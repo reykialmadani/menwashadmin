@@ -7,209 +7,212 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23D25353'/%3E%3Ccircle cx='12' cy='13.3' r='6' fill='none' stroke='%23FFEAD3' stroke-width='1.8'/%3E%3Cpath d='M9.1 13.3c0-1.6 1.3-2.9 2.9-2.9s2.9 1.3 2.9 2.9-1.3 2.9-2.9 2.9' fill='none' stroke='%23FFEAD3' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M8.3 4.6h1M11.5 4.6h1M14.7 4.6h1' stroke='%23FFEAD3' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/admin.css">
 <style>
+  .cycle-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
   .cycle-row{
-    display:flex; align-items:center; gap:14px; padding:14px 16px; border:1.5px solid var(--border-soft);
-    border-radius:var(--radius-md); margin-bottom:10px; cursor:pointer;
+    display:flex; flex-direction:column; gap:14px; padding:16px; border-radius:var(--radius-lg); cursor:pointer;
+    background:var(--card-bg); box-shadow:var(--shadow-card); transition:box-shadow .18s ease, transform .18s ease;
   }
-  .cycle-row:hover{ border-color:var(--terracotta-light); }
+  .cycle-row:hover{ box-shadow:var(--shadow-hover); transform:translateY(-1px); }
+  .cy-top{ display:flex; align-items:center; gap:12px; }
+  .cy-icon{ width:44px; height:44px; border-radius:var(--radius-lg); background:var(--busy-bg); color:var(--busy-ink); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .cy-icon.dry{ background:var(--amber-bg); color:var(--amber-ink); }
+  .cy-name{ display:flex; flex-direction:column; flex:1; min-width:0; }
+  .cy-name b{ font-family:var(--font-display); font-weight:600; font-size:16px; line-height:24px; }
+  .cy-name span{ font-size:12px; line-height:16px; color:var(--text-soft); }
+  .cy-mid{ display:flex; align-items:center; gap:14px; padding:12px; border-radius:var(--radius-lg); background:var(--surface-low); }
   .cycle-ring{
-    width:44px; height:44px; border-radius:50%; flex-shrink:0; position:relative;
-    background:conic-gradient(var(--terracotta) var(--pct,60%), var(--border-soft) 0);
+    width:56px; height:56px; border-radius:50%; flex-shrink:0; position:relative;
+    background:conic-gradient(var(--ring, var(--busy)) var(--pct,60%), var(--surface-high) 0);
     display:flex; align-items:center; justify-content:center;
   }
-  .cycle-ring::before{ content:""; position:absolute; inset:4px; background:#fff; border-radius:50%; }
-  .cycle-ring svg{ position:relative; z-index:1; width:16px; height:16px; color:var(--terracotta); animation:spin 4s linear infinite; }
-  .cycle-main{ flex:1; min-width:0; }
-  .cycle-title{ font-weight:700; font-size:13.5px; }
-  .cycle-meta{ font-size:12px; color:var(--text-soft); margin-top:2px; }
+  .cycle-ring::before{ content:""; position:absolute; inset:5px; background:var(--surface-low); border-radius:50%; }
+  .cycle-ring span{ position:relative; z-index:1; font-family:var(--font-mono); font-weight:500; font-size:11px; }
+  .cycle-row .rc-k{ display:block; font-size:11px; line-height:14px; font-weight:600; color:var(--text-soft); text-transform:uppercase; letter-spacing:.05em; }
+  .cycle-row .rc-v{ font-family:var(--font-mono); font-weight:500; font-size:20px; line-height:28px; }
+  .cycle-row .rc-v small{ font-family:var(--font-body); font-weight:400; font-size:12px; color:var(--text-soft); }
+  .cy-tx{ margin-left:auto; text-align:right; display:flex; flex-direction:column; min-width:0; }
+  .cy-tx span:last-child{ font-size:11px; line-height:14px; color:var(--text-soft); }
+  .cy-btn{ width:100%; }
+  .tabs .badge{ margin-left:6px; }
+  @media (max-width:1200px){ .cycle-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (max-width:640px){ .cycle-grid{ grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
 
 <div class="app">
 
-  <!-- ===== SIDEBAR ===== -->
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M8 4h1M12 4h1M16 4h1"/></svg>
-      </div>
-      <div>
-        <div class="brand-name">Menwash</div>
-        <div class="brand-sub">ADMIN PANEL</div>
-      </div>
-    </div>
-
-    <nav class="nav">
-      <a href="dashboard.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
-        Dashboard
-      </a>
-      <div class="nav-group">
-        <a href="mesin.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3"/><path d="M8 4h1M12 4h1M16 4h1"/></svg>
-          Mesin
-        </a>
-        <div class="nav-sub">
-          <a href="mesin.html">Semua Mesin</a>
-          <a href="gangguan.html" class="sub-danger" style="display:flex; align-items:center; justify-content:space-between;">
-            <span>Mesin Gangguan</span>
-            <span class="badge err" style="padding:2px 7px; font-size:10px; border-radius:99px;">1</span>
-          </a>
-        </div>
-      </div>
-      <a href="transaksi.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v4H4zM4 12h16M4 16h10M4 20h6"/></svg>
-        Transaksi
-      </a>
-      <a href="progress.html" class="active">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
-        Progress
-      </a>
-    </nav>
-
-    <div class="sidebar-outlet">
-      <div class="o-name">Outlet Laundry Cendrawasih</div>
-      <div class="o-addr">Jl. Raya Cendrawasih No. 1F, Bintaro, Tangerang Selatan</div>
-    </div>
-
-    <div class="logout-row">
-      <a href="login.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
-        Keluar
-      </a>
-    </div>
-  </aside>
+  <!-- ===== SIDEBAR (dirender oleh assets/layout.js) ===== -->
+  <aside class="sidebar" id="layoutSidebar"></aside>
 
   <!-- ===== MAIN ===== -->
   <main class="main">
 
-    <div class="topbar">
-      <div>
-        <div class="topbar-title">Progress</div>
-        <div class="topbar-sub">Siklus yang sedang berjalan &amp; riwayat</div>
-      </div>
-      <div class="topbar-right">
-        <div style="position:relative; margin-right:16px; cursor:pointer; color:var(--text); display:flex; align-items:center;">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-          <span style="position:absolute; top:-2px; right:-2px; width:10px; height:10px; background:var(--err); border-radius:50%; border:2px solid #fff;"></span>
-        </div>
-        <div class="clock" id="liveClock"><b>09:41:07</b><span>Kamis, hari ini</span></div>
-        <div class="avatar">RA</div>
-      </div>
-    </div>
+    <div class="topbar" id="layoutTopbar"></div>
 
     <div class="content">
 
-      <div class="mini-stat-row" style="margin-bottom:16px;">
-        <div class="mini-stat">
-          <div class="ms-val">5</div>
-          <div class="ms-label">Siklus mesin berjalan</div>
+      <!-- Ringkasan -->
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="s-top">
+            <span class="s-label">Siklus mesin berjalan</span>
+            <span class="badge busy"><span class="dot"></span>LIVE</span>
+          </div>
+          <div class="s-val">5 <small>Unit</small></div>
+          <div class="s-delta">3 Cuci · 2 Pengering</div>
         </div>
-        <div class="mini-stat">
-          <div class="ms-val">4</div>
-          <div class="ms-label">Transaksi aktif (QRIS 3 · Tunai 1)</div>
+        <div class="stat-card">
+          <div class="s-top">
+            <span class="s-label">Transaksi aktif</span>
+            <span class="s-icon" data-icon="invoice" data-size="20"></span>
+          </div>
+          <div class="s-val">4</div>
+          <div class="s-delta">QRIS 3 · Tunai 1</div>
         </div>
-        <div class="mini-stat">
-          <div class="ms-val">1</div>
-          <div class="ms-label">Siklus kombo Cuci + Kering</div>
+        <div class="stat-card">
+          <div class="s-top">
+            <span class="s-label">Siklus kombo Cuci + Kering</span>
+            <span class="s-icon" data-icon="progress" data-size="20" style="background:var(--amber-bg); color:var(--amber-ink);"></span>
+          </div>
+          <div class="s-val">1</div>
+          <div class="s-delta">Cuci #03 → Pengering #01</div>
         </div>
-        <div class="mini-stat">
-          <div class="ms-val">2</div>
-          <div class="ms-label">Riwayat gagal/gangguan</div>
+        <div class="stat-card is-err">
+          <div class="s-top">
+            <span class="s-label">Riwayat gagal/gangguan</span>
+            <span class="s-icon" data-icon="alert" data-size="20" style="background:var(--err-bg); color:var(--err-ink);"></span>
+          </div>
+          <div class="s-val">2</div>
+          <div class="s-delta warn">Lihat tab Gagal / Gangguan</div>
         </div>
       </div>
 
       <!-- Siklus berjalan -->
-      <div class="card">
-        <div class="card-head" style="flex-wrap:wrap; gap:12px;">
-          <div><h3>Siklus sedang berjalan</h3><p>QRIS mandiri &amp; transaksi tunai — klik untuk kontrol darurat</p></div>
-          <div class="chip-row">
-            <div class="fchip active" onclick="filterCycles('semua', this)">Semua Siklus</div>
-            <div class="fchip" onclick="filterCycles('cuci', this)">Cuci saja</div>
-            <div class="fchip" onclick="filterCycles('kering', this)">Kering saja</div>
-            <div class="fchip" onclick="filterCycles('kombo', this)">Kombo</div>
-            <div class="fchip" onclick="filterCycles('gangguan', this)">Gangguan / Gagal</div>
+      <div class="section-head" style="flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+          <div>
+            <h3>Siklus Sedang Berjalan</h3>
+            <p>QRIS mandiri &amp; transaksi tunai — klik kartu untuk kontrol darurat</p>
           </div>
         </div>
-        <div class="card-body">
-
-          <div class="cycle-row" data-code="Mesin Cuci #03" data-status="busy" data-paid="true" data-layanan="Cuci + Kering" data-durasi="40 menit · sisa 9 menit" data-tx="MW-284719" data-combo="MW-284719 → Pengering #01" style="--pct:78%;">
-            <div class="cycle-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12c1.5 2 3 3 4 3s2.5-1 4-3 2.5-3 4-3 2.5 1 4 3"/></svg></div>
-            <div class="cycle-main">
-              <div class="cycle-title">Cuci #03 — Cuci + Kering</div>
-              <div class="cycle-meta">QRIS mandiri · MW-284719 · sisa 9 menit</div>
-            </div>
-            <span class="badge amber">⇄ Kombo</span>
-          </div>
-
-          <div class="cycle-row" data-code="Mesin Pengering #01" data-status="busy" data-paid="true" data-layanan="Kering (lanjutan Cuci + Kering)" data-durasi="35 menit · menunggu" data-tx="MW-284719" data-combo="MW-284719 ← Cuci #03" style="--pct:8%;">
-            <div class="cycle-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h3M18 12h3M12 3v3M12 18v3"/><circle cx="12" cy="12" r="4"/></svg></div>
-            <div class="cycle-main">
-              <div class="cycle-title">Pengering #01 — menunggu cucian</div>
-              <div class="cycle-meta">QRIS mandiri · MW-284719 · lanjutan dari Cuci #03</div>
-            </div>
-            <span class="badge amber">⇄ Kombo</span>
-          </div>
-
-          <div class="cycle-row" data-code="Mesin Cuci #07" data-status="busy" data-paid="true" data-layanan="Cuci saja" data-durasi="40 menit · sisa 31 menit" data-tx="MW-TX-9925" data-combo="" style="--pct:22%;">
-            <div class="cycle-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12c1.5 2 3 3 4 3s2.5-1 4-3 2.5-3 4-3 2.5 1 4 3"/></svg></div>
-            <div class="cycle-main">
-              <div class="cycle-title">Cuci #07 — Cuci saja</div>
-              <div class="cycle-meta">Tunai · MW-TX-9925 · sisa 31 menit</div>
-            </div>
-            <span class="badge amber">Tunai</span>
-          </div>
-
-          <div class="cycle-row" data-code="Mesin Pengering #04" data-status="busy" data-paid="true" data-layanan="Kering saja" data-durasi="35 menit · sisa 12 menit" data-tx="MW-284710" data-combo="" style="--pct:66%;">
-            <div class="cycle-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h3M18 12h3M12 3v3M12 18v3"/><circle cx="12" cy="12" r="4"/></svg></div>
-            <div class="cycle-main">
-              <div class="cycle-title">Pengering #04 — Kering saja</div>
-              <div class="cycle-meta">QRIS mandiri · MW-284710 · sisa 12 menit</div>
-            </div>
-          </div>
-
-          <div class="cycle-row" data-code="Mesin Cuci #02" data-status="busy" data-paid="true" data-layanan="Cuci saja" data-durasi="40 menit · sisa 22 menit" data-tx="MW-284702" data-combo="" style="--pct:45%;">
-            <div class="cycle-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12c1.5 2 3 3 4 3s2.5-1 4-3 2.5-3 4-3 2.5 1 4 3"/></svg></div>
-            <div class="cycle-main">
-              <div class="cycle-title">Cuci #02 — Cuci saja</div>
-              <div class="cycle-meta">QRIS mandiri · MW-284702 · sisa 22 menit</div>
-            </div>
-          </div>
-
+        <div class="chip-row">
+          <div class="fchip active" onclick="filterCycles('semua', this)">Semua Siklus</div>
+          <div class="fchip" onclick="filterCycles('cuci', this)">Cuci saja</div>
+          <div class="fchip" onclick="filterCycles('kering', this)">Kering saja</div>
+          <div class="fchip" onclick="filterCycles('kombo', this)">Kombo</div>
+          <div class="fchip" onclick="filterCycles('gangguan', this)">Gangguan / Gagal</div>
         </div>
       </div>
 
+      <div class="cycle-grid">
+
+        <div class="cycle-row" data-code="Mesin Cuci #03" data-status="busy" data-paid="true" data-layanan="Cuci + Kering" data-durasi="40 menit · sisa 9 menit" data-tx="MW-284719" data-combo="MW-284719 → Pengering #01" style="--pct:78%;">
+          <div class="cy-top">
+            <div class="cy-icon" data-icon="wash" data-size="24"></div>
+            <div class="cy-name"><b>Cuci #03</b><span>Cuci + Kering</span></div>
+            <span class="badge amber">⇄ Kombo</span>
+          </div>
+          <div class="cy-mid">
+            <div class="cycle-ring"><span>78%</span></div>
+            <div><div class="rc-k">Sisa waktu</div><div class="rc-v">9<small> menit</small></div></div>
+            <div class="cy-tx"><span class="rc-k">Transaksi</span><b class="tx-id">MW-284719</b><span>QRIS mandiri</span></div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm cy-btn">Kontrol Darurat</button>
+        </div>
+
+        <div class="cycle-row" data-code="Mesin Pengering #01" data-status="busy" data-paid="true" data-layanan="Kering (lanjutan Cuci + Kering)" data-durasi="35 menit · menunggu" data-tx="MW-284719" data-combo="MW-284719 ← Cuci #03" style="--pct:8%; --ring:var(--amber);">
+          <div class="cy-top">
+            <div class="cy-icon dry" data-icon="dry" data-size="24"></div>
+            <div class="cy-name"><b>Pengering #01</b><span>Menunggu cucian</span></div>
+            <span class="badge amber">⇄ Kombo</span>
+          </div>
+          <div class="cy-mid">
+            <div class="cycle-ring"><span>8%</span></div>
+            <div><div class="rc-k">Durasi</div><div class="rc-v">35<small> menit</small></div></div>
+            <div class="cy-tx"><span class="rc-k">Transaksi</span><b class="tx-id">MW-284719</b><span>Lanjutan dari Cuci #03</span></div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm cy-btn">Kontrol Darurat</button>
+        </div>
+
+        <div class="cycle-row" data-code="Mesin Cuci #07" data-status="busy" data-paid="true" data-layanan="Cuci saja" data-durasi="40 menit · sisa 31 menit" data-tx="MW-TX-9925" data-combo="" style="--pct:22%;">
+          <div class="cy-top">
+            <div class="cy-icon" data-icon="wash" data-size="24"></div>
+            <div class="cy-name"><b>Cuci #07</b><span>Cuci saja</span></div>
+            <span class="badge amber">Tunai</span>
+          </div>
+          <div class="cy-mid">
+            <div class="cycle-ring"><span>22%</span></div>
+            <div><div class="rc-k">Sisa waktu</div><div class="rc-v">31<small> menit</small></div></div>
+            <div class="cy-tx"><span class="rc-k">Transaksi</span><b class="tx-id">MW-TX-9925</b><span>Tunai</span></div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm cy-btn">Kontrol Darurat</button>
+        </div>
+
+        <div class="cycle-row" data-code="Mesin Pengering #04" data-status="busy" data-paid="true" data-layanan="Kering saja" data-durasi="35 menit · sisa 12 menit" data-tx="MW-284710" data-combo="" style="--pct:66%; --ring:var(--amber);">
+          <div class="cy-top">
+            <div class="cy-icon dry" data-icon="dry" data-size="24"></div>
+            <div class="cy-name"><b>Pengering #04</b><span>Kering saja</span></div>
+          </div>
+          <div class="cy-mid">
+            <div class="cycle-ring"><span>66%</span></div>
+            <div><div class="rc-k">Sisa waktu</div><div class="rc-v">12<small> menit</small></div></div>
+            <div class="cy-tx"><span class="rc-k">Transaksi</span><b class="tx-id">MW-284710</b><span>QRIS mandiri</span></div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm cy-btn">Kontrol Darurat</button>
+        </div>
+
+        <div class="cycle-row" data-code="Mesin Cuci #02" data-status="busy" data-paid="true" data-layanan="Cuci saja" data-durasi="40 menit · sisa 22 menit" data-tx="MW-284702" data-combo="" style="--pct:45%;">
+          <div class="cy-top">
+            <div class="cy-icon" data-icon="wash" data-size="24"></div>
+            <div class="cy-name"><b>Cuci #02</b><span>Cuci saja</span></div>
+          </div>
+          <div class="cy-mid">
+            <div class="cycle-ring"><span>45%</span></div>
+            <div><div class="rc-k">Sisa waktu</div><div class="rc-v">22<small> menit</small></div></div>
+            <div class="cy-tx"><span class="rc-k">Transaksi</span><b class="tx-id">MW-284702</b><span>QRIS mandiri</span></div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm cy-btn">Kontrol Darurat</button>
+        </div>
+
+      </div>
+
       <!-- Riwayat -->
-      <div class="card">
+      <div class="card" style="margin-top:24px;">
         <div class="tabs">
-          <button class="active" data-tab="selesai" onclick="switchTab('selesai')">Selesai</button>
+          <button class="active" data-tab="selesai" onclick="switchTab('selesai')">Selesai<span class="badge ok">3</span></button>
           <button data-tab="gagal" onclick="switchTab('gagal')" style="position:relative;">
-            Gagal / Gangguan
-            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--err); margin-left:4px;"></span>
+            Gagal / Gangguan<span class="badge err">2</span>
           </button>
         </div>
 
-        <div class="alert danger" style="margin:16px 20px 0; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-          <div style="display:flex; align-items:center; gap:10px;">
+        <div class="table-toolbar">
+          <div class="table-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 17L21 21"/><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z"/></svg>
+            <input type="text" id="riwayatSearch" placeholder="Cari ID transaksi atau mesin...">
+          </div>
+        </div>
+
+        <div class="alert danger" style="margin:0 24px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:280px;">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-            <span><b>⚠️ Perlu Tindakan Admin:</b> Mesin Cuci #04 terhenti (MW-284688) — Pelanggan disarankan datang ke Meja Admin untuk kompensasi.</span>
+            <span><b>Perlu Tindakan Admin:</b> Mesin Cuci #04 terhenti (MW-284688) — Pelanggan disarankan datang ke Meja Admin untuk kompensasi.</span>
           </div>
           <a href="dummy-restart.html" class="btn btn-danger btn-sm" style="white-space:nowrap;">Pelanggan Datang (Restart Dummy) →</a>
         </div>
 
-        <div class="card-body" id="tab-selesai" style="padding:0;">
+        <div class="card-body" id="tab-selesai" style="padding:0; overflow-x:auto;">
           <table>
             <thead><tr><th>ID Transaksi</th><th>Mesin</th><th>Layanan</th><th>Metode</th><th>Selesai</th><th style="text-align:right;">Nominal</th></tr></thead>
             <tbody>
-              <tr><td class="tx-id">MW-284670</td><td>Cuci #02</td><td>Cuci saja</td><td><span class="badge busy"><span class="dot"></span>QRIS</span></td><td class="mono">08:15</td><td style="text-align:right; font-weight:700;">Rp 12.000</td></tr>
-              <tr><td class="tx-id">MW-284655</td><td>Pengering #06</td><td>Kering saja</td><td><span class="badge amber"><span class="dot"></span>Tunai</span></td><td class="mono">07:58</td><td style="text-align:right; font-weight:700;">Rp 10.000</td></tr>
-              <tr><td class="tx-id">MW-284640</td><td>Cuci #05 → Pengering #03</td><td>Cuci + Kering</td><td><span class="badge busy"><span class="dot"></span>QRIS</span></td><td class="mono">07:20</td><td style="text-align:right; font-weight:700;">Rp 20.000</td></tr>
+              <tr><td class="tx-id">MW-284670</td><td>Cuci #02</td><td>Cuci saja</td><td><span class="badge busy"><span class="dot"></span>QRIS</span></td><td class="mono">08:15</td><td class="amt">Rp 12.000</td></tr>
+              <tr><td class="tx-id">MW-284655</td><td>Pengering #06</td><td>Kering saja</td><td><span class="badge amber"><span class="dot"></span>Tunai</span></td><td class="mono">07:58</td><td class="amt">Rp 10.000</td></tr>
+              <tr><td class="tx-id">MW-284640</td><td>Cuci #05 → Pengering #03</td><td>Cuci + Kering</td><td><span class="badge busy"><span class="dot"></span>QRIS</span></td><td class="mono">07:20</td><td class="amt">Rp 20.000</td></tr>
             </tbody>
           </table>
         </div>
 
-        <div class="card-body" id="tab-gagal" style="padding:0; display:none;">
+        <div class="card-body" id="tab-gagal" style="padding:0; display:none; overflow-x:auto;">
           <table>
             <thead><tr><th>ID Transaksi</th><th>Mesin</th><th>Layanan</th><th>Kendala</th><th>Waktu</th><th style="text-align:right;"></th></tr></thead>
             <tbody>
@@ -227,6 +230,14 @@
               </tr>
             </tbody>
           </table>
+        </div>
+        <div class="table-pagination">
+          <div class="tp-info" id="riwayatPageInfo">Menampilkan seluruh data</div>
+          <div class="tp-pages">
+            <button class="tp-btn tp-text" disabled><span data-icon="arrowLeft" data-size="16"></span>Sebelumnya</button>
+            <div class="tp-page">1</div>
+            <button class="tp-btn tp-text" disabled>Selanjutnya<span data-icon="arrowRight" data-size="16"></span></button>
+          </div>
         </div>
       </div>
 
@@ -260,7 +271,7 @@
         <span id="dComboText"></span>
       </div>
 
-      <div class="mt-20" style="font-weight:800; font-size:13.5px;">Kontrol Darurat</div>
+      <div class="mt-20" style="font-weight:600; font-size:13.5px;">Kontrol Darurat</div>
       <div class="muted mt-4">Gunakan hanya bila diperlukan. Setiap tindakan akan tercatat pada riwayat aktivitas mesin.</div>
 
       <div id="dActionDefault" class="mt-14">
@@ -314,7 +325,7 @@
         </div>
       </div>
 
-      <div class="mt-20" style="font-weight:800; font-size:13.5px;">Riwayat aktivitas mesin</div>
+      <div class="mt-20" style="font-weight:600; font-size:13.5px;">Riwayat aktivitas mesin</div>
       <div class="tl mt-14">
         <div class="tl-item">
           <div class="tl-title">Siklus dimulai</div>
@@ -330,13 +341,35 @@
   <span>Berhasil</span>
 </div>
 
+<script src="assets/icons.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+  Layout.mount({ active:'progress', title:'Progress', subtitle:'Siklus yang sedang berjalan &amp; riwayat', badgeGangguan:'1' });
+</script>
 <script src="assets/admin.js"></script>
 <script>
   function switchTab(name){
     document.querySelectorAll('.tabs button').forEach(b=> b.classList.toggle('active', b.dataset.tab===name));
     document.getElementById('tab-selesai').style.display = name==='selesai' ? 'block' : 'none';
     document.getElementById('tab-gagal').style.display = name==='gagal' ? 'block' : 'none';
+    applyRiwayatSearch();
   }
+
+  function applyRiwayatSearch(){
+    const query = (document.getElementById('riwayatSearch').value || '').trim().toLowerCase();
+    const activeTab = document.querySelector('.tabs button.active').dataset.tab;
+    const rows = document.querySelectorAll(`#tab-${activeTab} tbody tr`);
+    let visible = 0;
+    rows.forEach(row=>{
+      const match = !query || row.textContent.toLowerCase().includes(query);
+      row.style.display = match ? '' : 'none';
+      if(match) visible++;
+    });
+    document.getElementById('riwayatPageInfo').textContent = query
+      ? `Menampilkan ${visible} dari ${rows.length} data`
+      : 'Menampilkan seluruh data';
+  }
+  document.getElementById('riwayatSearch').addEventListener('input', applyRiwayatSearch);
 
   let currentPaid = false;
   document.querySelectorAll('.cycle-row').forEach(row=>{
@@ -462,7 +495,7 @@
           <div style="width:56px;height:56px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
             <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>
           </div>
-          <div style="font-weight:800; font-size:15.5px;">Mesin berhasil dinyalakan</div>
+          <div style="font-weight:600; font-size:15.5px;">Mesin berhasil dinyalakan</div>
           <div class="muted mt-4">Transaksi tunai sudah tercatat di sistem.</div>
         </div>
         <div class="summary-box mt-14">
@@ -486,13 +519,6 @@
     </div>
   </div>
 </div>
-
-<!-- ===== GLOBAL FLOATING ACTION BUTTON (WhatsApp Style) ===== -->
-<button class="fab-activate" onclick="showStep('qa',1); openEl('qaModal')" title="Aktifkan Mesin Tunai">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
-  <span class="fab-tooltip">Aktifkan Mesin Tunai</span>
-  <span class="fab-badge"></span>
-</button>
 
 <script>
   function qaActivate(){

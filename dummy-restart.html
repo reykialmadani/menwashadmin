@@ -11,67 +11,13 @@
 
 <div class="app">
 
-  <!-- ===== SIDEBAR ===== -->
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M8 4h1M12 4h1M16 4h1"/></svg>
-      </div>
-      <div>
-        <div class="brand-name">Menwash</div>
-        <div class="brand-sub">ADMIN PANEL</div>
-      </div>
-    </div>
-
-    <nav class="nav">
-      <a href="dashboard.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
-        Dashboard
-      </a>
-      <a href="mesin.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3"/><path d="M8 4h1M12 4h1M16 4h1"/></svg>
-        Mesin
-      </a>
-      <a href="transaksi.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v4H4zM4 12h16M4 16h10M4 20h6"/></svg>
-        Transaksi
-      </a>
-      <a href="progress.html" class="active">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
-        Progress
-      </a>
-    </nav>
-
-    <div class="sidebar-outlet">
-      <div class="o-name">Outlet Laundry Cendrawasih</div>
-      <div class="o-addr">Jl. Raya Cendrawasih No. 1F, Bintaro, Tangerang Selatan</div>
-    </div>
-
-    <div class="logout-row">
-      <a href="login.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
-        Keluar
-      </a>
-    </div>
-  </aside>
+  <!-- ===== SIDEBAR (dirender oleh assets/layout.js) ===== -->
+  <aside class="sidebar" id="layoutSidebar"></aside>
 
   <!-- ===== MAIN ===== -->
   <main class="main">
 
-    <div class="topbar">
-      <div>
-        <div class="topbar-title">Start Ulang untuk Pelanggan</div>
-        <div class="topbar-sub">Pelanggan MW-284688 mendatangi admin karena gangguan pada Cuci #04</div>
-      </div>
-      <div class="topbar-right">
-        <div style="position:relative; margin-right:16px; cursor:pointer; color:var(--text); display:flex; align-items:center;">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-          <span style="position:absolute; top:-2px; right:-2px; width:10px; height:10px; background:var(--err); border-radius:50%; border:2px solid #fff;"></span>
-        </div>
-        <div class="clock" id="liveClock"><b>09:41:07</b><span>Kamis, hari ini</span></div>
-        <div class="avatar">RA</div>
-      </div>
-    </div>
+    <div class="topbar" id="layoutTopbar"></div>
 
     <div class="content">
 
@@ -82,14 +28,8 @@
         </div>
       </div>
 
-      <div class="alert info" style="margin-bottom:10px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 4.9V17L12 22l-9-4.9V6.9z"/><path d="M12 8v5M12 16h.01"/></svg>
-        <span><b>Catatan Penting:</b> Uang dummy hanya boleh digunakan untuk mengaktifkan/start ulang mesin bagi pelanggan yang mengalami gangguan atau kegagalan sistem.</span>
-      </div>
-
-      <div class="alert danger" style="margin-bottom:10px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-        <span><b>Transaksi asli:</b> MW-284688 · Cuci #04 · Cuci saja 40 menit · terhenti pada menit ke-18 karena gangguan.</span>
+      <div class="summary-box" style="margin-bottom:16px;">
+        <div class="summary-row"><span class="k">Transaksi Terganggu</span><span class="v">MW-284688 · Cuci #04 (terhenti menit 18)</span></div>
       </div>
 
       <div class="card">
@@ -113,7 +53,7 @@
               <input type="radio" name="dmMesin" checked>
               <span class="radio"></span>
               <div>
-                <div style="font-weight:700; font-size:13.5px;">Mesin Cuci #01 — tersedia</div>
+                <div style="font-weight:600; font-size:13.5px;">Mesin Cuci #01 — tersedia</div>
                 <div class="muted">Pindahkan ke mesin lain yang kosong.</div>
               </div>
             </label>
@@ -121,7 +61,7 @@
               <input type="radio" name="dmMesin">
               <span class="radio"></span>
               <div>
-                <div style="font-weight:700; font-size:13.5px;">Mesin Cuci #05 — tersedia</div>
+                <div style="font-weight:600; font-size:13.5px;">Mesin Cuci #05 — tersedia</div>
                 <div class="muted">Pindahkan ke mesin lain yang kosong.</div>
               </div>
             </label>
@@ -133,13 +73,13 @@
             <div class="summary-box mt-4" style="margin-bottom:16px;">
               <div class="summary-row"><span class="k">Layanan awal</span><span class="v">Cuci saja · 40 menit</span></div>
               <div class="summary-row"><span class="k">Waktu berjalan sebelum gangguan</span><span class="v">18 menit</span></div>
-              <div class="summary-row"><span class="k">Sisa waktu yang belum selesai</span><span class="v" style="color:var(--err); font-weight:700;">22 menit</span></div>
+              <div class="summary-row"><span class="k">Sisa waktu yang belum selesai</span><span class="v" style="color:var(--err); font-weight:600;">22 menit</span></div>
             </div>
             <div class="field">
               <label>Pilih durasi start ulang (kelipatan 5 menit)</label>
               <div style="display:flex; align-items:center; gap:10px;">
                 <input type="range" id="durasiSlider" min="5" max="60" step="5" value="20" style="flex:1;" oninput="updateDummyCost(this.value)">
-                <span id="durasiLabel" style="font-weight:bold; font-size:15px; width:70px; text-align:right;">20 menit</span>
+                <span id="durasiLabel" style="font-weight:600; font-size:15px; width:70px; text-align:right;">20 menit</span>
               </div>
               <div class="hint">Karena sisa 22 menit, durasi terdekat adalah 20 atau 25 menit.</div>
               <div id="dummyCostDisplay" style="margin-top:10px; font-weight:600; color:var(--text); padding:10px; background:var(--page-bg); border:1px solid var(--border); border-radius:var(--radius-md);">
@@ -167,17 +107,12 @@
                 <div class="summary-row"><span class="k">Durasi start ulang</span><span class="v" id="sumDurasi">22 menit</span></div>
                 <div class="summary-row"><span class="k">Metode</span><span class="v">Uang dummy — tanpa pembayaran ulang</span></div>
                 <div class="summary-row"><span class="k">Transaksi asli terkait</span><span class="v">MW-284688</span></div>
-              </div>
-              <div class="alert info mt-14">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 4.9V17L12 22l-9-4.9V6.9z"/><path d="M12 8v5M12 16h.01"/></svg>
-                <span>Setelah dikonfirmasi: mesin akan langsung start ulang, transaksi asli otomatis ditandai gagal/refund, dan transaksi uang dummy tercatat terhubung ke kode transaksi asli.</span>
-              </div>
             </div>
 
             <div id="dm-processing" style="display:none;">
               <div class="processing-box">
                 <div class="p-spin"></div>
-                <div class="p-text"><b>Memproses…</b><span>202 Accepted — transaksi asli ditandai refund, order uang dummy dibuat, menunggu ACK mesin melalui MQTT.</span></div>
+                <div class="p-text"><b>Memproses…</b><span>Mengirim perintah ke mesin…</span></div>
               </div>
             </div>
 
@@ -186,7 +121,7 @@
                 <div style="width:56px;height:56px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
                   <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>
                 </div>
-                <div style="font-weight:800; font-size:15.5px;">Mesin berhasil di-start ulang</div>
+                <div style="font-weight:600; font-size:15.5px;">Mesin berhasil di-start ulang</div>
               </div>
 
               <div class="tl">
@@ -223,6 +158,15 @@
   <span>Berhasil</span>
 </div>
 
+<script src="assets/icons.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+  Layout.mount({
+    active:'progress', title:'Start Ulang untuk Pelanggan',
+    subtitle:'Pelanggan MW-284688 mendatangi admin karena gangguan pada Cuci #04',
+    badgeGangguan:'1'
+  });
+</script>
 <script src="assets/admin.js"></script>
 <script>
   let dmStep = 1;

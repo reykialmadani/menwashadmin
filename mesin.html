@@ -11,110 +11,50 @@
 
 <div class="app">
 
-  <!-- ===== SIDEBAR ===== -->
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M8 4h1M12 4h1M16 4h1"/></svg>
-      </div>
-      <div>
-        <div class="brand-name">Menwash</div>
-        <div class="brand-sub">ADMIN PANEL</div>
-      </div>
-    </div>
-
-    <nav class="nav">
-      <a href="dashboard.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
-        Dashboard
-      </a>
-      <div class="nav-group">
-        <a href="mesin.html" class="active">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3"/><path d="M8 4h1M12 4h1M16 4h1"/></svg>
-          Mesin
-        </a>
-        <div class="nav-sub">
-          <a href="mesin.html" class="active">Semua Mesin</a>
-          <a href="gangguan.html" class="sub-danger" style="display:flex; align-items:center; justify-content:space-between;">
-            <span>Mesin Gangguan</span>
-            <span class="badge err" style="padding:2px 7px; font-size:10px; border-radius:99px;">1</span>
-          </a>
-        </div>
-      </div>
-      <a href="transaksi.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v4H4zM4 12h16M4 16h10M4 20h6"/></svg>
-        Transaksi
-      </a>
-      <a href="progress.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
-        Progress
-      </a>
-    </nav>
-
-    <div class="sidebar-outlet">
-      <div class="o-name">Outlet Laundry Cendrawasih</div>
-      <div class="o-addr">Jl. Raya Cendrawasih No. 1F, Bintaro, Tangerang Selatan</div>
-    </div>
-
-    <div class="logout-row">
-      <a href="login.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
-        Keluar
-      </a>
-    </div>
-  </aside>
+  <!-- ===== SIDEBAR (dirender oleh assets/layout.js) ===== -->
+  <aside class="sidebar" id="layoutSidebar"></aside>
 
   <!-- ===== MAIN ===== -->
   <main class="main">
 
-    <div class="topbar">
-      <div>
-        <div class="topbar-title">Mesin</div>
-        <div class="topbar-sub">Status seluruh mesin cuci &amp; pengering outlet</div>
-      </div>
-      <div class="topbar-right">
-        <div style="position:relative; margin-right:16px; cursor:pointer; color:var(--text); display:flex; align-items:center;">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-          <span style="position:absolute; top:-2px; right:-2px; width:10px; height:10px; background:var(--err); border-radius:50%; border:2px solid #fff;"></span>
-        </div>
-        <div class="clock" id="liveClock"><b>09:41:07</b><span>Kamis, hari ini</span></div>
-        <div class="avatar">RA</div>
-      </div>
-    </div>
+    <div class="topbar" id="layoutTopbar"></div>
 
     <div class="content">
 
       <div class="mini-stat-row" style="margin-bottom:16px;">
-        <div class="mini-stat">
+        <div class="mini-stat ok">
           <div class="ms-val">5</div>
           <div class="ms-label">Tersedia</div>
         </div>
-        <div class="mini-stat">
+        <div class="mini-stat busy">
           <div class="ms-val">5</div>
           <div class="ms-label">Aktif</div>
         </div>
-        <div class="mini-stat">
+        <div class="mini-stat err">
           <div class="ms-val">2</div>
           <div class="ms-label">Gangguan</div>
         </div>
-        <div class="mini-stat">
+        <div class="mini-stat off">
           <div class="ms-val">1</div>
           <div class="ms-label">Offline</div>
         </div>
       </div>
 
-      <div class="alert info mt-4" style="margin-bottom:18px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 4.9V17L12 22l-9-4.9V6.9z"/><path d="M12 8v5M12 16h.01"/></svg>
-        <span>Klik salah satu mesin untuk membuka <b>Kontrol Darurat</b> khusus mesin tersebut. Badge kuning menandakan mesin terhubung dalam satu siklus Cuci + Kering.</span>
-      </div>
-
       <!-- Filter status mesin -->
-      <div class="chip-row" style="margin-bottom:18px;">
-        <div class="fchip active" onclick="filterMachines('semua', this)">Semua Status</div>
-        <div class="fchip" onclick="filterMachines('ok', this)">Tersedia (5)</div>
-        <div class="fchip" onclick="filterMachines('busy', this)">Aktif (5)</div>
-        <div class="fchip" onclick="filterMachines('err', this)">Gangguan (2)</div>
-        <div class="fchip" onclick="filterMachines('off', this)">Offline (1)</div>
+      <div class="card" style="margin-bottom:18px;">
+        <div class="table-toolbar" style="border-bottom:none;">
+          <div class="table-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 17L21 21"/><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z"/></svg>
+            <input type="text" id="mesinSearch" placeholder="Cari kode mesin...">
+          </div>
+          <div class="chip-row">
+            <div class="fchip active" onclick="filterMachines('semua', this)">Semua Status</div>
+            <div class="fchip" onclick="filterMachines('ok', this)">Tersedia (5)</div>
+            <div class="fchip" onclick="filterMachines('busy', this)">Aktif (5)</div>
+            <div class="fchip" onclick="filterMachines('err', this)">Gangguan (2)</div>
+            <div class="fchip" onclick="filterMachines('off', this)">Offline (1)</div>
+          </div>
+        </div>
       </div>
 
       <!-- ===== MESIN CUCI ===== -->
@@ -133,11 +73,13 @@
             <div class="m-card" data-code="Mesin Cuci #02" data-status="busy" data-paid="true" data-layanan="Cuci saja" data-durasi="40 menit · sisa 22 menit" data-tx="MW-284702" data-combo="">
               <div class="m-top"><span class="m-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M8 4h1M12 4h1M16 4h1"/></svg></span><span class="m-code">Cuci #02</span><span class="badge busy"><svg class="ic" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 6A3.6 3.6 0 116 2.4"/><path d="M9.6 2.4v3.3h-3.3"/></svg>Aktif</span></div>
               <div class="m-meta">QRIS mandiri · sisa 22 menit</div>
+              <div class="m-prog" role="img" aria-label="45% selesai"><i style="width:45%"></i></div>
             </div>
 
             <div class="m-card" data-code="Mesin Cuci #03" data-status="busy" data-paid="true" data-layanan="Cuci + Kering" data-durasi="40 menit · sisa 9 menit" data-tx="MW-284719" data-combo="MW-284719 → Pengering #01">
               <div class="m-top"><span class="m-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M8 4h1M12 4h1M16 4h1"/></svg></span><span class="m-code">Cuci #03</span><span class="badge busy"><svg class="ic" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 6A3.6 3.6 0 116 2.4"/><path d="M9.6 2.4v3.3h-3.3"/></svg>Aktif</span></div>
               <div class="m-meta">QRIS mandiri · sisa 9 menit</div>
+              <div class="m-prog" role="img" aria-label="78% selesai"><i style="width:78%"></i></div>
               <div class="m-link">⇄ MW-284719 · lanjut ke Pengering #01</div>
             </div>
 
@@ -159,6 +101,7 @@
             <div class="m-card" data-code="Mesin Cuci #07" data-status="busy" data-paid="true" data-layanan="Cuci saja" data-durasi="40 menit · sisa 31 menit" data-tx="MW-TX-9925" data-combo="">
               <div class="m-top"><span class="m-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M8 4h1M12 4h1M16 4h1"/></svg></span><span class="m-code">Cuci #07</span><span class="badge busy"><svg class="ic" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 6A3.6 3.6 0 116 2.4"/><path d="M9.6 2.4v3.3h-3.3"/></svg>Aktif</span></div>
               <div class="m-meta">Tunai · sisa 31 menit</div>
+              <div class="m-prog" role="img" aria-label="23% selesai"><i style="width:23%"></i></div>
             </div>
 
           </div>
@@ -192,6 +135,7 @@
             <div class="m-card" data-code="Mesin Pengering #04" data-status="busy" data-paid="true" data-layanan="Kering saja" data-durasi="35 menit · sisa 12 menit" data-tx="MW-284710" data-combo="">
               <div class="m-top"><span class="m-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12h3M18 12h3M12 3v3M12 18v3"/><circle cx="12" cy="12" r="4"/></svg></span><span class="m-code">Pengering #04</span><span class="badge busy"><svg class="ic" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 6A3.6 3.6 0 116 2.4"/><path d="M9.6 2.4v3.3h-3.3"/></svg>Aktif</span></div>
               <div class="m-meta">QRIS mandiri · sisa 12 menit</div>
+              <div class="m-prog" role="img" aria-label="66% selesai"><i style="width:66%"></i></div>
             </div>
 
             <div class="m-card" data-code="Mesin Pengering #05" data-status="err" data-paid="false" data-layanan="—" data-durasi="—" data-tx="—" data-combo="">
@@ -239,7 +183,7 @@
         <span id="dComboText"></span>
       </div>
 
-      <div class="mt-20" style="font-weight:800; font-size:13.5px;">Kontrol Darurat</div>
+      <div class="mt-20" style="font-weight:600; font-size:13.5px;">Kontrol Darurat</div>
       <div class="muted mt-4">Gunakan hanya bila diperlukan. Setiap tindakan akan tercatat pada riwayat aktivitas mesin.</div>
 
       <!-- jika mesin tersedia (ok), matikan mesin di-hide -->
@@ -304,7 +248,7 @@
         </div>
       </div>
 
-      <div class="mt-20" style="font-weight:800; font-size:13.5px;">Riwayat aktivitas mesin</div>
+      <div class="mt-20" style="font-weight:600; font-size:13.5px;">Riwayat aktivitas mesin</div>
       <div class="tl mt-14">
         <div class="tl-item">
           <div class="tl-title">Siklus dimulai</div>
@@ -326,8 +270,31 @@
   <span>Berhasil</span>
 </div>
 
+<script src="assets/icons.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+  Layout.mount({ active:'mesin', title:'Mesin', subtitle:'Status seluruh mesin cuci &amp; pengering outlet', badgeGangguan:'1' });
+</script>
 <script src="assets/admin.js"></script>
 <script>
+  let mesinStatusFilter = 'semua';
+  const _origFilterMachines = filterMachines;
+  filterMachines = function(status, el){
+    mesinStatusFilter = status;
+    _origFilterMachines(status, el);
+    applyMesinSearch();
+  };
+
+  function applyMesinSearch(){
+    const query = document.getElementById('mesinSearch').value.trim().toLowerCase();
+    document.querySelectorAll('.m-card').forEach(card=>{
+      const matchStatus = mesinStatusFilter === 'semua' || card.dataset.status === mesinStatusFilter;
+      const matchSearch = !query || card.dataset.code.toLowerCase().includes(query);
+      card.style.display = (matchStatus && matchSearch) ? 'block' : 'none';
+    });
+  }
+  document.getElementById('mesinSearch').addEventListener('input', applyMesinSearch);
+
   let currentPaid = false;
 
   document.querySelectorAll('.m-card').forEach(card=>{
@@ -472,7 +439,7 @@
           <div style="width:56px;height:56px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
             <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>
           </div>
-          <div style="font-weight:800; font-size:15.5px;">Mesin berhasil dinyalakan</div>
+          <div style="font-weight:600; font-size:15.5px;">Mesin berhasil dinyalakan</div>
           <div class="muted mt-4">Transaksi tunai sudah tercatat di sistem.</div>
         </div>
         <div class="summary-box mt-14">
@@ -496,13 +463,6 @@
     </div>
   </div>
 </div>
-
-<!-- ===== GLOBAL FLOATING ACTION BUTTON (WhatsApp Style) ===== -->
-<button class="fab-activate" onclick="showStep('qa',1); openEl('qaModal')" title="Aktifkan Mesin Tunai">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
-  <span class="fab-tooltip">Aktifkan Mesin Tunai</span>
-  <span class="fab-badge"></span>
-</button>
 
 <script>
   function qaActivate(){

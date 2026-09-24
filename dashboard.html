@@ -11,251 +11,229 @@
 
 <div class="app">
 
-  <!-- ===== SIDEBAR ===== -->
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M8 4h1M12 4h1M16 4h1"/></svg>
-      </div>
-      <div>
-        <div class="brand-name">Menwash</div>
-        <div class="brand-sub">ADMIN PANEL</div>
-      </div>
-    </div>
-
-    <nav class="nav">
-      <a href="dashboard.html" class="active">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
-        Dashboard
-      </a>
-      <div class="nav-group">
-        <a href="mesin.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3"/><path d="M8 4h1M12 4h1M16 4h1"/></svg>
-          Mesin
-        </a>
-        <div class="nav-sub">
-          <a href="mesin.html">Semua Mesin</a>
-          <a href="gangguan.html" class="sub-danger" style="display:flex; align-items:center; justify-content:space-between;">
-            <span>Mesin Gangguan</span>
-            <span class="badge err" style="padding:2px 7px; font-size:10px; border-radius:99px;">1</span>
-          </a>
-        </div>
-      </div>
-      <a href="transaksi.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v4H4zM4 12h16M4 16h10M4 20h6"/></svg>
-        Transaksi
-      </a>
-      <a href="progress.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
-        Progress
-      </a>
-    </nav>
-
-    <div class="sidebar-outlet">
-      <div class="o-name">Outlet Lasundry Cendrawasih</div>
-      <div class="o-addr">Jl. Raya Cendrawasih No. 1F, Bintaro, Tangerang Selatan</div>
-    </div>
-
-    <div class="logout-row">
-      <a href="login.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
-        Keluar
-      </a>
-    </div>
-  </aside>
+  <!-- ===== SIDEBAR (dirender oleh assets/layout.js) ===== -->
+  <aside class="sidebar" id="layoutSidebar"></aside>
 
   <!-- ===== MAIN ===== -->
   <main class="main">
 
-    <div class="topbar">
-      <div>
-        <div class="topbar-title">Dashboard</div>
-        <div class="topbar-sub">Ringkasan operasional hari ini</div>
-      </div>
-      <div class="topbar-right">
-        <div style="position:relative; margin-right:16px; cursor:pointer; color:var(--text); display:flex; align-items:center;">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-          <span style="position:absolute; top:-2px; right:-2px; width:10px; height:10px; background:var(--err); border-radius:50%; border:2px solid #fff;"></span>
-        </div>
-        <div class="clock" id="liveClock"><b>09:41:07</b><span>Kamis, hari ini</span></div>
-        <div class="avatar">RA</div>
-      </div>
-    </div>
+    <div class="topbar" id="layoutTopbar"></div>
 
     <div class="content">
 
-      <!-- Stat cards -->
+      <!-- KPI -->
       <div class="stat-grid">
         <div class="stat-card">
-          <div class="s-top">
-            <div class="s-icon" style="background:var(--busy-bg); color:var(--busy);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3"/></svg>
-            </div>
+          <div class="s-top"> 
+            <span class="s-label">Mesin sedang aktif</span>
+            <span class="s-icon" data-icon="machine" data-size="20"></span>
           </div>
-          <div class="s-val">7 / 12</div>
-          <div class="s-label">Mesin sedang aktif</div>
-          <span class="s-delta up">5 tersedia</span>
+          <div class="s-val">7 <small>/ 12 mesin</small></div>
+          <div class="s-delta up">5 tersedia</div>
+          <div class="s-bar"><i style="width:58.3%; background:var(--busy);"></i></div>
         </div>
 
         <div class="stat-card">
           <div class="s-top">
-            <div class="s-icon" style="background:var(--ok-bg); color:var(--ok);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v4H4zM4 12h16M4 16h10"/></svg>
-            </div>
+            <span class="s-label">Transaksi hari ini</span>
+            <span class="s-icon" data-icon="invoice" data-size="20"></span>
           </div>
           <div class="s-val">48</div>
-          <div class="s-label">Transaksi hari ini</div>
-          <span class="s-delta up">+12 dari kemarin</span>
+          <div class="s-delta up">+12 dari kemarin</div>
         </div>
 
         <div class="stat-card">
           <div class="s-top">
-            <div class="s-icon" style="background:#FDF1EC; color:var(--terracotta);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-            </div>
+            <span class="s-label">Est. pendapatan hari ini</span>
+            <span class="s-icon" data-icon="money" data-size="20"></span>
           </div>
           <div class="s-val">Rp 612rb</div>
-          <div class="s-label">Estimasi pendapatan hari ini</div>
-          <span class="s-delta up">QRIS 34 · Tunai 14</span>
+          <div class="s-delta">QRIS 34 · Tunai 14</div>
+          <div class="s-bar" role="img" aria-label="QRIS 71 persen, Tunai 29 persen"><i style="width:70.8%; background:var(--busy);"></i><i style="width:29.2%; background:var(--amber);"></i></div>
         </div>
 
-        <div class="stat-card">
+        <div class="stat-card is-err">
           <div class="s-top">
-            <div class="s-icon" style="background:var(--err-bg); color:var(--err);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-            </div>
+            <span class="s-label">Gangguan aktif</span>
+            <span class="s-icon" data-icon="alert" data-size="20" style="background:var(--err-bg); color:var(--err-ink);"></span>
           </div>
           <div class="s-val">1</div>
-          <div class="s-label">Gangguan aktif</div>
-          <span class="s-delta warn">Perlu tindakan</span>
+          <div class="s-delta warn">Perlu tindakan</div>
         </div>
       </div>
 
-      <!-- Card Mesin Gagal & Perlu Tindakan (Posisi Utama / Atas) -->
-      <div class="card card-failed-accent" style="margin-bottom:18px;">
-        <div class="card-head">
+      <!-- Notifikasi Gangguan Singkat -->
+      <div class="alert-strip">
+        <div class="as-icon" data-icon="alert" data-size="18"></div>
+        <div class="as-body">
+          <div class="as-line"><b>Mesin Cuci #04 terhenti (menit 18)</b> · Transaksi <span class="tx-id">MW-284688</span> · Menunggu kompensasi</div>
+        </div>
+        <div class="as-actions">
+          <a href="dummy-restart.html" class="btn btn-primary" style="padding:6px 14px; font-size:13px;">Restart Dummy</a>
+        </div>
+      </div>
+
+      <!-- Siklus berjalan -->
+      <div class="section-head">
+        <div>
+          <h3>Siklus Sedang Berjalan</h3>
+          <p>Cuplikan siklus aktif saat ini</p>
+        </div>
+        <a href="progress.html" class="link-more">Lihat semua siklus <span data-icon="arrowRight" data-size="16"></span></a>
+      </div>
+      <div class="run-grid">
+        <div class="run-card">
+          <div class="rc-top">
+            <span class="rc-name">Cuci #03</span>
+            <span class="badge amber">⇄ Kombo</span>
+          </div>
+          <div class="rc-main">
+            <div class="rc-icon" data-icon="wash" data-size="24"></div>
+            <div><div class="rc-k">Sisa waktu siklus</div><div class="rc-v">9<small> menit</small></div></div>
+          </div>
           <div>
-            <h3 style="display:flex; align-items:center; gap:8px;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--err);"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-              Mesin Gagal &amp; Perlu Tindakan
-            </h3>
-            <p>Gangguan aktif yang membutuhkan penanganan admin segera</p>
+            <div class="rc-bar-h"><span>Cuci + Kering</span><span class="mono">78%</span></div>
+            <div class="rc-bar"><i style="width:78%"></i></div>
           </div>
-          <span class="badge err"><span class="dot"></span>1 Gangguan Aktif</span>
+          <div class="rc-foot">MW-284719 · QRIS</div>
         </div>
-        <div class="card-body">
-          <div style="background:var(--page-bg); border:1px solid var(--border-soft); border-radius:var(--radius-md); padding:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
-            <div style="flex:1; min-width:240px;">
-              <div style="display:flex; align-items:center; gap:10px;">
-                <span style="font-weight:800; font-size:15px;">Mesin Cuci #04</span>
-                <span class="badge err">Gangguan Siklus</span>
-              </div>
-              <div class="muted mt-4">Siklus terhenti di menit 18 · Kode Transaksi: <b>MW-284688</b></div>
-              <div class="alert danger mt-8" style="font-size:12px; padding:6px 10px; margin-top:8px;">
-                <span><b>Instruksi:</b> Pelanggan disarankan menuju meja admin desk untuk proses kompensasi siklus.</span>
-              </div>
-            </div>
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <a href="dummy-restart.html" class="btn btn-danger btn-sm" style="justify-content:center;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                Pelanggan Datang (Restart Dummy)
-              </a>
-              <a href="mesin.html" class="btn btn-secondary btn-sm" style="justify-content:center;">
-                Kontrol Mesin
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Chart: Tren Pemakaian Mesin -->
-      <div class="card" id="trendChartCard">
-        <div class="card-head">
+        <div class="run-card">
+          <div class="rc-top">
+            <span class="rc-name">Pengering #04</span>
+            <span class="badge busy">Berjalan</span>
+          </div>
+          <div class="rc-main">
+            <div class="rc-icon dry" data-icon="dry" data-size="24"></div>
+            <div><div class="rc-k">Sisa waktu siklus</div><div class="rc-v">12<small> menit</small></div></div>
+          </div>
           <div>
-            <h3>Tren Pemakaian Mesin</h3>
-            <p>Perbandingan penggunaan Mesin Cuci &amp; Pengering</p>
+            <div class="rc-bar-h"><span>Kering saja</span><span class="mono">66%</span></div>
+            <div class="rc-bar dry"><i style="width:66%"></i></div>
           </div>
-          <div class="field" style="margin-bottom:0; min-width:140px;">
-            <select id="chartFilter" onchange="setChartPeriod(this.value, this)">
-              <option value="hari">Hari ini</option>
-              <option value="minggu">Minggu ini</option>
-              <option value="bulan">Bulan ini</option>
-            </select>
-          </div>
+          <div class="rc-foot">MW-284710 · QRIS</div>
         </div>
-        <div class="card-body">
-          <div class="chart-legend">
-            <div class="lg-item lg-item-cuci"><span class="lg-dot" style="background:#111827;"></span>Mesin Cuci · <b>34</b></div>
-            <div class="lg-item lg-item-kering"><span class="lg-dot" style="background:#9CA3AF;"></span>Mesin Pengering · <b>14</b></div>
+
+        <div class="run-card">
+          <div class="rc-top">
+            <span class="rc-name">Cuci #02</span>
+            <span class="badge busy">Berjalan</span>
           </div>
+          <div class="rc-main">
+            <div class="rc-icon" data-icon="wash" data-size="24"></div>
+            <div><div class="rc-k">Sisa waktu siklus</div><div class="rc-v">22<small> menit</small></div></div>
+          </div>
+          <div>
+            <div class="rc-bar-h"><span>Cuci saja</span><span class="mono">45%</span></div>
+            <div class="rc-bar"><i style="width:45%"></i></div>
+          </div>
+          <div class="rc-foot">MW-284702 · QRIS</div>
+        </div>
 
-          <svg class="line-chart" viewBox="0 0 640 200" role="img" aria-label="Grafik tren pemakaian mesin">
-            <line class="grid-line" x1="40" y1="20" x2="620" y2="20"/>
-            <line class="grid-line" x1="40" y1="95" x2="620" y2="95"/>
-            <line class="axis-line" x1="40" y1="170" x2="620" y2="170"/>
-            <text class="axis-label" x="32" y="24" text-anchor="end">4</text>
-            <text class="axis-label" x="32" y="99" text-anchor="end">2</text>
-            <text class="axis-label" x="32" y="174" text-anchor="end">0</text>
-
-            <path d="M40,170 L40,132.5 81.4,95 122.9,57.5 164.3,20 205.7,57.5 247.1,95 288.6,57.5 330,20 371.4,57.5 412.9,95 454.3,57.5 495.7,95 537.1,132.5 578.6,132.5 620,170 Z" fill="#111827" opacity="0.1"/>
-            <polyline class="polyline-cuci" points="40,132.5 81.4,95 122.9,57.5 164.3,20 205.7,57.5 247.1,95 288.6,57.5 330,20 371.4,57.5 412.9,95 454.3,57.5 495.7,95 537.1,132.5 578.6,132.5 620,170" fill="none" stroke="#111827" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-            <polyline class="polyline-kering" points="40,170 81.4,132.5 122.9,132.5 164.3,95 205.7,132.5 247.1,132.5 288.6,132.5 330,95 371.4,132.5 412.9,132.5 454.3,132.5 495.7,132.5 537.1,170 578.6,132.5 620,170" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-
-            <g fill="#111827">
-              <circle class="pt" cx="40" cy="132.5" r="3"><title>07:00 · Cuci · 1 kali</title></circle>
-              <circle class="pt" cx="81.4" cy="95" r="3"><title>08:00 · Cuci · 2 kali</title></circle>
-              <circle class="pt" cx="122.9" cy="57.5" r="3"><title>09:00 · Cuci · 3 kali</title></circle>
-              <circle class="pt" cx="164.3" cy="20" r="4"><title>10:00 · Cuci · 4 kali</title></circle>
-              <circle class="pt" cx="205.7" cy="57.5" r="3"><title>11:00 · Cuci · 3 kali</title></circle>
-              <circle class="pt" cx="247.1" cy="95" r="3"><title>12:00 · Cuci · 2 kali</title></circle>
-              <circle class="pt" cx="288.6" cy="57.5" r="3"><title>13:00 · Cuci · 3 kali</title></circle>
-              <circle class="pt" cx="330" cy="20" r="4"><title>14:00 · Cuci · 4 kali</title></circle>
-              <circle class="pt" cx="371.4" cy="57.5" r="3"><title>15:00 · Cuci · 3 kali</title></circle>
-              <circle class="pt" cx="412.9" cy="95" r="3"><title>16:00 · Cuci · 2 kali</title></circle>
-              <circle class="pt" cx="454.3" cy="57.5" r="3"><title>17:00 · Cuci · 3 kali</title></circle>
-              <circle class="pt" cx="495.7" cy="95" r="3"><title>18:00 · Cuci · 2 kali</title></circle>
-              <circle class="pt" cx="537.1" cy="132.5" r="3"><title>19:00 · Cuci · 1 kali</title></circle>
-              <circle class="pt" cx="578.6" cy="132.5" r="3"><title>20:00 · Cuci · 1 kali</title></circle>
-              <circle class="pt" cx="620" cy="170" r="3"><title>21:00 · Cuci · 0 kali</title></circle>
-            </g>
-            <g fill="#9CA3AF">
-              <circle class="pt" cx="40" cy="170" r="3"><title>07:00 · Kering · 0 kali</title></circle>
-              <circle class="pt" cx="81.4" cy="132.5" r="3"><title>08:00 · Kering · 1 kali</title></circle>
-              <circle class="pt" cx="122.9" cy="132.5" r="3"><title>09:00 · Kering · 1 kali</title></circle>
-              <circle class="pt" cx="164.3" cy="95" r="4"><title>10:00 · Kering · 2 kali</title></circle>
-              <circle class="pt" cx="205.7" cy="132.5" r="3"><title>11:00 · Kering · 1 kali</title></circle>
-              <circle class="pt" cx="247.1" cy="132.5" r="3"><title>12:00 · Kering · 1 kali</title></circle>
-              <circle class="pt" cx="288.6" cy="132.5" r="3"><title>13:00 · Kering · 1 kali</title></circle>
-              <circle class="pt" cx="330" cy="95" r="4"><title>14:00 · Kering · 2 kali</title></circle>
-              <circle class="pt" cx="371.4" cy="132.5" r="3"><title>15:00 · Kering · 1 kali</title></circle>
-              <circle class="pt" cx="412.9" cy="132.5" r="3"><title>16:00 · Kering · 1 kali</title></circle>
-              <circle class="pt" cx="454.3" cy="132.5" r="3"><title>17:00 · Kering · 1 kali</title></circle>
-              <circle class="pt" cx="495.7" cy="132.5" r="3"><title>18:00 · Kering · 1 kali</title></circle>
-              <circle class="pt" cx="537.1" cy="170" r="3"><title>19:00 · Kering · 0 kali</title></circle>
-              <circle class="pt" cx="578.6" cy="132.5" r="3"><title>20:00 · Kering · 1 kali</title></circle>
-              <circle class="pt" cx="620" cy="170" r="3"><title>21:00 · Kering · 0 kali</title></circle>
-            </g>
-
-            <text class="val-label" x="164.3" y="13" text-anchor="middle" fill="#111827">4</text>
-            <text class="val-label" x="330" y="13" text-anchor="middle" fill="#111827">4</text>
-            <text class="val-label" x="164.3" y="88" text-anchor="middle" fill="#9CA3AF">2</text>
-
-            <text class="axis-label" x="40" y="188" text-anchor="middle">07</text>
-            <text class="axis-label" x="122.9" y="188" text-anchor="middle">09</text>
-            <text class="axis-label" x="205.7" y="188" text-anchor="middle">11</text>
-            <text class="axis-label" x="288.6" y="188" text-anchor="middle">13</text>
-            <text class="axis-label" x="371.4" y="188" text-anchor="middle">15</text>
-            <text class="axis-label" x="454.3" y="188" text-anchor="middle">17</text>
-            <text class="axis-label" x="537.1" y="188" text-anchor="middle">19</text>
-            <text class="axis-label" x="620" y="188" text-anchor="middle">21</text>
-          </svg>
+        <div class="run-card">
+          <div class="rc-top">
+            <span class="rc-name">Cuci #07</span>
+            <span class="badge busy">Berjalan</span>
+          </div>
+          <div class="rc-main">
+            <div class="rc-icon" data-icon="wash" data-size="24"></div>
+            <div><div class="rc-k">Sisa waktu siklus</div><div class="rc-v">31<small> menit</small></div></div>
+          </div>
+          <div>
+            <div class="rc-bar-h"><span>Cuci saja</span><span class="mono">22%</span></div>
+            <div class="rc-bar"><i style="width:22%"></i></div>
+          </div>
+          <div class="rc-foot">MW-TX-9925 · Tunai</div>
         </div>
       </div>
 
-      <!-- Chart: Utilisasi Mesin + Komposisi Metode Pembayaran -->
-      <div class="chart-row-2">
+      <!-- Tren + utilisasi -->
+      <div class="dash-grid">
 
-        <div class="card">
+        <div class="card col-8" id="trendChartCard">
+          <div class="card-head">
+            <div>
+              <h3>Tren Pemakaian Mesin</h3>
+              <p>Perbandingan penggunaan Mesin Cuci &amp; Pengering</p>
+            </div>
+            <div class="field" style="margin-bottom:0; min-width:140px;">
+              <select id="chartFilter" onchange="setChartPeriod(this.value, this)">
+                <option value="hari">Hari ini</option>
+                <option value="minggu">Minggu ini</option>
+                <option value="bulan">Bulan ini</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body chart-body">
+            <div class="chart-legend">
+              <div class="lg-item lg-item-cuci"><span class="lg-dot" style="background:var(--chart-1);"></span>Mesin Cuci · <b>34</b></div>
+              <div class="lg-item lg-item-kering"><span class="lg-dot" style="background:var(--chart-2);"></span>Mesin Pengering · <b>14</b></div>
+            </div>
+
+            <svg class="line-chart" viewBox="0 0 640 200" role="img" aria-label="Grafik tren pemakaian mesin">
+              <line class="grid-line" x1="40" y1="20" x2="620" y2="20"/>
+              <line class="grid-line" x1="40" y1="95" x2="620" y2="95"/>
+              <line class="axis-line" x1="40" y1="170" x2="620" y2="170"/>
+              <text class="axis-label" x="32" y="24" text-anchor="end">4</text>
+              <text class="axis-label" x="32" y="99" text-anchor="end">2</text>
+              <text class="axis-label" x="32" y="174" text-anchor="end">0</text>
+
+              <path d="M40,170 L40,132.5 81.4,95 122.9,57.5 164.3,20 205.7,57.5 247.1,95 288.6,57.5 330,20 371.4,57.5 412.9,95 454.3,57.5 495.7,95 537.1,132.5 578.6,132.5 620,170 Z" fill="var(--chart-1)" opacity="0.08"/>
+              <polyline class="polyline-cuci" points="40,132.5 81.4,95 122.9,57.5 164.3,20 205.7,57.5 247.1,95 288.6,57.5 330,20 371.4,57.5 412.9,95 454.3,57.5 495.7,95 537.1,132.5 578.6,132.5 620,170" fill="none" stroke="var(--chart-1)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+              <polyline class="polyline-kering" points="40,170 81.4,132.5 122.9,132.5 164.3,95 205.7,132.5 247.1,132.5 288.6,132.5 330,95 371.4,132.5 412.9,132.5 454.3,132.5 495.7,132.5 537.1,170 578.6,132.5 620,170" fill="none" stroke="var(--chart-2)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+
+              <g fill="var(--chart-1)">
+                <circle class="pt" cx="40" cy="132.5" r="3"><title>07:00 · Cuci · 1 kali</title></circle>
+                <circle class="pt" cx="81.4" cy="95" r="3"><title>08:00 · Cuci · 2 kali</title></circle>
+                <circle class="pt" cx="122.9" cy="57.5" r="3"><title>09:00 · Cuci · 3 kali</title></circle>
+                <circle class="pt" cx="164.3" cy="20" r="4"><title>10:00 · Cuci · 4 kali</title></circle>
+                <circle class="pt" cx="205.7" cy="57.5" r="3"><title>11:00 · Cuci · 3 kali</title></circle>
+                <circle class="pt" cx="247.1" cy="95" r="3"><title>12:00 · Cuci · 2 kali</title></circle>
+                <circle class="pt" cx="288.6" cy="57.5" r="3"><title>13:00 · Cuci · 3 kali</title></circle>
+                <circle class="pt" cx="330" cy="20" r="4"><title>14:00 · Cuci · 4 kali</title></circle>
+                <circle class="pt" cx="371.4" cy="57.5" r="3"><title>15:00 · Cuci · 3 kali</title></circle>
+                <circle class="pt" cx="412.9" cy="95" r="3"><title>16:00 · Cuci · 2 kali</title></circle>
+                <circle class="pt" cx="454.3" cy="57.5" r="3"><title>17:00 · Cuci · 3 kali</title></circle>
+                <circle class="pt" cx="495.7" cy="95" r="3"><title>18:00 · Cuci · 2 kali</title></circle>
+                <circle class="pt" cx="537.1" cy="132.5" r="3"><title>19:00 · Cuci · 1 kali</title></circle>
+                <circle class="pt" cx="578.6" cy="132.5" r="3"><title>20:00 · Cuci · 1 kali</title></circle>
+                <circle class="pt" cx="620" cy="170" r="3"><title>21:00 · Cuci · 0 kali</title></circle>
+              </g>
+              <g fill="var(--chart-2)">
+                <circle class="pt" cx="40" cy="170" r="3"><title>07:00 · Kering · 0 kali</title></circle>
+                <circle class="pt" cx="81.4" cy="132.5" r="3"><title>08:00 · Kering · 1 kali</title></circle>
+                <circle class="pt" cx="122.9" cy="132.5" r="3"><title>09:00 · Kering · 1 kali</title></circle>
+                <circle class="pt" cx="164.3" cy="95" r="4"><title>10:00 · Kering · 2 kali</title></circle>
+                <circle class="pt" cx="205.7" cy="132.5" r="3"><title>11:00 · Kering · 1 kali</title></circle>
+                <circle class="pt" cx="247.1" cy="132.5" r="3"><title>12:00 · Kering · 1 kali</title></circle>
+                <circle class="pt" cx="288.6" cy="132.5" r="3"><title>13:00 · Kering · 1 kali</title></circle>
+                <circle class="pt" cx="330" cy="95" r="4"><title>14:00 · Kering · 2 kali</title></circle>
+                <circle class="pt" cx="371.4" cy="132.5" r="3"><title>15:00 · Kering · 1 kali</title></circle>
+                <circle class="pt" cx="412.9" cy="132.5" r="3"><title>16:00 · Kering · 1 kali</title></circle>
+                <circle class="pt" cx="454.3" cy="132.5" r="3"><title>17:00 · Kering · 1 kali</title></circle>
+                <circle class="pt" cx="495.7" cy="132.5" r="3"><title>18:00 · Kering · 1 kali</title></circle>
+                <circle class="pt" cx="537.1" cy="170" r="3"><title>19:00 · Kering · 0 kali</title></circle>
+                <circle class="pt" cx="578.6" cy="132.5" r="3"><title>20:00 · Kering · 1 kali</title></circle>
+                <circle class="pt" cx="620" cy="170" r="3"><title>21:00 · Kering · 0 kali</title></circle>
+              </g>
+
+              <text class="val-label" x="164.3" y="13" text-anchor="middle" fill="var(--chart-1)">4</text>
+              <text class="val-label" x="330" y="13" text-anchor="middle" fill="var(--chart-1)">4</text>
+              <text class="val-label" x="164.3" y="88" text-anchor="middle" fill="var(--text-faint)">2</text>
+
+              <text class="axis-label" x="40" y="188" text-anchor="middle">07</text>
+              <text class="axis-label" x="122.9" y="188" text-anchor="middle">09</text>
+              <text class="axis-label" x="205.7" y="188" text-anchor="middle">11</text>
+              <text class="axis-label" x="288.6" y="188" text-anchor="middle">13</text>
+              <text class="axis-label" x="371.4" y="188" text-anchor="middle">15</text>
+              <text class="axis-label" x="454.3" y="188" text-anchor="middle">17</text>
+              <text class="axis-label" x="537.1" y="188" text-anchor="middle">19</text>
+              <text class="axis-label" x="620" y="188" text-anchor="middle">21</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="card col-4">
           <div class="card-head">
             <div>
               <h3>Utilisasi Mesin</h3>
@@ -264,28 +242,30 @@
           </div>
           <div class="card-body">
             <div class="donut-wrap">
-              <svg viewBox="0 0 140 140" width="140" height="140" role="img" aria-label="Donut utilisasi mesin: Tersedia 38%, Aktif 38%, Gangguan 15%, Offline 8%">
-                <g transform="rotate(-90 70 70)">
-                  <circle cx="70" cy="70" r="52" fill="none" stroke="#F3E7D5" stroke-width="16"/>
-                  <circle cx="70" cy="70" r="52" fill="none" stroke="#6E8F5C" stroke-width="16" stroke-dasharray="125.7 326.7" stroke-dashoffset="0"><title>Tersedia · 5 unit (38%)</title></circle>
-                  <circle cx="70" cy="70" r="52" fill="none" stroke="#D25353" stroke-width="16" stroke-dasharray="125.7 326.7" stroke-dashoffset="-125.7"><title>Aktif · 5 unit (38%)</title></circle>
-                  <circle cx="70" cy="70" r="52" fill="none" stroke="#9E3B3B" stroke-width="16" stroke-dasharray="50.3 326.7" stroke-dashoffset="-251.4"><title>Gangguan · 2 unit (15%)</title></circle>
-                  <circle cx="70" cy="70" r="52" fill="none" stroke="#8A6459" stroke-width="16" stroke-dasharray="25.1 326.7" stroke-dashoffset="-301.7"><title>Offline · 1 unit (8%)</title></circle>
-                </g>
-                <text x="70" y="67" text-anchor="middle" style="font-family:var(--font-display); font-weight:600; font-size:20px; fill:var(--text);">13</text>
-                <text x="70" y="83" text-anchor="middle" style="font-family:var(--font-body); font-size:10px; fill:var(--text-soft);">total mesin</text>
-              </svg>
-              <div class="donut-figures">
-                <div class="df-item"><span class="df-dot" style="background:#6E8F5C;"></span>Tersedia <b>5</b> <span>(38%)</span></div>
-                <div class="df-item"><span class="df-dot" style="background:#D25353;"></span>Aktif <b>5</b> <span>(38%)</span></div>
-                <div class="df-item"><span class="df-dot" style="background:#9E3B3B;"></span>Gangguan <b>2</b> <span>(15%)</span></div>
-                <div class="df-item"><span class="df-dot" style="background:#8A6459;"></span>Offline <b>1</b> <span>(8%)</span></div>
+              <div class="donut">
+                <svg viewBox="0 0 120 120" role="img" aria-label="Donut utilisasi mesin: Tersedia 38%, Aktif 38%, Gangguan 15%, Offline 8%">
+                  <g transform="rotate(-90 60 60)" fill="none" stroke-width="14">
+                    <circle cx="60" cy="60" r="48" stroke="var(--surface-low)"/>
+                    <circle cx="60" cy="60" r="48" stroke="var(--ok)" stroke-dasharray="116 301.6" stroke-dashoffset="0"><title>Tersedia · 5 unit (38%)</title></circle>
+                    <circle cx="60" cy="60" r="48" stroke="var(--busy)" stroke-dasharray="116 301.6" stroke-dashoffset="-116"><title>Aktif · 5 unit (38%)</title></circle>
+                    <circle cx="60" cy="60" r="48" stroke="var(--err)" stroke-dasharray="46.4 301.6" stroke-dashoffset="-232"><title>Gangguan · 2 unit (15%)</title></circle>
+                    <circle cx="60" cy="60" r="48" stroke="var(--off)" stroke-dasharray="23.2 301.6" stroke-dashoffset="-278.4"><title>Offline · 1 unit (8%)</title></circle>
+                  </g>
+                </svg>
+                <div class="donut-center"><b>13</b><span>Total mesin</span></div>
+              </div>
+              <div class="legend-list">
+                <div class="legend-row"><span class="lg-l"><i style="background:var(--ok)"></i>Tersedia</span><span class="lg-r"><b>5</b><span>38%</span></span></div>
+                <div class="legend-row"><span class="lg-l"><i style="background:var(--busy)"></i>Aktif</span><span class="lg-r"><b>5</b><span>38%</span></span></div>
+                <div class="legend-row is-err"><span class="lg-l"><i style="background:var(--err)"></i>Gangguan</span><span class="lg-r"><b>2</b><span>15%</span></span></div>
+                <div class="legend-row"><span class="lg-l"><i style="background:var(--off)"></i>Offline</span><span class="lg-r"><b>1</b><span>8%</span></span></div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="card">
+        <!-- Komposisi metode + uang dummy -->
+        <div class="card col-4">
           <div class="card-head">
             <div>
               <h3>Komposisi Metode</h3>
@@ -294,37 +274,32 @@
           </div>
           <div class="card-body">
             <div class="donut-wrap">
-              <svg viewBox="0 0 140 140" width="140" height="140" role="img" aria-label="Donut komposisi metode pembayaran: QRIS 71%, Tunai 29%">
-                <g transform="rotate(-90 70 70)">
-                  <circle cx="70" cy="70" r="52" fill="none" stroke="#F3E7D5" stroke-width="16"/>
-                  <circle cx="70" cy="70" r="52" fill="none" stroke="#D25353" stroke-width="16" stroke-dasharray="231.4 326.7" stroke-dashoffset="0"><title>QRIS · 34 transaksi (71%)</title></circle>
-                  <circle cx="70" cy="70" r="52" fill="none" stroke="#4a3aa7" stroke-width="16" stroke-dasharray="95.3 326.7" stroke-dashoffset="-231.4"><title>Tunai · 14 transaksi (29%)</title></circle>
-                </g>
-                <text x="70" y="67" text-anchor="middle" style="font-family:var(--font-display); font-weight:600; font-size:20px; fill:var(--text);">48</text>
-                <text x="70" y="83" text-anchor="middle" style="font-family:var(--font-body); font-size:10px; fill:var(--text-soft);">transaksi</text>
-              </svg>
-              <div class="donut-figures">
-                <div class="df-item"><span class="df-dot" style="background:#D25353;"></span>QRIS <b>34</b> <span>(71%)</span></div>
-                <div class="df-item"><span class="df-dot" style="background:#4a3aa7;"></span>Tunai <b>14</b> <span>(29%)</span></div>
+              <div class="donut">
+                <svg viewBox="0 0 120 120" role="img" aria-label="Donut komposisi metode pembayaran: QRIS 71%, Tunai 29%">
+                  <g transform="rotate(-90 60 60)" fill="none" stroke-width="14">
+                    <circle cx="60" cy="60" r="48" stroke="var(--surface-low)"/>
+                    <circle cx="60" cy="60" r="48" stroke="var(--busy)" stroke-dasharray="213.6 301.6" stroke-dashoffset="0"><title>QRIS · 34 transaksi (71%)</title></circle>
+                    <circle cx="60" cy="60" r="48" stroke="var(--amber)" stroke-dasharray="88 301.6" stroke-dashoffset="-213.6"><title>Tunai · 14 transaksi (29%)</title></circle>
+                  </g>
+                </svg>
+                <div class="donut-center"><b>48</b><span>Transaksi</span></div>
               </div>
-              <div class="muted" style="width:100%; text-align:center; margin-top:2px;">+ 1 restart uang dummy hari ini (non-revenue, Rp 0) — <a href="transaksi.html?filter=dummy" style="font-weight:700; color:var(--maroon);">lihat</a></div>
+              <div class="legend-list">
+                <div class="legend-row"><span class="lg-l"><i style="background:var(--busy)"></i>QRIS</span><span class="lg-r"><b>34</b><span>71%</span></span></div>
+                <div class="legend-row"><span class="lg-l"><i style="background:var(--amber)"></i>Tunai</span><span class="lg-r"><b>14</b><span>29%</span></span></div>
+              </div>
+              <div class="muted" style="text-align:center;">+ 1 restart uang dummy hari ini (non-revenue, Rp 0) — <a href="transaksi.html?filter=dummy" style="font-weight:600; text-decoration:underline;">lihat</a></div>
             </div>
           </div>
         </div>
 
-      </div>
-
-      <!-- Grid 2 Kolom untuk Pemantauan Uang Dummy & Aktivitas Terbaru -->
-      <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:18px; margin-top:18px;">
-
-        <!-- Pemantauan Uang Dummy -->
-        <div class="card">
+        <div class="card col-8">
           <div class="card-head">
             <div>
               <h3>Pemantauan Uang Dummy</h3>
               <p>Restart mesin tanpa pembayaran ulang akibat gangguan/kegagalan siklus</p>
             </div>
-            <a href="transaksi.html?filter=dummy" class="muted" style="font-weight:700;">Lihat semua →</a>
+            <a href="transaksi.html?filter=dummy" class="link-more">Lihat semua <span data-icon="arrowRight" data-size="16"></span></a>
           </div>
           <div class="card-body">
 
@@ -344,7 +319,7 @@
             </div>
 
             <div class="alert info mt-14">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 4.9V17L12 22l-9-4.9V6.9z"/><path d="M12 8v5M12 16h.01"/></svg>
+              <span data-icon="info" data-size="18"></span>
               <span>Uang dummy dipakai admin untuk melanjutkan siklus pelanggan yang gagal/terganggu tanpa membayar ulang. Setiap kali dipakai, transaksi asli otomatis ditandai refund.</span>
             </div>
 
@@ -358,37 +333,54 @@
           </div>
         </div>
 
-        <!-- Aktivitas terbaru -->
-        <div class="card">
-          <div class="card-head">
-            <div>
-              <h3>Aktivitas terbaru</h3>
-              <p>Kejadian terakhir di seluruh mesin</p>
-            </div>
-            <a href="progress.html" class="muted" style="font-weight:700;">Lihat semua →</a>
-          </div>
-          <div class="card-body">
-            <div class="tl">
-              <div class="tl-item">
-                <div class="tl-title">Gangguan pada Mesin Cuci #07</div>
-                <div class="tl-meta">09:32 · Menunggu tindakan admin</div>
-              </div>
-              <div class="tl-item">
-                <div class="tl-title">Transaksi tunai — Mesin Kering #03</div>
-                <div class="tl-meta">09:18 · Diaktifkan oleh Rani Admin</div>
-              </div>
-              <div class="tl-item">
-                <div class="tl-title">Siklus selesai — Mesin Cuci #02</div>
-                <div class="tl-meta">09:05 · QRIS mandiri, Rp 12.000</div>
-              </div>
-              <div class="tl-item">
-                <div class="tl-title">Mesin Pengering #06 dimatikan manual</div>
-                <div class="tl-meta">08:47 · Alasan: perawatan filter</div>
-              </div>
-            </div>
-          </div>
-        </div>
+      </div>
 
+      <!-- Aktivitas terbaru -->
+      <div class="card" style="margin-top:16px;">
+        <div class="card-head" style="padding-bottom:16px;">
+          <div>
+            <h3>Aktivitas terbaru</h3>
+            <p>Kejadian terakhir di seluruh mesin</p>
+          </div>
+          <a href="progress.html" class="link-more">Lihat semua <span data-icon="arrowRight" data-size="16"></span></a>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr><th>Waktu</th><th>Mesin</th><th>Aktivitas</th><th>Keterangan</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono">09:32</td>
+                <td><b>Mesin Cuci #07</b></td>
+                <td>Gangguan terdeteksi</td>
+                <td>Menunggu tindakan admin</td>
+                <td><span class="badge err"><span class="dot"></span>Gangguan</span></td>
+              </tr>
+              <tr>
+                <td class="mono">09:18</td>
+                <td><b>Mesin Pengering #03</b></td>
+                <td>Transaksi tunai</td>
+                <td>Diaktifkan oleh Rani Admin</td>
+                <td><span class="badge amber"><span class="dot"></span>Tunai</span></td>
+              </tr>
+              <tr>
+                <td class="mono">09:05</td>
+                <td><b>Mesin Cuci #02</b></td>
+                <td>Siklus selesai</td>
+                <td>QRIS mandiri, Rp 12.000</td>
+                <td><span class="badge ok"><span class="dot"></span>Selesai</span></td>
+              </tr>
+              <tr>
+                <td class="mono">08:47</td>
+                <td><b>Mesin Pengering #06</b></td>
+                <td>Dimatikan manual</td>
+                <td>Alasan: perawatan filter</td>
+                <td><span class="badge off"><span class="dot"></span>Manual</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>
@@ -468,7 +460,7 @@
           <div style="width:56px;height:56px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
             <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>
           </div>
-          <div style="font-weight:800; font-size:15.5px;">Mesin berhasil dinyalakan</div>
+          <div style="font-weight:600; font-size:15.5px;">Mesin berhasil dinyalakan</div>
           <div class="muted mt-4">Transaksi tunai sudah tercatat di sistem.</div>
         </div>
         <div class="summary-box mt-14">
@@ -500,6 +492,11 @@
   <span>Berhasil</span>
 </div>
 
+<script src="assets/icons.js"></script>
+<script src="assets/layout.js"></script>
+<script>
+  Layout.mount({ active:'dashboard', title:'Dashboard', subtitle:'Ringkasan operasional hari ini', badgeGangguan:'1' });
+</script>
 <script src="assets/admin.js"></script>
 <script>
   function qaActivate(){
@@ -535,12 +532,5 @@
     qaObserver.observe(document.getElementById(id), { attributes:true, attributeFilter:['style'] });
   });
 </script>
-<!-- ===== GLOBAL FLOATING ACTION BUTTON (WhatsApp Style) ===== -->
-<button class="fab-activate" onclick="showStep('qa',1); openEl('qaModal')" title="Aktifkan Mesin Tunai">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
-  <span class="fab-tooltip">Aktifkan Mesin Tunai</span>
-  <span class="fab-badge"></span>
-</button>
-
 </body>
 </html>
