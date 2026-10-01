@@ -1,60 +1,337 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menwash Admin — Masuk</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23D25353'/%3E%3Ccircle cx='12' cy='13.3' r='6' fill='none' stroke='%23FFEAD3' stroke-width='1.8'/%3E%3Cpath d='M9.1 13.3c0-1.6 1.3-2.9 2.9-2.9s2.9 1.3 2.9 2.9-1.3 2.9-2.9 2.9' fill='none' stroke='%23FFEAD3' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M8.3 4.6h1M11.5 4.6h1M14.7 4.6h1' stroke='%23FFEAD3' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/admin.css">
-<style>
-  body{
-    display:flex; align-items:center; justify-content:center; min-height:100vh;
-    background:radial-gradient(circle at 15% 10%, #3F3F46 0%, var(--sidebar-1) 55%);
-    overflow:hidden; position:relative;
-  }
-  .login-wrap{ width:400px; max-width:92vw; }
-  .login-logo{ display:flex; flex-direction:column; align-items:center; margin-bottom:24px; }
-  .login-mark{ width:150px; height:124px; overflow:hidden; margin-bottom:8px; }
-  .login-mark img{ display:block; width:220px; height:220px; max-width:none; margin:-49px 0 0 -35px; }
-  .login-title{ font-family:var(--font-display); font-weight:600; font-size:16px; line-height:24px; color:#fff; }
-  .login-sub{ font-size:13px; line-height:18px; color:var(--sidebar-text-dim); margin-top:2px; }
-  .login-card{ background:#fff; border-radius:var(--radius-xl); padding:28px; box-shadow:var(--shadow-pop); }
-  .login-foot{ text-align:center; font-size:12px; color:var(--sidebar-text-dim); margin-top:20px; }
-</style>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Menwash Admin — Masuk ke Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23153A66'/%3E%3Ccircle cx='12' cy='13.3' r='6' fill='none' stroke='%23FFFFFF' stroke-width='1.8'/%3E%3Cpath d='M9.1 13.3c0-1.6 1.3-2.9 2.9-2.9s2.9 1.3 2.9 2.9-1.3 2.9-2.9 2.9' fill='none' stroke='%23FFFFFF' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M8.3 4.6h1M11.5 4.6h1M14.7 4.6h1' stroke='%23FFFFFF' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#002449",
+            "primary-container": "#153A66",
+            "primary-dark": "#0D2040",
+            "primary-slate": "#182331",
+            "primary-fixed": "#d5e3ff",
+            "primary-fixed-dim": "#a8c8fc",
+            "surface": "#faf8ff",
+            "surface-dim": "#d4d9f0",
+            "surface-container": "#eaedff",
+            "surface-container-low": "#f2f3ff",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-high": "#e3e7fe",
+            "surface-container-highest": "#dde2f8",
+            "on-surface": "#161b2b",
+            "on-surface-variant": "#43474f",
+            "outline": "#737780",
+            "outline-variant": "#c3c6d0",
+            "on-primary": "#ffffff",
+            "tertiary": "#001f5d",
+            "on-tertiary-container": "#7f9fff"
+          },
+          fontFamily: {
+            sans: ['"DM Sans"', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 9999px;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    .animate-pulse-dot {
+      animation: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  </style>
 </head>
-<body>
+<body class="bg-[#0D2040] text-on-surface antialiased overflow-x-hidden selection:bg-[#153A66] selection:text-white">
 
-<div class="login-bubble" style="width:220px; height:220px; top:-50px; left:-60px;"></div>
-<div class="login-bubble" style="width:280px; height:280px; bottom:-80px; right:-90px;"></div>
-<div class="login-bubble" style="width:90px; height:90px; top:70px; right:12%;"></div>
-<div class="login-bubble" style="width:60px; height:60px; bottom:14%; left:8%;"></div>
+  <!-- Main Split-Screen Container -->
+  <main class="relative w-full min-h-screen bg-gradient-to-br from-[#0D2040] via-[#153A66] to-[#182331] text-white flex items-center justify-center p-4 sm:p-6 lg:p-12 overflow-hidden">
+    
+    <!-- Ambient Luminous Orbs -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-primary-fixed-dim/10 blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] right-[-5%] w-[550px] h-[550px] rounded-full bg-on-tertiary-container/10 blur-[120px] pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/3 -translate-y-1/2 w-80 h-80 rounded-full bg-[#153A66]/30 blur-2xl pointer-events-none"></div>
 
-<div class="login-wrap">
-  <div class="login-logo">
-    <div class="login-mark"><img src="logo.svg" alt="Menwash"></div>
-    <div class="login-title">Admin Panel</div>
-    <div class="login-sub">Panel operasional outlet</div>
+    <div class="relative w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-center">
+      
+      <!-- ================= LEFT SECTION (58% Visual Weight): Hero & IoT Live Telemetry ================= -->
+      <div class="lg:col-span-7 flex flex-col justify-center space-y-7 pr-0 lg:pr-6 z-10">
+        
+
+
+        <!-- Typography Stack -->
+        <div class="space-y-3.5">
+          <h1 class="text-3xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight leading-[1.18] text-white">
+            Kelola Operasional Laundry Lebih Cepat &amp; Terorganisir
+          </h1>
+          <p class="text-base sm:text-lg text-surface-container-high/90 max-w-xl font-normal leading-relaxed">
+            Smart centralized monitoring platform untuk IoT unit mesin cuci dan pengering komersial Menwash.
+          </p>
+        </div>
+
+        <!-- Sleek Industrial Equipment Visual with Ambient Mask & Telemetry HUD -->
+        <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl group bg-gradient-to-tr from-[#091830]/80 to-transparent border border-white/10">
+          <div class="relative h-64 sm:h-72 w-full overflow-hidden">
+            <img class="w-full h-full object-cover object-center opacity-85 transition-transform duration-700 ease-out group-hover:scale-105" 
+                 alt="Modern high-tech industrial laundromat interior with a sleek row of commercial stainless steel washing machines" 
+                 src="logomenwash.svg">
+            
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0D2040] via-[#0D2040]/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#0D2040]/90 via-transparent to-transparent"></div>
+
+            <!-- Real-time HUD telemetry overlay card (Sesuai Outlet Cendrawasih kita: 12/13 Mesin) -->
+            <div class="absolute bottom-4 left-4 right-4 flex flex-wrap items-center justify-between gap-3 bg-white/15 backdrop-blur-md px-4 py-3 rounded-xl border border-white/20 shadow-lg">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center text-primary-fixed">
+                  <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">local_laundry_service</span>
+                </div>
+                <div>
+                  <div class="text-[11px] font-bold uppercase tracking-wider text-surface-dim/90">Status Node Gerai Cendrawasih</div>
+                  <div class="text-sm sm:text-base font-semibold text-white">12/13 Mesin Beroperasi Optimal</div>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-semibold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 99.98% Uptime
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Key Bullet Badges -->
+        <div class="flex flex-wrap items-center gap-3 pt-1">
+          <div class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 backdrop-blur-sm text-white/95 border border-white/10 shadow-sm transition hover:bg-white/15">
+            <span class="material-symbols-outlined text-primary-fixed-dim text-[18px]">sensors</span>
+            <span class="text-xs sm:text-sm font-medium">Telemetri IoT Real-Time</span>
+          </div>
+          <div class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 backdrop-blur-sm text-white/95 border border-white/10 shadow-sm transition hover:bg-white/15">
+            <span class="material-symbols-outlined text-primary-fixed-dim text-[18px]">qr_code_scanner</span>
+            <span class="text-xs sm:text-sm font-medium">Multi-channel QRIS &amp; Tunai</span>
+          </div>
+          <div class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 backdrop-blur-sm text-white/95 border border-white/10 shadow-sm transition hover:bg-white/15">
+            <span class="material-symbols-outlined text-primary-fixed-dim text-[18px]">notifications_active</span>
+            <span class="text-xs sm:text-sm font-medium">Zero-Downtime Alerting</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= RIGHT SECTION (42% Visual Weight): Floating Auth Card ================= -->
+      <div class="lg:col-span-5 flex justify-center w-full z-20">
+        <div class="w-full max-w-md bg-white rounded-[22px] p-7 sm:p-9 shadow-2xl relative overflow-hidden transition-all duration-300 text-on-surface border border-slate-100">
+          
+          <!-- Subtle Top Brand Accent bar -->
+          <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#0D2040] via-[#153A66] to-[#a8c8fc]"></div>
+          
+          <!-- Brand Logo & Header -->
+          <div class="flex flex-col items-center text-center space-y-3 pt-1">
+            <div class="w-14 h-14 rounded-2xl bg-[#0D2040] flex items-center justify-center shadow-md relative group p-2">
+              <img src="logomenwash.svg" alt="Menwash" class="w-full h-full object-contain filter brightness-0 invert">
+            </div>
+            <div class="space-y-1">
+              <h2 class="text-2xl font-bold tracking-tight text-[#161B2B]">
+                Selamat datang di Menwash
+              </h2>
+              <p class="text-sm text-[#43474F] font-normal leading-snug">
+                Masuk dengan akun admin outlet Anda untuk memulai monitoring harian.
+              </p>
+            </div>
+          </div>
+
+          <!-- Auth Form (Flow: Submit redirecting to dashboard.html) -->
+          <form id="loginForm" class="mt-5 space-y-4" onsubmit="handleLogin(event)">
+
+
+            <!-- Input 2: Username / ID Admin -->
+            <div class="space-y-1">
+              <label class="block text-xs font-bold text-[#161B2B] uppercase tracking-wider" for="admin-id">
+                Username / ID Admin
+              </label>
+              <div class="relative flex items-center">
+                <div class="absolute left-3.5 flex items-center pointer-events-none text-slate-400">
+                  <span class="material-symbols-outlined text-[19px]">person</span>
+                </div>
+                <input id="admin-id" type="text" required value="admin_cendrawasih" placeholder="cth. admin_cendrawasih"
+                       class="w-full h-[44px] pl-10 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-[#161B2B] text-sm placeholder:text-slate-400 focus:bg-white focus:border-[#153A66] focus:ring-2 focus:ring-[#153A66]/20 outline-none transition duration-150">
+              </div>
+            </div>
+
+            <!-- Input 3: Kata Sandi -->
+            <div class="space-y-1">
+              <label class="block text-xs font-bold text-[#161B2B] uppercase tracking-wider" for="admin-password">
+                Kata Sandi
+              </label>
+              <div class="relative flex items-center">
+                <div class="absolute left-3.5 flex items-center pointer-events-none text-slate-400">
+                  <span class="material-symbols-outlined text-[19px]">lock</span>
+                </div>
+                <input id="admin-password" type="password" required value="admin12345" placeholder="••••••••" autocomplete="current-password"
+                       class="w-full h-[44px] pl-10 pr-11 bg-slate-50 border border-slate-200 rounded-xl text-[#161B2B] text-sm placeholder:text-slate-400 focus:bg-white focus:border-[#153A66] focus:ring-2 focus:ring-[#153A66]/20 outline-none transition duration-150">
+                <button id="toggle-password-btn" type="button" onclick="togglePasswordVisibility()" aria-label="Tampilkan atau sembunyikan kata sandi"
+                        class="absolute right-3 flex items-center justify-center p-1 text-slate-400 hover:text-slate-700 transition">
+                  <span id="eye-icon" class="material-symbols-outlined text-[20px]">visibility</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Primary Submit Button -->
+            <button id="submitBtn" type="submit"
+                    class="w-full h-[46px] mt-2 bg-[#153A66] hover:bg-[#0D2040] active:bg-[#091830] text-white text-sm font-semibold rounded-xl flex items-center justify-center space-x-2 shadow-md hover:shadow-lg transition-all duration-200 group">
+              <span id="submitText">Masuk ke Dashboard</span>
+              <span id="submitIcon" class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+            </button>
+          </form>
+
+          <!-- Technical Support Footer -->
+          <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+            <p class="text-xs text-[#43474F]">
+              Butuh bantuan akun? Hubungi <span class="font-semibold text-[#161B2B]">Technical Support Menwash</span> di 
+              <a href="tel:02188920199" class="font-semibold text-[#153A66] hover:underline block sm:inline mt-0.5 sm:mt-0">
+                (021) 8892-0199
+              </a>
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal Bantuan Lupa Kata Sandi (Ergonomis & Sesuai Flow Outlet) -->
+  <div id="forgotModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200">
+    <div class="w-full max-w-sm bg-white rounded-2xl p-6 shadow-2xl border border-slate-100 transform scale-95 transition-transform duration-200" id="forgotModalContent">
+      <div class="w-12 h-12 rounded-xl bg-blue-50 text-[#153A66] flex items-center justify-center mb-4">
+        <span class="material-symbols-outlined text-[24px]">support_agent</span>
+      </div>
+      <h3 class="text-lg font-bold text-[#161B2B]">Pemulihan Kata Sandi</h3>
+      <p class="text-xs text-[#43474F] mt-2 leading-relaxed">
+        Untuk keamanan telemetri IoT dan transaksi gerai, kredensial akun admin outlet dikelola secara terpusat. Hubungi Supervisor Outlet atau Technical Support Menwash untuk reset kata sandi.
+      </p>
+      
+      <div class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
+        <div class="font-semibold text-slate-800">Kontak Bantuan Cepat:</div>
+        <div class="text-slate-600 flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[15px] text-[#153A66]">call</span>
+          <span>(021) 8892-0199 (Pusat Bantuan 24/7)</span>
+        </div>
+        <div class="text-slate-600 flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[15px] text-[#153A66]">mail</span>
+          <span>support@menwash.id</span>
+        </div>
+      </div>
+
+      <div class="mt-5 flex justify-end">
+        <button type="button" onclick="hideForgotPasswordModal()" class="w-full h-10 rounded-xl bg-[#153A66] hover:bg-[#0D2040] text-white text-xs font-semibold transition">
+          Mengerti &amp; Tutup
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div class="login-card">
-    <div class="field required">
-      <label>Kode Outlet</label>
-      <input type="text" value="CDW-01" readonly>
-    </div>
-    <div class="field required">
-      <label>Nama Admin</label>
-      <input type="text" placeholder="cth. Rani Admin">
-    </div>
-    <div class="field required">
-      <label>Kata Sandi</label>
-      <input type="password" placeholder="••••••••" autocomplete="current-password">
-    </div>
-    <a href="dashboard.html" class="btn btn-primary btn-block mt-8">Masuk ke Dashboard</a>
-    <div class="muted mt-14" style="text-align:center;">Lupa kata sandi? Hubungi penanggung jawab outlet.</div>
-  </div>
+  <!-- Interactive Scripts -->
+  <script>
+    // Toggle Password Visibility
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('admin-password');
+      const eyeIcon = document.getElementById('eye-icon');
+      if (!passwordInput || !eyeIcon) return;
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.textContent = 'visibility_off';
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.textContent = 'visibility';
+      }
+    }
 
-  <div class="login-foot">Menwash Admin Panel · Outlet Laundry Cendrawasih</div>
-</div>
+    // Modal Lupa Kata Sandi
+    function showForgotPasswordModal() {
+      const modal = document.getElementById('forgotModal');
+      const content = document.getElementById('forgotModalContent');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        content.classList.remove('scale-95');
+      }, 10);
+    }
+
+    function hideForgotPasswordModal() {
+      const modal = document.getElementById('forgotModal');
+      const content = document.getElementById('forgotModalContent');
+      if (!modal) return;
+      modal.classList.add('opacity-0');
+      content.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    }
+
+    // Handle Login Flow Transition to dashboard.html
+    function handleLogin(event) {
+      event.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      const submitText = document.getElementById('submitText');
+      const submitIcon = document.getElementById('submitIcon');
+      
+      // Feedback button state
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-80', 'cursor-wait');
+      submitText.textContent = 'Memverifikasi Sesi...';
+      submitIcon.innerHTML = `
+        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      `;
+
+      // Simulasikan transisi autentikasi cepat & smooth ke dashboard.html
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 450);
+    }
+
+    // Close modal on click outside or ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') hideForgotPasswordModal();
+    });
+    document.getElementById('forgotModal')?.addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) hideForgotPasswordModal();
+    });
+  </script>
 
 </body>
 </html>

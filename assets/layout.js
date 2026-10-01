@@ -40,12 +40,19 @@ const Layout = {
     return `
       <div>
         <div class="brand">
-          <div class="brand-mark"><img src="logo.svg" alt="Menwash"></div>
+          <div class="brand-mark">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+            </svg>
+          </div>
           <div>
             <div class="brand-name">Menwash</div>
             <div class="brand-sub">Admin Panel</div>
           </div>
         </div>
+        <div class="sidebar-divider"></div>
         <nav class="nav">${navHTML}</nav>
       </div>
 
@@ -57,9 +64,10 @@ const Layout = {
             <div class="o-addr">12/13 mesin online</div>
           </div>
         </div>
-        <div class="logout-row">
-          <a href="login.html" title="Keluar">${Icons.render('logout', { size: 20 })}<span class="lbl">Keluar</span></a>
-        </div>
+        <a href="login.html" class="logout-btn" title="Keluar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+          <span class="lbl">Keluar</span>
+        </a>
       </div>
     `;
   },
@@ -75,12 +83,22 @@ const Layout = {
         <div class="topbar-sub">${opts.subtitle || ''}</div>
       </div>
       <div class="topbar-right">
-        <div class="clock" id="liveClock"><b>09:41:07</b><span>Kamis, hari ini</span></div>
+        <div class="clock" id="liveClock">
+          <b>09:41:07</b>
+          <span>Kamis, hari ini</span>
+        </div>
         <div class="topbar-actions" id="layoutActions"></div>
-        <button type="button" class="icon-btn" aria-label="Notifikasi">${Icons.render('bell', { size: 22 })}<span class="ping"></span></button>
+        <button type="button" class="icon-btn" aria-label="Notifikasi">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="ping"></span>
+        </button>
         <div class="user">
           <div class="avatar">RA</div>
-          <div class="user-meta"><b>Rani Admin</b><span>Admin Outlet</span></div>
+          <div class="user-meta">
+            <b>Rani Admin</b>
+            <span>Admin Outlet</span>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-soft); margin-left: 4px;"><path d="m6 9 6 6 6-6"/></svg>
         </div>
       </div>
     `;

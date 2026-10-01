@@ -1,513 +1,1611 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="web_dashboard" name="shell-type">
 <title>Menwash Admin — Mesin Gangguan</title>
-<meta name="description" content="Penanganan gangguan mesin cuci dan pengering Menwash.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230D2040'/%3E%3Ccircle cx='12' cy='13.3' r='6' fill='none' stroke='%23FFFFFF' stroke-width='1.8'/%3E%3Cpath d='M9.1 13.3c0-1.6 1.3-2.9 2.9-2.9s2.9 1.3 2.9 2.9-1.3 2.9-2.9 2.9' fill='none' stroke='%23FFFFFF' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/admin.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23002449'/%3E%3Ccircle cx='12' cy='13.3' r='6' fill='none' stroke='%23D5E3FF' stroke-width='1.8'/%3E%3Cpath d='M9.1 13.3c0-1.6 1.3-2.9 2.9-2.9s2.9 1.3 2.9 2.9-1.3 2.9-2.9 2.9' fill='none' stroke='%23D5E3FF' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M8.3 4.6h1M11.5 4.6h1M14.7 4.6h1' stroke='%23D5E3FF' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+<style>
+@layer base {
+  html, body { margin: 0; padding: 0; }
+  body { overscroll-behavior: none; }
+  main > :first-child { margin-top: 0 !important; }
+  main > :last-child { margin-bottom: 0 !important; }
+}
+::-webkit-scrollbar { display: none; }
+.modal-enter { animation: fadeIn 0.18s ease-out forwards; }
+.modal-content-enter { animation: scaleUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleUp { from { opacity: 0; transform: scale(0.96) translateY(6px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+</style>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "on-primary-container": "#85a5d7",
+        "primary-fixed-dim": "#a8c8fc",
+        "tertiary": "#001f5d",
+        "inverse-on-surface": "#eef0ff",
+        "surface-dim": "#d4d9f0",
+        "on-background": "#161b2b",
+        "on-secondary": "#ffffff",
+        "secondary-fixed": "#d8e2ff",
+        "secondary-fixed-dim": "#b5c6ef",
+        "on-surface-variant": "#43474f",
+        "surface-variant": "#dde2f8",
+        "on-tertiary-container": "#7f9fff",
+        "on-primary-fixed-variant": "#254874",
+        "inverse-surface": "#2a3041",
+        "primary-fixed": "#d5e3ff",
+        "surface-bright": "#faf8ff",
+        "on-error": "#ffffff",
+        "on-error-container": "#93000a",
+        "on-secondary-container": "#4b5b7f",
+        "surface-container-lowest": "#ffffff",
+        "secondary-container": "#c3d4fe",
+        "error-container": "#ffdad6",
+        "inverse-primary": "#a8c8fc",
+        "surface-container-highest": "#dde2f8",
+        "tertiary-fixed-dim": "#b4c5ff",
+        "surface-container-high": "#e3e7fe",
+        "background": "#faf8ff",
+        "surface-container": "#eaedff",
+        "on-primary-fixed": "#001c3b",
+        "on-primary": "#ffffff",
+        "on-secondary-fixed": "#071b3b",
+        "outline-variant": "#c3c6d0",
+        "on-surface": "#161b2b",
+        "on-tertiary-fixed": "#00174b",
+        "outline": "#737780",
+        "primary-container": "#153a66",
+        "surface": "#faf8ff",
+        "tertiary-container": "#00328b",
+        "on-secondary-fixed-variant": "#364769",
+        "on-tertiary": "#ffffff",
+        "error": "#ba1a1a",
+        "secondary": "#4d5e82",
+        "surface-container-low": "#f2f3ff",
+        "on-tertiary-fixed-variant": "#003ea8",
+        "surface-tint": "#3f5f8e",
+        "tertiary-fixed": "#dbe1ff",
+        "primary": "#002449"
+      },
+      borderRadius: {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "2xl": "1rem",
+        "full": "9999px"
+      },
+      spacing: {
+        "space-sm": "0.5rem",
+        "gutter-lg": "1.5rem",
+        "space-lg": "1.5rem",
+        "margin-lg": "2rem",
+        "space-xs": "0.25rem",
+        "space-xl": "2rem",
+        "margin": "1.5rem",
+        "space-md": "1rem",
+        "margin-sm": "1rem",
+        "gutter-sm": "0.75rem",
+        "gutter": "1.25rem"
+      },
+      fontFamily: {
+        "body-lg": ["DM Sans"],
+        "body-sm": ["DM Sans"],
+        "body-md": ["DM Sans"],
+        "headline-lg": ["DM Sans"],
+        "headline-xl": ["DM Sans"],
+        "metric-display": ["DM Sans"],
+        "label-sm": ["DM Sans"],
+        "label-lg": ["DM Sans"],
+        "label-md": ["DM Sans"],
+        "headline-xl-mobile": ["DM Sans"],
+        "headline-lg-mobile": ["DM Sans"],
+        "title-sm": ["DM Sans"],
+        "headline-md": ["DM Sans"]
+      },
+      fontSize: {
+        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+        "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+        "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.015em", fontWeight: "700" }],
+        "headline-xl": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "metric-display": ["32px", { lineHeight: "38px", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "700" }],
+        "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }],
+        "headline-xl-mobile": ["28px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "700" }],
+        "headline-lg-mobile": ["22px", { lineHeight: "30px", letterSpacing: "-0.01em", fontWeight: "700" }],
+        "title-sm": ["16px", { lineHeight: "24px", fontWeight: "600" }],
+        "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }]
+      }
+    }
+  }
+};
+</script>
 </head>
-<body>
+<body class="bg-surface font-body-md text-body-md text-on-surface">
 
-<div class="app">
+<!-- ===== SIDEBAR (Fixed Left w-64) ===== -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-primary text-on-primary z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+  <div class="flex flex-col">
+    <!-- Brand / Header Sidebar -->
+    <div class="h-16 px-space-md flex items-center gap-space-sm bg-primary border-b border-on-primary/10">
+      <img src="logomenwash.svg" alt="Menwash Logo" style="width: 32px; height: 32px; object-fit: contain; border-radius: 6px; background: rgb(255, 255, 255); padding: 2px;">
+      <div class="flex flex-col min-w-0">
+        <span class="font-label-lg text-label-lg text-on-primary truncate">Menwash Admin</span>
+        <span class="font-label-sm text-label-sm text-on-primary-container truncate">Outlet Cendrawasih</span>
+      </div>
+    </div>
 
-  <!-- ===== SIDEBAR (dirender oleh assets/layout.js) ===== -->
-  <aside class="sidebar" id="layoutSidebar"></aside>
+    <!-- Navigasi -->
+    <nav class="flex flex-col gap-space-xs px-space-sm py-space-md overflow-y-auto">
+      <div class="px-space-sm pt-space-xs pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Utama</div>
+      <a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-primary/80 hover:bg-primary-container hover:text-on-primary transition-colors" data-path="dashboard" href="dashboard.html">
+        <span class="material-symbols-outlined text-lg">dashboard</span>
+        <span class="font-body-md text-body-md">Dashboard</span>
+      </a>
 
-  <!-- ===== MAIN ===== -->
-  <main class="main">
-
-    <div class="topbar" id="layoutTopbar"></div>
-
-    <div class="content">
-
-      <!-- ===== STAT GRID ===== -->
-      <div class="gangguan-stat-grid">
-
-        <div class="gs-card">
-          <div class="gs-icon err">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-          </div>
-          <div class="gs-body">
-            <div class="gs-val">1</div>
-            <div class="gs-label">Perlu Kompensasi</div>
-          </div>
+      <div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Mesin</div>
+      <a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-primary/80 hover:bg-primary-container hover:text-on-primary transition-colors" data-path="semua-mesin" href="mesin.html">
+        <span class="material-symbols-outlined text-lg">local_laundry_service</span>
+        <span class="font-body-md text-body-md">Semua Mesin</span>
+      </a>
+      <a aria-current="page" class="flex items-center justify-between px-space-sm py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary font-bold shadow-sm" data-path="mesin-gangguan" href="gangguan.html">
+        <div class="flex items-center gap-space-sm">
+          <span class="material-symbols-outlined text-lg">error</span>
+          <span class="font-body-md text-body-md">Mesin Gangguan</span>
         </div>
+        <span class="px-space-xs py-0.5 rounded-full bg-error text-on-error font-label-sm text-label-sm font-bold" id="badgeNavGangguan">4</span>
+      </a>
 
-        <div class="gs-card">
-          <div class="gs-icon off">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18.36 6.64A9 9 0 115.64 17.36"/><path d="M12 2v10"/></svg>
-          </div>
-          <div class="gs-body">
-            <div class="gs-val">1</div>
-            <div class="gs-label">Mesin Offline</div>
-          </div>
-        </div>
+      <div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Aktivitas &amp; Transaksi</div>
+      <a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-primary/80 hover:bg-primary-container hover:text-on-primary transition-colors" data-path="transaksi" href="transaksi.html">
+        <span class="material-symbols-outlined text-lg">receipt_long</span>
+        <span class="font-body-md text-body-md">Transaksi</span>
+      </a>
+      <a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-primary/80 hover:bg-primary-container hover:text-on-primary transition-colors" data-path="progress" href="progress.html">
+        <span class="material-symbols-outlined text-lg">sync</span>
+        <span class="font-body-md text-body-md">Progress</span>
+      </a>
+    </nav>
+  </div>
 
-        <div class="gs-card">
-          <div class="gs-icon ok">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg>
-          </div>
-          <div class="gs-body">
-            <div class="gs-val">2</div>
-            <div class="gs-label">Selesai Hari Ini</div>
-          </div>
-        </div>
+  <!-- Footer Sidebar -->
+  <div class="p-space-md border-t border-on-primary/10 flex flex-col gap-space-sm bg-primary">
+    <div class="flex items-center justify-between text-on-primary/70">
+      <span class="font-label-sm text-label-sm flex items-center gap-space-xs">
+        IoT Server Online <span class="text-xs text-green-400">●</span>
+      </span>
+      <span class="font-label-sm text-[11px] text-on-primary-container">v2.4.1</span>
+    </div>
+    <div class="flex items-center justify-between pt-1">
+      <a class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-primary-container hover:text-on-primary transition-colors" href="javascript:void(0)" onclick="showToast('Pusat Bantuan IoT Menwash: Hubungi teknisi di ext. 102')">
+        <span class="material-symbols-outlined text-base">help_outline</span>
+        <span>Bantuan &amp; Dukungan</span>
+      </a>
+      <a class="flex items-center gap-1 font-body-sm text-body-sm text-on-primary/60 hover:text-error transition-colors" href="login.html" title="Keluar dari sistem">
+        <span class="material-symbols-outlined text-base">logout</span>
+      </a>
+    </div>
+  </div>
+</aside>
 
+<!-- ===== MAIN CONTENT WRAPPER ===== -->
+<div class="pl-64">
+  <!-- Topbar Header (Fixed) -->
+  <header class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg border-b border-outline-variant/30">
+    <div class="flex items-center gap-space-sm text-on-surface-variant">
+      <span class="font-body-sm text-body-sm">Menwash Admin</span>
+      <span class="text-xs text-outline">/</span>
+      <span class="font-body-sm text-body-sm">Mesin</span>
+      <span class="text-xs text-outline">/</span>
+      <span class="font-label-md text-label-md text-on-surface font-semibold">Mesin Gangguan</span>
+    </div>
+
+    <div class="flex items-center gap-space-md">
+      <!-- Tombol Cepat: Aktifkan Mesin Tunai (Flow Menwash Admin) -->
+      <button onclick="openQaModal()" class="px-space-md py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md flex items-center gap-1.5 hover:bg-primary transition-colors shadow-sm">
+        <span class="material-symbols-outlined text-sm">payments</span>
+        <span>Aktifkan Mesin Tunai</span>
+      </button>
+
+      <!-- Live Clock Display -->
+      <div class="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-container font-label-md text-label-md text-on-surface border border-outline-variant/40">
+        <span class="material-symbols-outlined text-sm text-on-surface-variant">schedule</span>
+        <span id="liveClockDisplay">09:41:22 WIB</span>
       </div>
 
-      <!-- ===== GANGGUAN AKTIF ===== -->
-      <div class="card" style="margin-bottom:20px;">
-        <div class="card-head">
-          <div>
-            <h3>Gangguan Aktif</h3>
+      <!-- Notifikasi -->
+      <button class="relative p-space-xs rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button" title="Notifikasi" onclick="showToast('4 mesin memerlukan penanganan segera', 'warning', true)">
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
+      </button>
+
+      <!-- User Profile -->
+      <div class="flex items-center gap-space-sm pl-space-sm border-l border-outline-variant">
+        <div class="text-right">
+          <div class="font-label-lg text-label-lg text-on-surface leading-tight font-semibold">Ratna Sari</div>
+          <div class="font-body-sm text-body-sm text-on-surface-variant leading-tight">Supervisor Outlet</div>
+        </div>
+        <img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZJ16dkyeRzgcZ67eDwE1S5CjswcsUra3kCohCeILjozB-FUkrAljT-EzKKxlfFDfZhSqWQ9nl6Jai2K9N3kqu7Llm2g_rkPf6oQBwndW1GNWWJCY29ncxS_RmvBgw7calcvFgRK4E0fKNHtCp5o1RSQ8NUAhf6kqL5KS9GdJJJnLWbzBtqGlQeOmWAgc4LpO0A7bMB2IMt_Xr0VVfWzKfKxJW9v8CtFip2BWgaZ6Z7B6Gp7Ci7jQElA">
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Body -->
+  <main class="relative w-full pt-20 px-space-lg pb-space-xl bg-surface min-h-screen">
+    <div class="flex flex-col w-full max-w-7xl mx-auto">
+
+      <!-- Operational Subheader Banner -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between pb-space-lg gap-space-md">
+        <div>
+          <div class="flex items-center gap-space-xs text-on-surface-variant font-label-md text-label-md">
+            <span>Menwash Admin</span>
+            <span>/</span>
+            <span>Mesin</span>
+            <span>/</span>
+            <span class="text-primary font-bold">Mesin Gangguan</span>
           </div>
+          <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-1 font-bold text-primary">Mesin Gangguan</h1>
+          <p class="font-body-md text-body-md text-on-surface-variant">Penanganan insiden, pemulihan siklus &amp; kompensasi pelanggan via Uang Dummy</p>
+        </div>
+        <div class="flex items-center gap-space-sm flex-wrap">
+          <div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container font-label-md text-label-md text-on-surface border border-outline-variant/30">
+            <span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+            <span class="font-bold text-error" id="bannerIncidentCount">4 Unit Butuh Tindakan</span>
+          </div>
+          <button class="flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-error hover:bg-red-700 text-on-error font-label-lg text-label-lg transition-all shadow-sm cursor-pointer" onclick="openWizardWithIncident('Cuci #04', 'MW-284688', 'Hendra Wijaya', 'Air macet (inlet drop)', 18, 40, 22)">
+            <span class="material-symbols-outlined text-base">restart_alt</span>
+            <span>Mulai Kompensasi Cepat</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 1: 4 STAT CARDS DI PALING ATAS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-gutter mb-space-xl">
+        <!-- Card 1: Perlu Kompensasi -->
+        <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between border border-outline-variant/30">
+          <div class="flex items-start justify-between">
+            <div class="flex flex-col">
+              <span class="font-label-sm text-label-sm uppercase tracking-wider text-error font-bold">Perlu Kompensasi</span>
+              <span class="font-metric-display text-metric-display text-on-surface mt-1 font-bold" id="statPerluKompensasi">4 Mesin</span>
+            </div>
+            <div class="w-10 h-10 rounded-lg bg-error-container text-on-error-container flex items-center justify-center">
+              <span class="material-symbols-outlined">warning</span>
+            </div>
+          </div>
+          <div class="mt-space-md pt-space-xs flex items-center gap-space-xs text-error font-body-sm text-body-sm bg-red-50 p-2 rounded-md">
+            <span class="material-symbols-outlined text-sm">schedule</span>
+            <span class="truncate">4 unit butuh restart kompensasi dummy</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Selesai Hari Ini -->
+        <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between border border-outline-variant/30">
+          <div class="flex items-start justify-between">
+            <div class="flex flex-col">
+              <span class="font-label-sm text-label-sm uppercase tracking-wider text-green-700 font-bold">Selesai Hari Ini</span>
+              <span class="font-metric-display text-metric-display text-on-surface mt-1 font-bold" id="statSelesaiHariIni">2 Kasus</span>
+            </div>
+            <div class="w-10 h-10 rounded-lg bg-green-100 text-green-800 flex items-center justify-center">
+              <span class="material-symbols-outlined">verified</span>
+            </div>
+          </div>
+          <div class="mt-space-md pt-space-xs flex items-center gap-space-xs text-green-700 font-body-sm text-body-sm bg-green-50 p-2 rounded-md">
+            <span class="material-symbols-outlined text-sm">check_circle</span>
+            <span class="truncate">Selesai diperbaiki &amp; dinormalisasi</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Total Gangguan -->
+        <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between border border-outline-variant/30">
+          <div class="flex items-start justify-between">
+            <div class="flex flex-col">
+              <span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Total Gangguan</span>
+              <span class="font-metric-display text-metric-display text-on-surface mt-1 font-bold">6 Insiden</span>
+            </div>
+            <div class="w-10 h-10 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center">
+              <span class="material-symbols-outlined">history</span>
+            </div>
+          </div>
+          <div class="mt-space-md pt-space-xs flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm bg-surface-container p-2 rounded-md">
+            <span class="material-symbols-outlined text-sm">analytics</span>
+            <span class="truncate">Akumulasi insiden operasional hari ini</span>
+          </div>
+        </div>
+
+        <!-- Card 4: Kompensasi Dummy Aktif -->
+        <div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between border border-outline-variant/30">
+          <div class="flex items-start justify-between">
+            <div class="flex flex-col">
+              <span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Kompensasi Dummy Aktif</span>
+              <span class="font-metric-display text-metric-display text-on-surface mt-1 font-bold" id="statTotalSaldoDummy">Rp 48.000</span>
+            </div>
+            <div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center">
+              <span class="material-symbols-outlined">payments</span>
+            </div>
+          </div>
+          <div class="mt-space-md pt-space-xs flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm bg-surface-container p-2 rounded-md">
+            <span class="material-symbols-outlined text-sm text-primary">account_balance_wallet</span>
+            <span class="truncate">Estimasi kompensasi 4 siklus mesin aktif</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: GANGGUAN AKTIF -->
+      <div class="flex flex-col gap-space-md mb-space-xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+          <div class="flex items-center gap-space-sm">
+            <h2 class="font-headline-md text-headline-md text-on-surface font-bold text-primary">Gangguan Aktif</h2>
+            <span class="px-space-sm py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm flex items-center gap-1 font-bold" id="activePillCount">
+              <span class="w-1.5 h-1.5 rounded-full bg-error"></span> 4 Unit Memerlukan Restart Ulang
+            </span>
+          </div>
+          <!-- Filter Tabs -->
+          <div class="inline-flex p-1 bg-surface-container rounded-lg self-start md:self-auto border border-outline-variant/30">
+            <button class="tab-filter-btn active px-space-md py-1.5 rounded-md bg-surface-container-lowest font-label-md text-label-md text-primary font-bold shadow-sm cursor-pointer" data-filter="semua" onclick="filterActiveIncidents('semua', this)">Semua Mesin (<span id="tabCountSemua">4</span>)</button>
+            <button class="tab-filter-btn px-space-md py-1.5 rounded-md font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer" data-filter="cuci" onclick="filterActiveIncidents('cuci', this)">Mesin Cuci (2)</button>
+            <button class="tab-filter-btn px-space-md py-1.5 rounded-md font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer" data-filter="pengering" onclick="filterActiveIncidents('pengering', this)">Mesin Pengering (2)</button>
+          </div>
+        </div>
+
+        <!-- Active Incident Grid (2 Columns) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg" id="incidentGrid">
+          
+          <!-- Card 1: Mesin Cuci #04 -->
+          <div class="incident-card bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col justify-between border-l-4 border-error relative border-t border-r border-b border-outline-variant/30" data-type="cuci" id="incident-card-mc04">
+            <div class="p-space-md flex flex-col gap-space-sm">
+              <div class="flex items-start justify-between gap-space-sm">
+                <div class="flex items-center gap-space-sm">
+                  <div class="w-10 h-10 rounded-lg bg-error-container/40 text-error flex items-center justify-center shrink-0 relative">
+                    <span class="material-symbols-outlined text-xl">local_laundry_service</span>
+                    <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-error text-white text-[9px] flex items-center justify-center font-bold">!</span>
+                  </div>
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="font-title-sm text-title-sm text-on-surface font-bold">Mesin Cuci #04</span>
+                      <span class="px-1.5 py-0.5 rounded text-[11px] font-bold bg-surface-container text-on-surface-variant">Front Load 10kg</span>
+                    </div>
+                    <span class="text-xs text-on-surface-variant truncate">Outlet Utama Cendrawasih · IOT-MC-04</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-bold flex items-center gap-1 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+                  Perlu Kompensasi
+                </span>
+              </div>
+              <div class="bg-surface-container-low rounded-lg p-2.5 flex flex-col gap-1.5">
+                <div class="flex items-center justify-between text-on-surface-variant text-xs">
+                  <span class="flex items-center gap-1 truncate font-mono">
+                    <span class="material-symbols-outlined text-sm text-primary">receipt</span>
+                    MW-284688 (QRIS Mandiri)
+                  </span>
+                  <span class="text-on-surface font-medium truncate">Hendra Wijaya</span>
+                </div>
+                <div class="flex items-center justify-between text-error text-xs">
+                  <span class="font-bold flex items-center gap-1 truncate">
+                    <span class="material-symbols-outlined text-sm">water_damage</span>
+                    Terhenti menit ke-18 / 40 menit (Tekanan Air Drop)
+                  </span>
+                  <span class="text-on-surface-variant font-medium shrink-0">Sisa 22 Menit</span>
+                </div>
+                <div class="w-full bg-surface-dim h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-error h-full rounded-full" style="width: 45%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="px-space-md py-2.5 bg-surface-container-low flex items-center justify-between gap-2 border-t border-surface-container">
+              <button class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-error hover:bg-red-700 text-on-error font-label-md text-label-md transition-colors shadow-sm cursor-pointer" onclick="openWizardWithIncident('Cuci #04', 'MW-284688', 'Hendra Wijaya', 'Tekanan suplai air drop di menit 18', 18, 40, 22)">
+                <span class="material-symbols-outlined text-base">restart_alt</span>
+                <span>Restart Ulang (Uang Dummy)</span>
+              </button>
+              <button class="flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-surface-container-lowest hover:bg-surface-variant text-primary font-label-md text-label-md transition-colors shrink-0 border border-outline-variant/40 cursor-pointer" onclick="openDrawerWithCode('Mesin Cuci #04', 'err', 'MW-284688')">
+                <span class="material-symbols-outlined text-base">settings_remote</span>
+                <span>Kontrol Darurat</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: Mesin Cuci #02 -->
+          <div class="incident-card bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col justify-between border-l-4 border-error relative border-t border-r border-b border-outline-variant/30" data-type="cuci" id="incident-card-mc02">
+            <div class="p-space-md flex flex-col gap-space-sm">
+              <div class="flex items-start justify-between gap-space-sm">
+                <div class="flex items-center gap-space-sm">
+                  <div class="w-10 h-10 rounded-lg bg-error-container/40 text-error flex items-center justify-center shrink-0 relative">
+                    <span class="material-symbols-outlined text-xl">local_laundry_service</span>
+                    <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-error text-white text-[9px] flex items-center justify-center font-bold">!</span>
+                  </div>
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="font-title-sm text-title-sm text-on-surface font-bold">Mesin Cuci #02</span>
+                      <span class="px-1.5 py-0.5 rounded text-[11px] font-bold bg-surface-container text-on-surface-variant">Front Load 10kg</span>
+                    </div>
+                    <span class="text-xs text-on-surface-variant truncate">Outlet Utama Cendrawasih · IOT-MC-02</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-bold flex items-center gap-1 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+                  Perlu Kompensasi
+                </span>
+              </div>
+              <div class="bg-surface-container-low rounded-lg p-2.5 flex flex-col gap-1.5">
+                <div class="flex items-center justify-between text-on-surface-variant text-xs">
+                  <span class="flex items-center gap-1 truncate font-mono">
+                    <span class="material-symbols-outlined text-sm text-primary">receipt</span>
+                    MW-284705 (Kasir QRIS)
+                  </span>
+                  <span class="text-on-surface font-medium truncate">Siti Rahmawati</span>
+                </div>
+                <div class="flex items-center justify-between text-error text-xs">
+                  <span class="font-bold flex items-center gap-1 truncate">
+                    <span class="material-symbols-outlined text-sm">lock</span>
+                    Terhenti menit ke-27 / 45 menit (Solenoid Door)
+                  </span>
+                  <span class="text-on-surface-variant font-medium shrink-0">Sisa 18 Menit</span>
+                </div>
+                <div class="w-full bg-surface-dim h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-error h-full rounded-full" style="width: 60%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="px-space-md py-2.5 bg-surface-container-low flex items-center justify-between gap-2 border-t border-surface-container">
+              <button class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-error hover:bg-red-700 text-on-error font-label-md text-label-md transition-colors shadow-sm cursor-pointer" onclick="openWizardWithIncident('Cuci #02', 'MW-284705', 'Siti Rahmawati', 'Sensor door lock interlock terlepas di menit 27', 27, 45, 18)">
+                <span class="material-symbols-outlined text-base">restart_alt</span>
+                <span>Restart Ulang (Uang Dummy)</span>
+              </button>
+              <button class="flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-surface-container-lowest hover:bg-surface-variant text-primary font-label-md text-label-md transition-colors shrink-0 border border-outline-variant/40 cursor-pointer" onclick="openDrawerWithCode('Mesin Cuci #02', 'err', 'MW-284705')">
+                <span class="material-symbols-outlined text-base">settings_remote</span>
+                <span>Kontrol Darurat</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3: Mesin Pengering #01 -->
+          <div class="incident-card bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col justify-between border-l-4 border-error relative border-t border-r border-b border-outline-variant/30" data-type="pengering" id="incident-card-dr01">
+            <div class="p-space-md flex flex-col gap-space-sm">
+              <div class="flex items-start justify-between gap-space-sm">
+                <div class="flex items-center gap-space-sm">
+                  <div class="w-10 h-10 rounded-lg bg-error-container/40 text-error flex items-center justify-center shrink-0 relative">
+                    <span class="material-symbols-outlined text-xl">mode_heat</span>
+                    <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-error text-white text-[9px] flex items-center justify-center font-bold">!</span>
+                  </div>
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="font-title-sm text-title-sm text-on-surface font-bold">Mesin Pengering #01</span>
+                      <span class="px-1.5 py-0.5 rounded text-[11px] font-bold bg-secondary-container text-on-secondary-container">Gas Dryer 12kg</span>
+                    </div>
+                    <span class="text-xs text-on-surface-variant truncate">Outlet Utama Cendrawasih · IOT-DR-01</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-bold flex items-center gap-1 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+                  Perlu Kompensasi
+                </span>
+              </div>
+              <div class="bg-surface-container-low rounded-lg p-2.5 flex flex-col gap-1.5">
+                <div class="flex items-center justify-between text-on-surface-variant text-xs">
+                  <span class="flex items-center gap-1 truncate font-mono">
+                    <span class="material-symbols-outlined text-sm text-primary">receipt</span>
+                    MW-284692 (QRIS BCA)
+                  </span>
+                  <span class="text-on-surface font-medium truncate">Dimas Pratama</span>
+                </div>
+                <div class="flex items-center justify-between text-error text-xs">
+                  <span class="font-bold flex items-center gap-1 truncate">
+                    <span class="material-symbols-outlined text-sm">device_thermostat</span>
+                    Terhenti menit ke-12 / 40 menit (Overheat Gas)
+                  </span>
+                  <span class="text-on-surface-variant font-medium shrink-0">Sisa 28 Menit</span>
+                </div>
+                <div class="w-full bg-surface-dim h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-error h-full rounded-full" style="width: 30%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="px-space-md py-2.5 bg-surface-container-low flex items-center justify-between gap-2 border-t border-surface-container">
+              <button class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-error hover:bg-red-700 text-on-error font-label-md text-label-md transition-colors shadow-sm cursor-pointer" onclick="openWizardWithIncident('Pengering #01', 'MW-284692', 'Dimas Pratama', 'Thermostat trip karena sirkulasi udara tersumbat', 12, 40, 28)">
+                <span class="material-symbols-outlined text-base">restart_alt</span>
+                <span>Restart Ulang (Uang Dummy)</span>
+              </button>
+              <button class="flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-surface-container-lowest hover:bg-surface-variant text-primary font-label-md text-label-md transition-colors shrink-0 border border-outline-variant/40 cursor-pointer" onclick="openDrawerWithCode('Mesin Pengering #01', 'err', 'MW-284692')">
+                <span class="material-symbols-outlined text-base">settings_remote</span>
+                <span>Kontrol Darurat</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 4: Mesin Pengering #05 -->
+          <div class="incident-card bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col justify-between border-l-4 border-error relative border-t border-r border-b border-outline-variant/30" data-type="pengering" id="incident-card-dr05">
+            <div class="p-space-md flex flex-col gap-space-sm">
+              <div class="flex items-start justify-between gap-space-sm">
+                <div class="flex items-center gap-space-sm">
+                  <div class="w-10 h-10 rounded-lg bg-error-container/40 text-error flex items-center justify-center shrink-0 relative">
+                    <span class="material-symbols-outlined text-xl">mode_heat</span>
+                    <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-error text-white text-[9px] flex items-center justify-center font-bold">!</span>
+                  </div>
+                  <div class="flex flex-col min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="font-title-sm text-title-sm text-on-surface font-bold">Mesin Pengering #05</span>
+                      <span class="px-1.5 py-0.5 rounded text-[11px] font-bold bg-secondary-container text-on-secondary-container">Gas Dryer 12kg</span>
+                    </div>
+                    <span class="text-xs text-on-surface-variant truncate">Outlet Utama Cendrawasih · IOT-DR-05</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-bold flex items-center gap-1 shrink-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+                  Perlu Kompensasi
+                </span>
+              </div>
+              <div class="bg-surface-container-low rounded-lg p-2.5 flex flex-col gap-1.5">
+                <div class="flex items-center justify-between text-on-surface-variant text-xs">
+                  <span class="flex items-center gap-1 truncate font-mono">
+                    <span class="material-symbols-outlined text-sm text-primary">receipt</span>
+                    MW-284714 (Tunai / Admin)
+                  </span>
+                  <span class="text-on-surface font-medium truncate">Bagus Saputra</span>
+                </div>
+                <div class="flex items-center justify-between text-error text-xs">
+                  <span class="font-bold flex items-center gap-1 truncate">
+                    <span class="material-symbols-outlined text-sm">air</span>
+                    Terhenti menit ke-31 / 45 menit (Sensor Lint Flue)
+                  </span>
+                  <span class="text-on-surface-variant font-medium shrink-0">Sisa 14 Menit</span>
+                </div>
+                <div class="w-full bg-surface-dim h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-error h-full rounded-full" style="width: 69%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="px-space-md py-2.5 bg-surface-container-low flex items-center justify-between gap-2 border-t border-surface-container">
+              <button class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-error hover:bg-red-700 text-on-error font-label-md text-label-md transition-colors shadow-sm cursor-pointer" onclick="openWizardWithIncident('Pengering #05', 'MW-284714', 'Bagus Saputra', 'Filter serat debu penuh sehingga airflow terdeteksi rendah', 31, 45, 14)">
+                <span class="material-symbols-outlined text-base">restart_alt</span>
+                <span>Restart Ulang (Uang Dummy)</span>
+              </button>
+              <button class="flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-surface-container-lowest hover:bg-surface-variant text-primary font-label-md text-label-md transition-colors shrink-0 border border-outline-variant/40 cursor-pointer" onclick="openDrawerWithCode('Mesin Pengering #05', 'err', 'MW-284714')">
+                <span class="material-symbols-outlined text-base">settings_remote</span>
+                <span>Kontrol Darurat</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION 3: RIWAYAT PENANGANAN GANGGUAN -->
+      <div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col border border-outline-variant/30">
+        <!-- Header Toolbar -->
+        <div class="p-space-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md border-b border-surface-container">
           <div>
-            <select id="filterGangguan" class="field" style="margin-bottom:0; padding:6px 12px; width:auto; font-size:13px;" onchange="filterGangguanGrid(this.value)">
-              <option value="semua">Semua Mesin</option>
-              <option value="cuci">Mesin Cuci</option>
-              <option value="pengering">Mesin Pengering</option>
+            <h2 class="font-headline-md text-headline-md text-on-surface font-bold text-primary">Riwayat Penanganan Gangguan Hari Ini</h2>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">Log audit penyelesaian insiden, kompensasi dummy, dan perbaikan perangkat</p>
+          </div>
+          <div class="flex items-center gap-space-sm flex-wrap">
+            <!-- Search bar -->
+            <div class="relative min-w-[240px]">
+              <span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-lg">search</span>
+              <input id="historySearchInput" class="w-full pl-9 pr-3 py-2 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary-container border border-outline-variant/30" placeholder="Cari ID transaksi, mesin, admin..." type="text">
+            </div>
+            <!-- Filter dropdown -->
+            <select id="historyCategorySelect" class="px-space-md py-2 bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg focus:outline-none border border-outline-variant/30">
+              <option value="semua">Semua Kategori</option>
+              <option value="dummy">Kompensasi Dummy</option>
+              <option value="filter">Perbaikan Filter</option>
+              <option value="iot">Konektivitas IoT</option>
             </select>
-          </div>
-        </div>
-        <div class="card-body">
-
-          <!-- Grid kartu gangguan aktif -->
-          <div class="gangguan-grid">
-
-            <!-- Kartu 1: Siklus terhenti -->
-            <div class="gangguan-card" id="gc-cuci04">
-              <div class="gc-header">
-                <div class="gc-header-left">
-                  <div class="gc-machine-icon err">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="7"/><path d="M9 13c0-1.7 1.3-3 3-3s3 1.3 3 3"/><path d="M8 4h1M12 4h1M16 4h1"/></svg>
-                  </div>
-                  <div>
-                    <div class="gc-name">Mesin Cuci #04</div>
-                    <div class="gc-sub">Terhenti menit ke-18 · TX <b>MW-284688</b></div>
-                  </div>
-                </div>
-                <span class="badge err">Kompensasi</span>
-              </div>
-              <div class="gc-footer">
-                <a href="dummy-restart.html" class="gc-btn-main">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                  Restart Dummy
-                </a>
-                <button class="gc-btn-secondary" id="btn-emergency-04" onclick="openDrawerWithCode('Mesin Cuci #04', 'err', 'MW-284688')">
-                  Kontrol Mesin
-                </button>
-              </div>
-            </div>
-
-            <!-- Kartu 2: Offline -->
-            <div class="gangguan-card" id="gc-cuci02">
-              <div class="gc-header">
-                <div class="gc-header-left">
-                  <div class="gc-machine-icon off">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18.36 6.64A9 9 0 115.64 17.36"/><path d="M12 2v10"/></svg>
-                  </div>
-                  <div>
-                    <div class="gc-name">Mesin Cuci #02</div>
-                    <div class="gc-sub">Tidak merespon sejak 08:12</div>
-                  </div>
-                </div>
-                <span class="badge off">Offline</span>
-              </div>
-              <div class="gc-footer">
-                <button class="gc-btn-main" id="btn-periksa-02" onclick="openConfirm('confirm-periksa', 'Mesin Cuci #02', 'Tandai Diperiksa', 'Kabel daya dan koneksi jaringan sudah diperiksa.')">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-                  Tandai Diperiksa
-                </button>
-                <button class="gc-btn-secondary" id="btn-emergency-02" onclick="openDrawerWithCode('Mesin Cuci #02', 'off', '—')">
-                  Kontrol Mesin
-                </button>
-              </div>
-            </div>
-
-          </div><!-- /gangguan-grid -->
-
-        </div>
-      </div>
-
-      <!-- ===== RIWAYAT PENANGANAN ===== -->
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <h3>Riwayat Penanganan</h3>
+            <button class="p-2 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container transition-colors border border-outline-variant/30 cursor-pointer" title="Export Log" onclick="exportAuditLog()">
+              <span class="material-symbols-outlined text-lg">download</span>
+            </button>
           </div>
         </div>
 
-        <!-- Filter chips -->
-        <div class="table-toolbar">
-          <div class="table-search">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 17L21 21"/><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z"/></svg>
-            <input type="text" id="historySearch" placeholder="Cari ID transaksi atau mesin...">
-          </div>
-          <div class="chip-row" id="historyFilterChips">
-            <button class="fchip active" id="chip-semua" onclick="filterHistory('semua', this)">Semua</button>
-            <button class="fchip" id="chip-dummy" onclick="filterHistory('dummy', this)">Restart Dummy</button>
-            <button class="fchip" id="chip-fisik" onclick="filterHistory('fisik', this)">Perbaikan Fisik</button>
-            <button class="fchip" id="chip-offline" onclick="filterHistory('offline', this)">Offline</button>
-          </div>
-        </div>
-
-        <div class="card-body" style="padding:0;">
-          <table id="historyTable">
-            <thead>
+        <!-- Data Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left" id="historyTable">
+            <thead class="bg-surface-container-low font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
               <tr>
-                <th>ID Transaksi</th>
-                <th>Mesin</th>
-                <th>Kendala</th>
-                <th>Tindakan</th>
-                <th>Admin / Waktu</th>
-                <th style="text-align:right;">Status</th>
+                <th class="py-space-sm px-space-md font-bold">ID Transaksi / Log</th>
+                <th class="py-space-sm px-space-md font-bold">Mesin</th>
+                <th class="py-space-sm px-space-md font-bold">Kendala</th>
+                <th class="py-space-sm px-space-md font-bold">Tindakan Selesai</th>
+                <th class="py-space-sm px-space-md font-bold">Admin / Waktu</th>
+                <th class="py-space-sm px-space-md font-bold">Status</th>
+                <th class="py-space-sm px-space-md text-right font-bold">Aksi</th>
               </tr>
             </thead>
-            <tbody>
-              <tr data-histtype="dummy">
-                <td class="tx-id">MW-DM-0042</td>
-                <td>Cuci #04</td>
-                <td><span class="badge">Terhenti 18m</span></td>
-                <td>Restart Dummy 15 menit · refund MW-284688</td>
-                <td class="mono">Rani Admin · 09:34</td>
-                <td style="text-align:right;"><span class="badge ok">Selesai</span></td>
+            <tbody class="divide-y divide-surface-container font-body-sm text-body-sm text-on-surface" id="historyTableBody">
+              <!-- Row 1 -->
+              <tr class="hover:bg-surface-container-low/60 transition-colors" data-cat="dummy">
+                <td class="py-space-sm px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-mono font-bold text-primary">MW-DM-0042</span>
+                    <span class="text-xs text-on-surface-variant font-mono">Ref: MW-284688</span>
+                  </div>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <div class="flex items-center gap-space-xs">
+                    <span class="material-symbols-outlined text-base text-primary">local_laundry_service</span>
+                    <span class="font-bold text-on-surface">Mesin Cuci #04</span>
+                  </div>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-red-50 text-error font-label-sm text-label-sm font-bold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-error"></span> Terhenti 18m (Air)
+                  </span>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-medium text-on-surface">Restart Dummy 15 menit • Refund MW-284688</span>
+                    <span class="text-xs text-on-surface-variant">Dipindahkan ke Cuci #01</span>
+                  </div>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-semibold text-on-surface">Rani Admin</span>
+                    <span class="text-xs text-on-surface-variant">Hari ini 09:34 WIB</span>
+                  </div>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-label-sm text-label-sm font-bold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-600"></span> Selesai
+                  </span>
+                </td>
+                <td class="py-space-sm px-space-md text-right">
+                  <button class="px-3 py-1.5 rounded-md bg-surface-container hover:bg-surface-variant text-primary font-label-md text-label-md transition-colors cursor-pointer" onclick="openDetailModal('MW-DM-0042', 'MW-284688', 'Mesin Cuci #04', 'Mesin Cuci #01', '18 Menit', '15 Menit', 'Rani Admin', 'Rp 12.000', 'Pelanggan Pak Hendra setuju pakaian dipindahkan ke Cuci #01 karena Cuci #04 mengalami gangguan aliran debit air. Kompensasi 15 menit langsung jalan sukses.')">
+                    Lihat Detail
+                  </button>
+                </td>
               </tr>
-              <tr data-histtype="fisik">
-                <td class="tx-id">MW-284611</td>
-                <td>Pengering #05</td>
-                <td><span class="badge">Filter Tersumbat</span></td>
-                <td>Pembersihan filter &amp; sensor</td>
-                <td class="mono">Rani Admin · Kemarin 16:40</td>
-                <td style="text-align:right;"><span class="badge ok">Selesai</span></td>
+
+              <!-- Row 2 -->
+              <tr class="hover:bg-surface-container-low/60 transition-colors" data-cat="filter">
+                <td class="py-space-sm px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-mono font-bold text-primary">MW-284611</span>
+                    <span class="text-xs text-on-surface-variant font-mono">Tiket Pemeliharaan</span>
+                  </div>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <div class="flex items-center gap-space-xs">
+                    <span class="material-symbols-outlined text-base text-secondary">mode_heat</span>
+                    <span class="font-bold text-on-surface">Pengering #05</span>
+                  </div>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 font-label-sm text-label-sm font-bold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Filter Macet (Heat)
+                  </span>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-medium text-on-surface">Pembersihan Filter &amp; Reset Sensor</span>
+                    <span class="text-xs text-on-surface-variant">Suhu normal kembali di 68°C</span>
+                  </div>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-semibold text-on-surface">Rani Admin</span>
+                    <span class="text-xs text-on-surface-variant">Hari ini 08:45 WIB</span>
+                  </div>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-label-sm text-label-sm font-bold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-600"></span> Selesai
+                  </span>
+                </td>
+                <td class="py-space-sm px-space-md text-right">
+                  <button class="px-3 py-1.5 rounded-md bg-surface-container hover:bg-surface-variant text-primary font-label-md text-label-md transition-colors cursor-pointer" onclick="openDetailModal('MW-284611', 'MW-284611', 'Pengering #05', 'Pengering #05', '22 Menit', 'Pembersihan Fisik', 'Rani Admin', 'Rp 0', 'Filter serat dibersihkan dan sensor thermistor di-reset ke nilai default pabrik.')">
+                    Lihat Detail
+                  </button>
+                </td>
               </tr>
-              <tr data-histtype="dummy">
-                <td class="tx-id">MW-DM-0039</td>
-                <td>Cuci #01</td>
-                <td><span class="badge">Door Lock</span></td>
-                <td>Restart Dummy 40 menit</td>
-                <td class="mono">Budi Admin · Kemarin 11:15</td>
-                <td style="text-align:right;"><span class="badge ok">Selesai</span></td>
+
+              <!-- Row 3 -->
+              <tr class="hover:bg-surface-container-low/60 transition-colors" data-cat="dummy">
+                <td class="py-space-sm px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-mono font-bold text-primary">MW-DM-0039</span>
+                    <span class="text-xs text-on-surface-variant font-mono">Ref: MW-284605</span>
+                  </div>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <div class="flex items-center gap-space-xs">
+                    <span class="material-symbols-outlined text-base text-primary">local_laundry_service</span>
+                    <span class="font-bold text-on-surface">Mesin Cuci #01</span>
+                  </div>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-red-50 text-error font-label-sm text-label-sm font-bold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-error"></span> Door Lock Macet
+                  </span>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-medium text-on-surface">Restart Dummy 40 menit • Refund MW-284605</span>
+                    <span class="text-xs text-on-surface-variant">Solenoid pintu dilumasi &amp; normal</span>
+                  </div>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-semibold text-on-surface">Budi Admin</span>
+                    <span class="text-xs text-on-surface-variant">Kemarin 16:20 WIB</span>
+                  </div>
+                </td>
+                <td class="py-space-sm px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-label-sm text-label-sm font-bold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-600"></span> Selesai
+                  </span>
+                </td>
+                <td class="py-space-sm px-space-md text-right">
+                  <button class="px-3 py-1.5 rounded-md bg-surface-container hover:bg-surface-variant text-primary font-label-md text-label-md transition-colors cursor-pointer" onclick="openDetailModal('MW-DM-0039', 'MW-284605', 'Mesin Cuci #01', 'Mesin Cuci #01', 'Menit 5', '40 Menit', 'Budi Admin', 'Rp 12.000', 'Solenoid pengunci pintu dilumasi dan siklus cuci ulang dijalankan menggunakan uang dummy.')">
+                    Lihat Detail
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="table-pagination">
-          <div class="tp-info" id="historyPageInfo">3 catatan</div>
-          <div class="tp-pages">
-            <button class="tp-btn" disabled>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18"/></svg>
-            </button>
-            <div class="tp-page">1</div>
-            <button class="tp-btn" disabled>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18"/></svg>
-            </button>
+
+        <!-- Table Footer / Pagination -->
+        <div class="p-space-md bg-surface-container-low flex items-center justify-between font-body-sm text-body-sm text-on-surface-variant border-t border-surface-container">
+          <span id="historyTableCountInfo">Menampilkan 3 dari 3 penanganan insiden hari ini</span>
+          <div class="flex items-center gap-2">
+            <button class="px-3 py-1 rounded bg-surface-container-lowest text-on-surface-variant opacity-50 cursor-not-allowed border border-outline-variant/30">Sebelumnya</button>
+            <button class="px-3 py-1 rounded bg-primary text-on-primary font-bold shadow-sm">1</button>
+            <button class="px-3 py-1 rounded bg-surface-container-lowest text-on-surface-variant opacity-50 cursor-not-allowed border border-outline-variant/30">Selanjutnya</button>
           </div>
         </div>
       </div>
 
-    </div><!-- /content -->
+    </div>
   </main>
-</div><!-- /app -->
+</div>
 
-<!-- ===== MODAL: KONTROL DARURAT ===== -->
-<div class="modal-overlay" id="mDrawer">
-  <div class="modal">
-    <div class="modal-head">
-      <div>
-        <h3 id="dCode">Mesin Cuci #04</h3>
-        <p id="dSub">Kontrol mesin</p>
+<!-- ========================================================================= -->
+<!-- MODAL 1: STEP-BY-STEP WIZARD "RESTART ULANG" (Uang Dummy Flow)            -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-primary/60 backdrop-blur-sm modal-enter" id="wizard-modal">
+  <div class="bg-surface-container-lowest w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] modal-content-enter border border-outline-variant/40">
+    <!-- Modal Header -->
+    <div class="p-space-lg bg-primary text-on-primary flex items-center justify-between">
+      <div class="flex items-center gap-space-sm">
+        <div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center">
+          <span class="material-symbols-outlined text-primary-fixed">restart_alt</span>
+        </div>
+        <div>
+          <h3 class="font-headline-md text-headline-md leading-tight font-bold" id="wzHeaderTitle">Wizard Kompensasi Siklus Mesin</h3>
+          <p class="font-body-sm text-body-sm text-on-primary-container" id="wzHeaderSub">Alur pemulihan gangguan • Ref: MW-284688</p>
+        </div>
       </div>
-      <button class="modal-close" onclick="closeEl('mDrawer'); resetDrawer();">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      <button class="text-on-primary/70 hover:text-on-primary cursor-pointer" onclick="closeModal('wizard-modal')">
+        <span class="material-symbols-outlined">close</span>
       </button>
     </div>
 
-    <div class="modal-body">
-      <div class="summary-box">
-        <div class="summary-row"><span class="k">Status</span><span class="v" id="dStatus">Gangguan</span></div>
-        <div class="summary-row"><span class="k">Layanan</span><span class="v" id="dLayanan">Cuci saja</span></div>
-        <div class="summary-row"><span class="k">ID Transaksi</span><span class="v" id="dTx">MW-284688</span></div>
+    <!-- Stepper Nav (4 Steps) -->
+    <div class="grid grid-cols-4 bg-surface-container-low p-space-sm gap-1 border-b border-surface-container">
+      <div class="flex flex-col items-center py-2 px-1 rounded-lg bg-surface-container-lowest shadow-sm text-primary font-bold text-center" id="step-nav-1">
+        <span class="w-5 h-5 rounded-full bg-primary text-on-primary text-xs flex items-center justify-center mb-1">1</span>
+        <span class="font-label-sm text-label-sm">Pilih Mesin</span>
+      </div>
+      <div class="flex flex-col items-center py-2 px-1 rounded-lg text-on-surface-variant text-center opacity-70" id="step-nav-2">
+        <span class="w-5 h-5 rounded-full bg-surface-container text-on-surface text-xs flex items-center justify-center mb-1">2</span>
+        <span class="font-label-sm text-label-sm">Durasi</span>
+      </div>
+      <div class="flex flex-col items-center py-2 px-1 rounded-lg text-on-surface-variant text-center opacity-70" id="step-nav-3">
+        <span class="w-5 h-5 rounded-full bg-surface-container text-on-surface text-xs flex items-center justify-center mb-1">3</span>
+        <span class="font-label-sm text-label-sm">Catatan</span>
+      </div>
+      <div class="flex flex-col items-center py-2 px-1 rounded-lg text-on-surface-variant text-center opacity-70" id="step-nav-4">
+        <span class="w-5 h-5 rounded-full bg-surface-container text-on-surface text-xs flex items-center justify-center mb-1">4</span>
+        <span class="font-label-sm text-label-sm">Konfirmasi IoT</span>
+      </div>
+    </div>
+
+    <!-- Modal Content Area -->
+    <div class="p-space-lg overflow-y-auto flex-1">
+      
+      <!-- STEP 1 CONTENT -->
+      <div class="flex flex-col gap-space-md" id="step-content-1">
+        <div class="p-space-sm bg-red-50 text-error rounded-lg flex items-center gap-space-xs font-body-sm text-body-sm border border-red-200">
+          <span class="material-symbols-outlined text-sm">warning</span>
+          <span id="step1AlertText">Mesin Cuci #04 macet di menit ke-18. Tentukan unit tujuan untuk melanjutkan proses cuci:</span>
+        </div>
+        <div class="flex flex-col gap-space-sm">
+          <!-- Option A: Recommend Transfer -->
+          <label class="flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-variant/40 transition-colors border border-outline-variant/30">
+            <input checked class="mt-1 accent-primary w-4 h-4" name="target_machine" type="radio" value="Mesin Cuci #01">
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <span class="font-title-sm text-title-sm text-on-surface font-bold">Pindahkan ke Mesin Cuci #01</span>
+                <span class="px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-label-sm text-label-sm font-bold">Rekomendasi (Standby)</span>
+              </div>
+              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Front Load 10kg • Beban kosong &amp; sensor air 100% normal. Pakaian pelanggan dipindahkan secara manual.</p>
+            </div>
+          </label>
+          <!-- Option B: Keep on same machine -->
+          <label class="flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-variant/40 transition-colors border border-outline-variant/30">
+            <input class="mt-1 accent-primary w-4 h-4" name="target_machine" type="radio" value="Mesin Cuci #05">
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <span class="font-title-sm text-title-sm text-on-surface font-bold">Pindahkan ke Mesin Cuci #05</span>
+                <span class="px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-label-sm text-label-sm font-bold">Tersedia Siaga</span>
+              </div>
+              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Front Load 10kg • Kondisi bersih &amp; siap menampung siklus pengganti.</p>
+            </div>
+          </label>
+        </div>
       </div>
 
-      <div id="dActionDefault" class="mt-14">
-        <button class="btn btn-secondary btn-block" style="color:var(--err-ink); border-color:rgba(185,28,28,.2);" onclick="beginStop()">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
-          Matikan Mesin (Force Stop)
+      <!-- STEP 2 CONTENT -->
+      <div class="hidden flex flex-col gap-space-md" id="step-content-2">
+        <div class="bg-surface-container-low p-space-md rounded-xl flex items-center justify-between border border-outline-variant/30">
+          <div>
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Kondisi Siklus Asal</span>
+            <div class="font-title-sm text-title-sm text-on-surface font-bold mt-0.5" id="step2KondisiAsal">Terhenti menit 18 dari 40 menit</div>
+          </div>
+          <div class="text-right">
+            <span class="font-label-sm text-label-sm text-error uppercase font-bold">Sisa Terutang</span>
+            <div class="font-title-sm text-title-sm text-error font-bold mt-0.5" id="step2SisaTerutang">22 Menit Tertunda</div>
+          </div>
+        </div>
+        <div>
+          <label class="font-label-lg text-label-lg text-on-surface block mb-1 font-bold text-primary">Durasi Siklus Kompensasi Baru</label>
+          <div class="flex items-center gap-space-md">
+            <input class="w-full accent-primary h-2 bg-surface-container rounded-lg cursor-pointer" id="duration-slider" max="45" min="10" oninput="updateDuration(this.value)" step="5" type="range" value="20">
+            <span class="font-title-sm text-title-sm font-bold text-primary px-3 py-1 bg-surface-container rounded-lg shrink-0 border border-outline-variant/30" id="duration-val">20 Menit</span>
+          </div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Pilihan rekomendasi: 20 menit (Cukup untuk menyelesaikan bilas + peras akhir).</p>
+        </div>
+        <!-- Dummy Money Breakdown -->
+        <div class="bg-primary/5 rounded-xl p-space-md flex flex-col gap-2 border border-primary/20">
+          <span class="font-label-md text-label-md text-primary font-bold">Kalkulasi Saldo Kompensasi Uang Dummy:</span>
+          <div class="flex justify-between font-body-sm text-body-sm text-on-surface">
+            <span>Beban Toko (Kompensasi Dummy):</span>
+            <span class="font-bold text-primary" id="step2NominalDummy">Rp 10.000</span>
+          </div>
+          <div class="flex justify-between font-body-sm text-body-sm text-on-surface">
+            <span>Beban Biaya Pelanggan:</span>
+            <span class="font-bold text-green-700">Rp 0 (GRATIS / 100% KOMPENSASI)</span>
+          </div>
+          <div class="flex justify-between font-body-sm text-body-sm text-on-surface-variant pt-2 border-t border-primary/10">
+            <span>Sisa Plafon Saldo Dummy Gerai:</span>
+            <span class="font-mono font-bold text-primary">Rp 988.000 / Rp 1.000.000</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 CONTENT -->
+      <div class="hidden flex flex-col gap-space-md" id="step-content-3">
+        <label class="font-label-lg text-label-lg text-primary block font-bold">
+          Catatan Kejadian &amp; Alasan Kompensasi <span class="text-error">*</span>
+        </label>
+        <textarea class="w-full p-space-md bg-surface-container-low rounded-xl font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container border border-outline-variant/40" id="audit-notes" placeholder="Masukkan alasan kejadian dan tindakan penanganan..." rows="4">Mesin terhenti menit 18 karena suplai air terhambat. Filter dibersihkan, pakaian dipindahkan ke Cuci #01 untuk melanjutkan sisa 20 menit.</textarea>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">
+          Catatan ini akan dicatat dalam database audit operasional dan otomatis dilampirkan pada log kompensasi kasir/supervisor.
+        </p>
+        <div class="p-space-sm bg-surface-container rounded-lg flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant border border-outline-variant/30">
+          <span class="material-symbols-outlined text-base text-primary">shield_person</span>
+          <span>Petugas Pelaksana: <strong>Ratna Sari (Supervisor Outlet)</strong> • Sesi Login Terverifikasi</span>
+        </div>
+      </div>
+
+      <!-- STEP 4 CONTENT -->
+      <div class="hidden flex flex-col gap-space-md" id="step-content-4">
+        <div class="p-space-md bg-green-50 rounded-xl flex items-center gap-space-sm text-green-900 border border-green-200">
+          <span class="material-symbols-outlined text-2xl text-green-700">task_alt</span>
+          <div>
+            <div class="font-title-sm text-title-sm font-bold">Siap Mengirim Perintah IoT</div>
+            <div class="font-body-sm text-body-sm">Pemeriksaan integritas transaksi kompensasi valid.</div>
+          </div>
+        </div>
+        <div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-2 font-body-sm text-body-sm border border-outline-variant/30">
+          <div class="flex justify-between py-1 border-b border-surface-container">
+            <span class="text-on-surface-variant">Transaksi Terdampak:</span>
+            <span class="font-mono font-bold text-on-surface" id="step4TxRef">MW-284688 (Hendra Wijaya)</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-surface-container">
+            <span class="text-on-surface-variant">Tindakan Refund Asli:</span>
+            <span class="font-bold text-green-700">Dibatalkan &amp; Auto-Reconciled</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-surface-container">
+            <span class="text-on-surface-variant">Mesin Pelaksana Baru:</span>
+            <span class="font-bold text-primary" id="step4TargetMesin">Mesin Cuci #01</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-surface-container">
+            <span class="text-on-surface-variant">Durasi Nyala IoT:</span>
+            <span class="font-bold text-on-surface" id="step4Durasi">20 Menit (Bilas &amp; Spin)</span>
+          </div>
+          <div class="flex justify-between py-1">
+            <span class="text-on-surface-variant">Nominal Dummy Terdebit:</span>
+            <span class="font-bold text-primary" id="step4Nominal">Rp 10.000</span>
+          </div>
+        </div>
+
+        <div id="wzProcessingIndicator" class="hidden p-space-md bg-surface-container rounded-xl flex items-center gap-3">
+          <span class="material-symbols-outlined text-2xl text-primary animate-spin">progress_activity</span>
+          <div class="flex flex-col">
+            <span class="font-label-md text-label-md text-primary font-bold">Menjalankan Kompensasi MQTT IoT…</span>
+            <span class="font-body-sm text-body-sm text-on-surface-variant">Mengirim sinyal nyala relay ke unit pengganti.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="p-space-lg bg-surface-container-low flex items-center justify-between border-t border-surface-container">
+      <button class="px-space-md py-2.5 rounded-lg bg-surface-container text-on-surface font-label-lg text-label-lg transition-colors hidden cursor-pointer" id="wizard-prev-btn" onclick="prevStep()">
+        Kembali
+      </button>
+      <div class="flex items-center gap-space-sm ml-auto">
+        <button class="px-space-md py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface font-label-lg text-label-lg cursor-pointer" onclick="closeModal('wizard-modal')">
+          Batal
+        </button>
+        <button class="px-space-md py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg transition-colors cursor-pointer" id="wizard-next-btn" onclick="nextStep()">
+          Lanjut
         </button>
       </div>
-
-      <div id="dActionPaid" class="mt-14" style="display:none;">
-        <div class="field required">
-          <label>Alasan force stop</label>
-          <textarea id="stopReasonPaid" placeholder="Tulis alasan singkat..." style="min-height:70px;"></textarea>
-        </div>
-        <div style="display:flex; gap:10px;">
-          <button class="btn btn-ghost" onclick="cancelStop()">Batal</button>
-          <button class="btn btn-primary btn-block" id="confirmPaidBtn" disabled onclick="submitStop()">Konfirmasi Matikan</button>
-        </div>
-      </div>
-
-      <div id="dActionProcessing" class="mt-14" style="display:none;">
-        <div class="processing-box">
-          <div class="p-spin"></div>
-          <div class="p-text"><b>Memproses…</b><span>Mengirim perintah ke mesin…</span></div>
-        </div>
-      </div>
-
-      <div id="dActionDone" class="mt-14" style="display:none;">
-        <div class="alert ok">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 6L9 17l-5-5"/></svg>
-          <span>Mesin berhasil dimatikan.</span>
-        </div>
-      </div>
     </div>
   </div>
 </div>
 
-<!-- ===== MODAL: AKTIFKAN MESIN TUNAI (GLOBAL) ===== -->
-<div class="modal-overlay" id="qaModal">
-  <div class="modal">
-    <div class="modal-head">
+<!-- ========================================================================= -->
+<!-- MODAL 2: DETAIL AUDIT TRAIL GANGGUAN                                      -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-primary/60 backdrop-blur-sm modal-enter" id="detail-modal">
+  <div class="bg-surface-container-lowest w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] modal-content-enter border border-outline-variant/40">
+    <!-- Header -->
+    <div class="p-space-lg bg-surface-container flex items-center justify-between border-b border-outline-variant/30">
+      <div class="flex items-center gap-space-sm">
+        <div class="w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center">
+          <span class="material-symbols-outlined">receipt_long</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="font-headline-md text-headline-md text-on-surface font-bold text-primary">Audit Kompensasi Dummy</h3>
+            <span class="px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-mono text-xs font-bold">SELESAI</span>
+          </div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant" id="auditModalSub">ID Audit: MW-DM-0042 • Referensi Transaksi: MW-284688</p>
+        </div>
+      </div>
+      <button class="text-on-surface-variant hover:text-on-surface cursor-pointer" onclick="closeModal('detail-modal')">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <!-- Audit Body (3 Panels) -->
+    <div class="p-space-lg overflow-y-auto flex-1 flex flex-col gap-space-lg">
+      <!-- Section A: Informasi Kompensasi & Biaya -->
+      <div class="flex flex-col gap-space-xs">
+        <div class="flex items-center gap-space-xs text-primary font-label-md text-label-md font-bold uppercase tracking-wider">
+          <span class="material-symbols-outlined text-base">payments</span>
+          <span>1. Informasi Kompensasi &amp; Biaya</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm bg-surface-container-low p-space-md rounded-xl mt-1 border border-outline-variant/30">
+          <div class="flex flex-col">
+            <span class="text-xs text-on-surface-variant">Nominal Uang Dummy</span>
+            <span class="font-title-sm text-title-sm font-bold text-primary" id="audDetailNominal">Rp 12.000</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xs text-on-surface-variant">Status Transaksi Asli</span>
+            <span class="font-label-md text-label-md font-bold text-green-700">REFUND SELESAI</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xs text-on-surface-variant">Beban Pelanggan</span>
+            <span class="font-title-sm text-title-sm font-bold text-green-700">Rp 0</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xs text-on-surface-variant">Sisa Plafon Saldo</span>
+            <span class="font-mono font-bold text-on-surface">Rp 988.000</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section B: Kronologi & Durasi Mesin -->
+      <div class="flex flex-col gap-space-xs">
+        <div class="flex items-center gap-space-xs text-primary font-label-md text-label-md font-bold uppercase tracking-wider">
+          <span class="material-symbols-outlined text-base">timelapse</span>
+          <span>2. Kronologi &amp; Durasi Mesin</span>
+        </div>
+        <div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-sm mt-1 border border-outline-variant/30">
+          <div class="flex items-center justify-between text-body-sm font-body-sm">
+            <span class="text-on-surface-variant">Unit Terganggu:</span>
+            <span class="font-bold text-error flex items-center gap-1" id="audDetailUnitAsal">
+              <span class="material-symbols-outlined text-sm">local_laundry_service</span> Mesin Cuci #04 (Front Load 10kg)
+            </span>
+          </div>
+          <div class="flex items-center justify-between text-body-sm font-body-sm">
+            <span class="text-on-surface-variant">Unit Pelaksana Kompensasi:</span>
+            <span class="font-bold text-primary flex items-center gap-1" id="audDetailUnitTarget">
+              <span class="material-symbols-outlined text-sm">swap_horiz</span> Mesin Cuci #01 (Front Load 10kg)
+            </span>
+          </div>
+          <div class="flex items-center justify-between text-body-sm font-body-sm">
+            <span class="text-on-surface-variant">Titik Macet:</span>
+            <span class="font-mono text-on-surface" id="audDetailMacet">Menit 18 dari 40 Menit</span>
+          </div>
+          <div class="flex items-center justify-between text-body-sm font-body-sm">
+            <span class="text-on-surface-variant">Durasi Siklus Kompensasi:</span>
+            <span class="font-bold text-on-surface" id="audDetailDurasi">15 Menit (Rinse &amp; Spin Final)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section C: Audit Trail & Operator -->
+      <div class="flex flex-col gap-space-xs">
+        <div class="flex items-center gap-space-xs text-primary font-label-md text-label-md font-bold uppercase tracking-wider">
+          <span class="material-symbols-outlined text-base">verified_user</span>
+          <span>3. Audit Trail &amp; Operator</span>
+        </div>
+        <div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-sm mt-1 text-body-sm font-body-sm border border-outline-variant/30">
+          <div class="flex items-center justify-between">
+            <span class="text-on-surface-variant">Operator Bertugas:</span>
+            <span class="font-bold text-on-surface" id="audDetailOperator">Rani Admin (ID: ADM-088)</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-on-surface-variant">Stempel Waktu Eksekusi:</span>
+            <span class="font-mono text-on-surface">Hari ini • 09:34:12 WIB</span>
+          </div>
+          <div class="flex flex-col gap-1 pt-2 border-t border-surface-container">
+            <span class="text-xs text-on-surface-variant uppercase font-bold">Catatan Operator:</span>
+            <p class="p-space-sm bg-surface-container-lowest rounded text-on-surface italic" id="audDetailNotes">
+              “Pelanggan Pak Hendra setuju pakaian dipindahkan ke Cuci #01 karena Cuci #04 mengalami gangguan aliran debit air. Kompensasi 15 menit langsung jalan sukses.”
+            </p>
+          </div>
+          <div class="flex flex-col gap-1 pt-1">
+            <span class="text-xs text-on-surface-variant uppercase font-bold">IoT Telemetry Raw Log:</span>
+            <pre class="bg-primary text-primary-fixed p-space-sm rounded font-mono text-xs overflow-x-auto">{"event":"INLET_TIMEOUT","code":"ERR_E04","source":"NODE_MC_04","remedy":"DUMMY_RELAY_ON","target":"NODE_MC_01","duration_sec":900,"auth":"TOKEN_OK_934"}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Buttons -->
+    <div class="p-space-lg bg-surface-container-low flex items-center justify-between border-t border-surface-container">
+      <button class="flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container hover:bg-surface-variant text-on-surface font-label-lg text-label-lg transition-colors cursor-pointer" onclick="window.print()">
+        <span class="material-symbols-outlined text-lg">print</span>
+        <span>Cetak Bukti Kompensasi</span>
+      </button>
+      <button class="px-space-lg py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg transition-colors cursor-pointer" onclick="closeModal('detail-modal')">
+        Tutup Jendela
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- MODAL 3: KONTROL DARURAT & FORCE-STOP (FLOW MENWASH ADMIN)                 -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-primary/60 backdrop-blur-sm modal-enter" id="drawer-modal">
+  <div class="bg-surface-container-lowest w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden flex flex-col modal-content-enter border border-outline-variant/40">
+    <div class="p-space-lg bg-primary text-on-primary flex items-center justify-between">
       <div>
-        <h3>Aktifkan Mesin Tunai</h3>
-        <p>Transaksi tunai di outlet</p>
+        <h3 class="font-headline-md text-headline-md font-bold text-white" id="drawerMachineTitle">Mesin Cuci #04</h3>
+        <p class="font-body-sm text-body-sm text-on-primary-container" id="drawerMachineSub">Kontrol Mesin &amp; Pemutusan Arus Breaker</p>
       </div>
-      <button class="modal-close" onclick="closeEl('qaModal')">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      <button class="text-on-primary/70 hover:text-on-primary cursor-pointer" onclick="closeModal('drawer-modal')">
+        <span class="material-symbols-outlined">close</span>
       </button>
     </div>
 
-    <div class="modal-body">
-      <div id="qa-step1">
-        <div class="field required">
-          <label>Pilih mesin</label>
-          <select id="qaMesin">
-            <option>Mesin Cuci #01 — Tersedia</option>
-            <option>Mesin Cuci #05 — Tersedia</option>
-            <option>Mesin Pengering #02 — Tersedia</option>
-            <option>Mesin Pengering #03 — Tersedia</option>
-          </select>
+    <div class="p-space-lg flex flex-col gap-space-md">
+      <div class="p-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 flex flex-col gap-2 font-body-sm text-body-sm">
+        <div class="flex justify-between items-center py-1 border-b border-surface-container">
+          <span class="text-on-surface-variant">Status Saat Ini:</span>
+          <span class="font-bold text-error px-2 py-0.5 rounded-full bg-error-container text-on-error-container text-xs" id="drawerStatusBadge">Gangguan Terhenti</span>
         </div>
-        <div class="field required">
-          <label>Layanan</label>
-          <div class="seg-row">
-            <div class="seg active" data-group="layanan" data-value="Cuci saja">Cuci saja</div>
-            <div class="seg" data-group="layanan" data-value="Kering saja">Kering saja</div>
-            <div class="seg" data-group="layanan" data-value="Cuci + Kering">Cuci + Kering</div>
-          </div>
+        <div class="flex justify-between items-center py-1 border-b border-surface-container">
+          <span class="text-on-surface-variant">Referensi Transaksi:</span>
+          <span class="font-mono font-bold text-primary" id="drawerTxRef">MW-284688</span>
         </div>
-        <div class="field required">
-          <label>Durasi</label>
-          <div class="seg-row">
-            <div class="seg" data-group="durasi" data-value="30 menit">30 menit</div>
-            <div class="seg active" data-group="durasi" data-value="40 menit">40 menit</div>
-            <div class="seg" data-group="durasi" data-value="60 menit">60 menit</div>
-          </div>
+        <div class="flex justify-between items-center py-1">
+          <span class="text-on-surface-variant">Instruksi Smart Relay:</span>
+          <span class="font-semibold text-on-surface">Arus Breaker Terisolasi</span>
         </div>
       </div>
 
-      <div id="qa-step2" style="display:none;">
-        <div class="summary-box">
-          <div class="summary-row"><span class="k">Mesin</span><span class="v" id="cfMesin">Mesin Cuci #01</span></div>
-          <div class="summary-row"><span class="k">Layanan</span><span class="v" id="cfLayanan">Cuci saja</span></div>
-          <div class="summary-row"><span class="k">Durasi</span><span class="v" id="cfDurasi">40 menit</span></div>
-          <div class="summary-row"><span class="k">Metode</span><span class="v">Tunai</span></div>
-          <div class="summary-row"><span class="k">Total</span><span class="v" style="font-size:15px; font-weight:700;">Rp 12.000</span></div>
-        </div>
-        <div class="processing-box mt-14" id="qaProcessingBox" style="display:none;">
-          <div class="p-spin"></div>
-          <div class="p-text"><b>Memproses…</b><span>Mengirim perintah ke mesin…</span></div>
+      <div class="flex flex-col gap-2">
+        <label class="font-label-md text-label-md text-primary font-bold">Tindakan Cepat Darurat</label>
+        <div class="grid grid-cols-2 gap-2">
+          <button class="p-3 rounded-xl bg-surface-container-low hover:bg-surface-variant border border-outline-variant/30 text-left flex flex-col gap-1 transition-colors cursor-pointer" onclick="triggerEmergencyUnlock()">
+            <span class="material-symbols-outlined text-primary text-xl">lock_open</span>
+            <span class="font-bold text-primary text-sm">Buka Kunci Pintu</span>
+            <span class="text-xs text-on-surface-variant">Lepas solenoid interlock pintu mesin</span>
+          </button>
+          <button class="p-3 rounded-xl bg-surface-container-low hover:bg-surface-variant border border-outline-variant/30 text-left flex flex-col gap-1 transition-colors cursor-pointer" onclick="triggerCutPower()">
+            <span class="material-symbols-outlined text-error text-xl">power_off</span>
+            <span class="font-bold text-error text-sm">Putus Total Daya</span>
+            <span class="text-xs text-on-surface-variant">Matikan smart breaker relay IoT</span>
+          </button>
         </div>
       </div>
 
-      <div id="qa-step3" style="display:none;">
-        <div style="text-align:center; padding:10px 0 6px;">
-          <div style="width:48px;height:48px;border-radius:50%;background:var(--ok-bg);color:var(--ok-ink);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>
-          </div>
-          <div style="font-weight:600; font-size:15px;">Mesin Berhasil Dinyalakan</div>
-          <div class="muted mt-4">Transaksi tunai telah dicatat.</div>
-        </div>
-        <div class="summary-box mt-14">
-          <div class="summary-row"><span class="k">ID Transaksi</span><span class="v">MW-TX-9935</span></div>
-          <div class="summary-row"><span class="k">Mesin</span><span class="v" id="cfMesin2">Mesin Cuci #01</span></div>
-          <div class="summary-row"><span class="k">Petugas</span><span class="v">Rani Admin</span></div>
-        </div>
+      <div id="drawerStopReasonBox" class="flex flex-col gap-1.5 pt-2 border-t border-surface-container">
+        <label class="font-label-sm text-label-sm text-primary font-bold">Catatan Force Stop / Tindakan Lapangan <span class="text-error">*</span></label>
+        <textarea id="drawerStopReason" rows="2" class="w-full p-2.5 rounded-lg bg-surface-container-low border border-outline-variant text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-error" placeholder="Tuliskan alasan penanganan darurat..."></textarea>
       </div>
     </div>
 
-    <div class="modal-foot" id="qaFoot1">
-      <button class="btn btn-ghost" onclick="closeEl('qaModal')">Batal</button>
-      <button class="btn btn-primary btn-block" onclick="showStep('qa',2)">Lanjutkan</button>
-    </div>
-    <div class="modal-foot" id="qaFoot2" style="display:none;">
-      <button class="btn btn-ghost" onclick="showStep('qa',1)">Kembali</button>
-      <button class="btn btn-primary btn-block" id="qaActivateBtn" onclick="qaActivate()">Nyalakan Mesin</button>
-    </div>
-    <div class="modal-foot" id="qaFoot3" style="display:none;">
-      <button class="btn btn-primary btn-block" onclick="closeEl('qaModal'); showStep('qa',1)">Selesai</button>
+    <div class="p-space-lg bg-surface-container-low flex items-center justify-end gap-2.5 border-t border-surface-container">
+      <button class="px-space-md py-2 rounded-lg text-secondary font-label-md text-label-md hover:bg-surface-container transition-colors cursor-pointer" onclick="closeModal('drawer-modal')">Batal</button>
+      <button class="px-space-lg py-2 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:bg-primary transition-colors shadow-sm cursor-pointer" onclick="submitDrawerAction()">Simpan &amp; Terapkan</button>
     </div>
   </div>
 </div>
 
-<!-- ===== MODAL KONFIRMASI KECIL ===== -->
-<div class="confirm-overlay" id="confirmModal">
-  <div class="confirm-modal">
-    <div class="cm-head">
-      <h3 id="cmTitle">Konfirmasi Tindakan</h3>
-      <p id="cmDesc">Pastikan kondisi mesin sudah dicek.</p>
+<!-- ========================================================================= -->
+<!-- MODAL 4: AKTIFKAN MESIN TUNAI (FLOW MENWASH ADMIN)                        -->
+<!-- ========================================================================= -->
+<div id="qaModalOverlay" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 modal-enter">
+  <div class="w-full max-w-lg bg-surface-container-lowest rounded-2xl shadow-2xl overflow-hidden border border-outline-variant/40 modal-content-enter">
+    <div class="px-space-lg py-space-md border-b border-surface-container flex items-center justify-between bg-surface-container-lowest">
+      <div>
+        <h3 class="font-headline-md text-headline-md text-primary font-bold">Aktifkan Mesin Tunai</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Transaksi yang dibayar tunai langsung di kasir outlet</p>
+      </div>
+      <button onclick="closeQaModal()" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container transition-colors cursor-pointer">
+        <span class="material-symbols-outlined text-xl">close</span>
+      </button>
     </div>
-    <div class="cm-body">
-      <div class="field">
-        <label>Catatan (opsional)</label>
-        <textarea id="cmNote" placeholder="Catatan singkat..." style="min-height:56px;"></textarea>
+    <div class="p-space-lg flex flex-col gap-space-md">
+      <div class="flex flex-col gap-1.5">
+        <label class="font-label-md text-label-md text-primary font-bold">Pilih Unit Mesin Siap Pakai</label>
+        <select id="qaMesinSelect" class="w-full h-11 px-3 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container">
+          <option value="Mesin Cuci #01">Mesin Cuci #01 — Front Load (Tersedia)</option>
+          <option value="Mesin Cuci #05">Mesin Cuci #05 — Front Load (Tersedia)</option>
+          <option value="Mesin Pengering #02">Mesin Pengering #02 — Gas Dryer (Tersedia)</option>
+          <option value="Mesin Pengering #03">Mesin Pengering #03 — Gas Dryer (Tersedia)</option>
+          <option value="Mesin Pengering #06">Mesin Pengering #06 — Gas Dryer (Tersedia)</option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label class="font-label-md text-label-md text-primary font-bold">Layanan</label>
+        <select id="qaLayananSelect" class="w-full h-11 px-3 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface font-body-md text-body-md">
+          <option value="Cuci saja">Cuci Saja (Rp 12.000)</option>
+          <option value="Kering saja">Kering Saja (Rp 12.000)</option>
+          <option value="Cuci + Kering">Cuci + Kering (Rp 22.000)</option>
+        </select>
+      </div>
+      <div class="p-space-sm bg-surface-container-low rounded-xl border border-primary-container/20 flex items-start gap-2 text-on-surface-variant font-body-sm text-body-sm">
+        <span class="material-symbols-outlined text-primary-container text-lg mt-0.5">info</span>
+        <span>Mesin akan langsung diaktifkan via sinyal relay IoT setelah konfirmasi.</span>
       </div>
     </div>
-    <div class="cm-foot">
-      <button class="btn btn-ghost" onclick="closeEl('confirmModal')">Batal</button>
-      <button class="btn btn-primary btn-block" id="cmConfirmBtn" onclick="submitConfirm()">
-        <span id="cmBtnLabel">Konfirmasi</span>
-      </button>
+    <div class="px-space-lg py-space-md bg-surface-container-low/60 border-t border-surface-container flex items-center justify-end gap-2.5">
+      <button onclick="closeQaModal()" class="px-space-md py-2 rounded-lg text-secondary font-label-md text-label-md hover:bg-surface-container transition-colors cursor-pointer">Batal</button>
+      <button onclick="submitQaModal()" class="px-space-lg py-2 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:bg-primary transition-colors shadow-sm cursor-pointer">Nyalakan Mesin Sekarang</button>
     </div>
   </div>
 </div>
 
-<!-- Toast notification -->
-<div class="toast" id="toast">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-  <span>Aksi berhasil</span>
+<!-- TOAST FLOATING NOTIFICATION -->
+<div id="toastNotification" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 px-space-md py-2.5 rounded-xl bg-primary text-on-primary shadow-2xl flex items-center gap-2.5 font-label-md text-label-md transition-all duration-300 opacity-0 pointer-events-none translate-y-4 border border-primary-fixed/20">
+  <span class="material-symbols-outlined text-green-400 text-lg" id="toastIcon">check_circle</span>
+  <span id="toastMessage">Aksi berhasil dilakukan</span>
 </div>
 
-<script src="assets/icons.js"></script>
-<script src="assets/layout.js"></script>
+<!-- ========================================================================= -->
+<!-- JAVASCRIPT LOGIC & MENWASH FLOWS                                          -->
+<!-- ========================================================================= -->
 <script>
-  Layout.mount({
-    active:'gangguan', titleIcon:'alert',
-    title:'Mesin Gangguan',
-    subtitle:'Penanganan kendala mesin &amp; kompensasi',
-    badgeGangguan:'1'
-  });
-</script>
-<script src="assets/admin.js"></script>
-<script>
-  /* ---- Drawer: Kontrol Darurat ---- */
-  function openDrawerWithCode(code, status, tx){
-    document.getElementById('dCode').textContent = code;
-    document.getElementById('dStatus').textContent = status === 'err' ? 'Gangguan' : (status === 'off' ? 'Offline' : status);
-    document.getElementById('dTx').textContent = tx;
-    resetDrawer();
-    openEl('mDrawer');
-  }
-
-  function resetDrawer(){
-    document.getElementById('dActionDefault').style.display = 'block';
-    document.getElementById('dActionPaid').style.display = 'none';
-    document.getElementById('dActionProcessing').style.display = 'none';
-    document.getElementById('dActionDone').style.display = 'none';
-    document.getElementById('stopReasonPaid').value = '';
-    document.getElementById('confirmPaidBtn').disabled = true;
-  }
-
-  function beginStop(){
-    document.getElementById('dActionDefault').style.display = 'none';
-    document.getElementById('dActionPaid').style.display = 'block';
-  }
-
-  function cancelStop(){ resetDrawer(); }
-
-  function submitStop(){
-    document.getElementById('dActionPaid').style.display = 'none';
-    document.getElementById('dActionProcessing').style.display = 'block';
-    simulateAsyncCommand(()=>{
-      document.getElementById('dActionProcessing').style.display = 'none';
-      document.getElementById('dActionDone').style.display = 'block';
-      showToast('Mesin dimatikan');
-    });
-  }
-
-  document.getElementById('stopReasonPaid').addEventListener('input', (e)=>{
-    document.getElementById('confirmPaidBtn').disabled = e.target.value.trim().length === 0;
-  });
-
-  /* ---- Quick Activate Tunai ---- */
-  function qaActivate(){
-    document.getElementById('qaProcessingBox').style.display = 'flex';
-    document.getElementById('qaActivateBtn').disabled = true;
-    document.querySelector('#qaFoot2 .btn-ghost').disabled = true;
-    simulateAsyncCommand(()=>{
-      showStep('qa',3);
-      showToast('Mesin dinyalakan & transaksi dicatat');
-      document.getElementById('qaProcessingBox').style.display = 'none';
-      document.getElementById('qaActivateBtn').disabled = false;
-      document.querySelector('#qaFoot2 .btn-ghost').disabled = false;
-    });
-  }
-
-  /* ---- Modal Konfirmasi Kecil ---- */
-  let _confirmType = '';
-  let _confirmMachine = '';
-
-  function openConfirm(type, machineName, btnLabel, desc){
-    _confirmType = type;
-    _confirmMachine = machineName;
-    document.getElementById('cmTitle').textContent = btnLabel + ' — ' + machineName;
-    document.getElementById('cmDesc').textContent = desc;
-    document.getElementById('cmBtnLabel').textContent = btnLabel;
-    document.getElementById('cmNote').value = '';
-    openEl('confirmModal');
-  }
-
-  function submitConfirm(){
-    closeEl('confirmModal');
-    if(_confirmType === 'confirm-selesai'){
-      showToast( _confirmMachine + ' ditandai selesai');
-      const card = document.getElementById('gc-kering05');
-      if(card){ card.style.opacity = '.45'; card.style.pointerEvents = 'none'; }
-    } else if(_confirmType === 'confirm-periksa'){
-      showToast(_confirmMachine + ' ditandai sudah diperiksa');
-      const card = document.getElementById('gc-cuci02');
-      if(card){ card.style.opacity = '.45'; card.style.pointerEvents = 'none'; }
+  /* Modal Helpers */
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.remove('hidden');
     }
   }
 
-  /* ---- Filter Riwayat Gangguan ---- */
-  let historyTypeFilter = 'semua';
-  function filterHistory(type, el){
-    historyTypeFilter = type;
-    document.querySelectorAll('#historyFilterChips .fchip').forEach(c => c.classList.remove('active'));
-    if(el) el.classList.add('active');
-    applyHistoryFilter();
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.add('hidden');
+    }
   }
 
-  function applyHistoryFilter(){
-    const query = document.getElementById('historySearch').value.trim().toLowerCase();
-    const rows = document.querySelectorAll('#historyTable tbody tr');
-    let visible = 0;
-    rows.forEach(row => {
-      const matchType = historyTypeFilter === 'semua' || row.dataset.histtype === historyTypeFilter;
-      const matchSearch = !query || row.textContent.toLowerCase().includes(query);
-      const match = matchType && matchSearch;
-      row.style.display = match ? '' : 'none';
-      if(match) visible++;
+  /* Toast Notification */
+  function showToast(msg, icon = 'check_circle', isErr = false) {
+    const toast = document.getElementById('toastNotification');
+    const toastMsg = document.getElementById('toastMessage');
+    const toastIcon = document.getElementById('toastIcon');
+    if (!toast) return;
+
+    toastMsg.textContent = msg;
+    toastIcon.textContent = isErr ? 'error' : icon;
+    toastIcon.className = isErr ? 'material-symbols-outlined text-red-400 text-lg' : 'material-symbols-outlined text-green-400 text-lg';
+
+    toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+    toast.classList.add('opacity-100', 'translate-y-0');
+
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(() => {
+      toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+      toast.classList.remove('opacity-100', 'translate-y-0');
+    }, 3200);
+  }
+
+  /* Live Clock */
+  function updateLiveClock() {
+    const clockEl = document.getElementById('liveClockDisplay');
+    if (!clockEl) return;
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const ss = String(now.getSeconds()).padStart(2, '0');
+    clockEl.textContent = `${hh}:${mm}:${ss} WIB`;
+  }
+  setInterval(updateLiveClock, 1000);
+  updateLiveClock();
+
+  /* ---------------------------------------------------- */
+  /* WIZARD FLOW LOGIC (KOMPENSASI UANG DUMMY)            */
+  /* ---------------------------------------------------- */
+  let currentStep = 1;
+  const totalSteps = 4;
+  let activeWzIncident = {
+    code: 'Mesin Cuci #04',
+    tx: 'MW-284688',
+    customer: 'Hendra Wijaya',
+    reason: 'Air macet (inlet drop)',
+    stoppedMin: 18,
+    totalMin: 40,
+    remainMin: 22,
+    targetMachine: 'Mesin Cuci #01',
+    compDuration: 20,
+    dummyCost: 10000
+  };
+
+  function openWizardWithIncident(code, tx, customer, reason, stoppedMin, totalMin, remainMin) {
+    activeWzIncident.code = code;
+    activeWzIncident.tx = tx;
+    activeWzIncident.customer = customer;
+    activeWzIncident.reason = reason;
+    activeWzIncident.stoppedMin = stoppedMin;
+    activeWzIncident.totalMin = totalMin;
+    activeWzIncident.remainMin = remainMin;
+    activeWzIncident.compDuration = Math.max(10, Math.round(remainMin / 5) * 5);
+
+    document.getElementById('wzHeaderTitle').textContent = `Kompensasi: ${code}`;
+    document.getElementById('wzHeaderSub').textContent = `Alur pemulihan gangguan • Ref: ${tx} (${customer})`;
+
+    document.getElementById('step1AlertText').textContent = `${code} macet di menit ke-${stoppedMin}. Tentukan unit pengganti untuk melanjutkan proses cucian:`;
+    document.getElementById('step2KondisiAsal').textContent = `Terhenti menit ${stoppedMin} dari ${totalMin} menit`;
+    document.getElementById('step2SisaTerutang').textContent = `${remainMin} Menit Tertunda`;
+
+    const slider = document.getElementById('duration-slider');
+    if (slider) slider.value = activeWzIncident.compDuration;
+    updateDuration(activeWzIncident.compDuration);
+
+    document.getElementById('audit-notes').value = `Mesin ${code} macet menit ${stoppedMin} karena kendala: ${reason}. Pakaian dialihkan ke unit pengganti untuk menyelesaikan sisa ${activeWzIncident.compDuration} menit.`;
+
+    document.getElementById('step4TxRef').textContent = `${tx} (${customer})`;
+    document.getElementById('step4Durasi').textContent = `${activeWzIncident.compDuration} Menit (Bilas & Spin)`;
+
+    currentStep = 1;
+    updateWizardUI();
+    openModal('wizard-modal');
+  }
+
+  function updateWizardUI() {
+    for (let i = 1; i <= totalSteps; i++) {
+      const content = document.getElementById('step-content-' + i);
+      const nav = document.getElementById('step-nav-' + i);
+      if (content) {
+        if (i === currentStep) {
+          content.classList.remove('hidden');
+        } else {
+          content.classList.add('hidden');
+        }
+      }
+      if (nav) {
+        if (i === currentStep) {
+          nav.className = "flex flex-col items-center py-2 px-1 rounded-lg bg-surface-container-lowest shadow-sm text-primary font-bold text-center";
+          nav.querySelector('span:first-child').className = "w-5 h-5 rounded-full bg-primary text-on-primary text-xs flex items-center justify-center mb-1";
+        } else if (i < currentStep) {
+          nav.className = "flex flex-col items-center py-2 px-1 rounded-lg text-green-700 text-center";
+          nav.querySelector('span:first-child').className = "w-5 h-5 rounded-full bg-green-100 text-green-800 text-xs flex items-center justify-center mb-1";
+        } else {
+          nav.className = "flex flex-col items-center py-2 px-1 rounded-lg text-on-surface-variant text-center opacity-70";
+          nav.querySelector('span:first-child').className = "w-5 h-5 rounded-full bg-surface-container text-on-surface text-xs flex items-center justify-center mb-1";
+        }
+      }
+    }
+
+    const prevBtn = document.getElementById('wizard-prev-btn');
+    if (currentStep > 1) {
+      prevBtn.classList.remove('hidden');
+    } else {
+      prevBtn.classList.add('hidden');
+    }
+
+    const nextBtn = document.getElementById('wizard-next-btn');
+    if (currentStep === totalSteps) {
+      nextBtn.innerHTML = `
+        <span class="flex items-center gap-1 font-bold">
+          <span class="material-symbols-outlined text-sm">bolt</span>
+          Eksekusi Refund &amp; Nyalakan IoT
+        </span>
+      `;
+      nextBtn.className = "px-space-md py-2.5 rounded-lg bg-error hover:bg-red-700 text-on-error font-label-lg text-label-lg transition-colors shadow-md cursor-pointer";
+    } else {
+      nextBtn.innerHTML = 'Lanjut';
+      nextBtn.className = "px-space-md py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg transition-colors cursor-pointer";
+    }
+  }
+
+  function nextStep() {
+    if (currentStep < totalSteps) {
+      if (currentStep === 1) {
+        const selectedTarget = document.querySelector('input[name="target_machine"]:checked');
+        if (selectedTarget) {
+          activeWzIncident.targetMachine = selectedTarget.value;
+          document.getElementById('step4TargetMesin').textContent = selectedTarget.value;
+        }
+      }
+      currentStep++;
+      updateWizardUI();
+    } else {
+      // Step 4 final execution
+      const indicator = document.getElementById('wzProcessingIndicator');
+      const nextBtn = document.getElementById('wizard-next-btn');
+      if (indicator) indicator.classList.remove('hidden');
+      if (nextBtn) nextBtn.disabled = true;
+
+      setTimeout(() => {
+        if (indicator) indicator.classList.add('hidden');
+        if (nextBtn) nextBtn.disabled = false;
+        closeModal('wizard-modal');
+
+        const newLogId = 'MW-DM-' + Math.floor(1000 + Math.random() * 9000);
+
+        // Add to history table
+        const tbody = document.getElementById('historyTableBody');
+        if (tbody) {
+          const newRow = document.createElement('tr');
+          newRow.className = 'hover:bg-surface-container-low/60 transition-colors bg-green-50/40';
+          newRow.dataset.cat = 'dummy';
+          newRow.innerHTML = `
+            <td class="py-space-sm px-space-md">
+              <div class="flex flex-col">
+                <span class="font-mono font-bold text-primary">${newLogId}</span>
+                <span class="text-xs text-on-surface-variant font-mono">Ref: ${activeWzIncident.tx}</span>
+              </div>
+            </td>
+            <td class="py-space-sm px-space-md">
+              <div class="flex items-center gap-space-xs">
+                <span class="material-symbols-outlined text-base text-primary">local_laundry_service</span>
+                <span class="font-bold text-on-surface">${activeWzIncident.code}</span>
+              </div>
+            </td>
+            <td class="py-space-sm px-space-md">
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-red-50 text-error font-label-sm text-label-sm font-bold">
+                <span class="w-1.5 h-1.5 rounded-full bg-error"></span> Terhenti ${activeWzIncident.stoppedMin}m
+              </span>
+            </td>
+            <td class="py-space-sm px-space-md">
+              <div class="flex flex-col">
+                <span class="font-medium text-on-surface">Restart Dummy ${activeWzIncident.compDuration} menit • Refund ${activeWzIncident.tx}</span>
+                <span class="text-xs text-on-surface-variant">Dipindahkan ke ${activeWzIncident.targetMachine}</span>
+              </div>
+            </td>
+            <td class="py-space-sm px-space-md">
+              <div class="flex flex-col">
+                <span class="font-semibold text-on-surface">Ratna Sari</span>
+                <span class="text-xs text-on-surface-variant">Baru saja</span>
+              </div>
+            </td>
+            <td class="py-space-sm px-space-md">
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-label-sm text-label-sm font-bold">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-600"></span> Selesai
+              </span>
+            </td>
+            <td class="py-space-sm px-space-md text-right">
+              <button class="px-3 py-1.5 rounded-md bg-surface-container hover:bg-surface-variant text-primary font-label-md text-label-md transition-colors cursor-pointer" onclick="openDetailModal('${newLogId}', '${activeWzIncident.tx}', '${activeWzIncident.code}', '${activeWzIncident.targetMachine}', '${activeWzIncident.stoppedMin} Menit', '${activeWzIncident.compDuration} Menit', 'Ratna Sari', 'Rp ${activeWzIncident.dummyCost.toLocaleString('id-ID')}', 'Kompensasi langsung jalan.')">
+                Lihat Detail
+              </button>
+            </td>
+          `;
+          tbody.insertBefore(newRow, tbody.firstChild);
+        }
+
+        // Dim active incident card
+        const cardMap = {
+          'Cuci #04': 'incident-card-mc04',
+          'Cuci #02': 'incident-card-mc02',
+          'Pengering #01': 'incident-card-dr01',
+          'Pengering #05': 'incident-card-dr05'
+        };
+        const cardId = cardMap[activeWzIncident.code];
+        if (cardId) {
+          const cardEl = document.getElementById(cardId);
+          if (cardEl) {
+            cardEl.style.opacity = '0.45';
+            cardEl.style.pointerEvents = 'none';
+          }
+        }
+
+        // Update stat counters
+        const statPerlu = document.getElementById('statPerluKompensasi');
+        const statSelesai = document.getElementById('statSelesaiHariIni');
+        const bannerCount = document.getElementById('bannerIncidentCount');
+        const pillCount = document.getElementById('activePillCount');
+        if (statPerlu) {
+          const v = Math.max(0, parseInt(statPerlu.textContent) - 1);
+          statPerlu.textContent = `${v} Mesin`;
+          if (bannerCount) bannerCount.textContent = `${v} Unit Butuh Tindakan`;
+          if (pillCount) pillCount.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-error"></span> ${v} Unit Memerlukan Restart Ulang`;
+          const navBadge = document.getElementById('badgeNavGangguan');
+          if (navBadge) navBadge.textContent = v;
+        }
+        if (statSelesai) {
+          const v = parseInt(statSelesai.textContent) + 1;
+          statSelesai.textContent = `${v} Kasus`;
+        }
+
+        showToast(`Kompensasi ${activeWzIncident.code} sukses dieksekusi ke ${activeWzIncident.targetMachine}. Transaksi refund otomatis dicatat.`);
+        currentStep = 1;
+        updateWizardUI();
+      }, 1200);
+    }
+  }
+
+  function prevStep() {
+    if (currentStep > 1) {
+      currentStep--;
+      updateWizardUI();
+    }
+  }
+
+  function updateDuration(val) {
+    const el = document.getElementById('duration-val');
+    if (el) el.innerText = val + " Menit";
+    activeWzIncident.compDuration = Number(val);
+    const cost = Math.round(Number(val) * 500);
+    activeWzIncident.dummyCost = cost;
+    const nominalEl = document.getElementById('step2NominalDummy');
+    if (nominalEl) nominalEl.textContent = 'Rp ' + cost.toLocaleString('id-ID');
+    const nominal4 = document.getElementById('step4Nominal');
+    if (nominal4) nominal4.textContent = 'Rp ' + cost.toLocaleString('id-ID');
+  }
+
+  /* ---------------------------------------------------- */
+  /* DETAIL AUDIT MODAL HELPER                            */
+  /* ---------------------------------------------------- */
+  function openDetailModal(auditId, refTx, unitAsal, unitTarget, macet, durasi, operator, nominal, notes) {
+    document.getElementById('auditModalSub').textContent = `ID Audit: ${auditId} • Referensi Transaksi: ${refTx}`;
+    document.getElementById('audDetailNominal').textContent = nominal;
+    document.getElementById('audDetailUnitAsal').innerHTML = `<span class="material-symbols-outlined text-sm">local_laundry_service</span> ${unitAsal}`;
+    document.getElementById('audDetailUnitTarget').innerHTML = `<span class="material-symbols-outlined text-sm">swap_horiz</span> ${unitTarget}`;
+    document.getElementById('audDetailMacet').textContent = macet;
+    document.getElementById('audDetailDurasi').textContent = durasi;
+    document.getElementById('audDetailOperator').textContent = operator;
+    document.getElementById('audDetailNotes').textContent = `“${notes}”`;
+    openModal('detail-modal');
+  }
+
+  /* ---------------------------------------------------- */
+  /* DRAWER KONTROL DARURAT                               */
+  /* ---------------------------------------------------- */
+  let currentDrawerMachine = 'Mesin Cuci #04';
+  let currentDrawerTx = 'MW-284688';
+
+  function openDrawerWithCode(machineCode, status, tx) {
+    currentDrawerMachine = machineCode;
+    currentDrawerTx = tx;
+    document.getElementById('drawerMachineTitle').textContent = machineCode;
+    document.getElementById('drawerTxRef').textContent = tx;
+    document.getElementById('drawerStopReason').value = '';
+    openModal('drawer-modal');
+  }
+
+  function triggerEmergencyUnlock() {
+    if (confirm(`PENTING: Pastikan level air di dalam drum sudah turun sebelum membuka paksa solenoid kunci pintu ${currentDrawerMachine}. Lanjutkan?`)) {
+      showToast(`Sinyal FORCE_UNLOCK_SOLENOID dikirim ke ${currentDrawerMachine} via MQTT.`);
+      closeModal('drawer-modal');
+    }
+  }
+
+  function triggerCutPower() {
+    if (confirm(`PERINGATAN: Matikan seluruh daya smart breaker ${currentDrawerMachine} sekarang?`)) {
+      showToast(`Arus daya ${currentDrawerMachine} berhasil diputus via relay smart breaker.`, 'power_off', true);
+      closeModal('drawer-modal');
+    }
+  }
+
+  function submitDrawerAction() {
+    const reason = document.getElementById('drawerStopReason').value.trim();
+    if (!reason) {
+      alert('Harap isi catatan tindakan lapangan terlebih dahulu.');
+      return;
+    }
+    showToast(`Tindakan darurat pada ${currentDrawerMachine} berhasil dicatat.`);
+    closeModal('drawer-modal');
+  }
+
+  /* ---------------------------------------------------- */
+  /* QUICK ACTIVATE CASH (qaModal)                        */
+  /* ---------------------------------------------------- */
+  function openQaModal() {
+    openModal('qaModalOverlay');
+  }
+
+  function closeQaModal() {
+    closeModal('qaModalOverlay');
+  }
+
+  function submitQaModal() {
+    const mesin = document.getElementById('qaMesinSelect').value;
+    const layanan = document.getElementById('qaLayananSelect').value;
+    closeQaModal();
+    showToast(`Mesin ${mesin} telah dinyalakan secara manual (${layanan}). Transaksi tunai dicatat.`);
+  }
+
+  /* ---------------------------------------------------- */
+  /* FILTERING INCIDENTS & HISTORY TABLE                  */
+  /* ---------------------------------------------------- */
+  function filterActiveIncidents(type, btn) {
+    document.querySelectorAll('.tab-filter-btn').forEach(b => {
+      b.className = 'tab-filter-btn px-space-md py-1.5 rounded-md font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer';
     });
-    document.getElementById('historyPageInfo').textContent = visible + ' catatan';
-  }
-  document.getElementById('historySearch').addEventListener('input', applyHistoryFilter);
+    btn.className = 'tab-filter-btn active px-space-md py-1.5 rounded-md bg-surface-container-lowest font-label-md text-label-md text-primary font-bold shadow-sm cursor-pointer';
 
-  /* ---- Filter Gangguan Grid ---- */
-  function filterGangguanGrid(tipe){
-    const cards = document.querySelectorAll('.gangguan-grid .gangguan-card');
-    cards.forEach(card => {
-      const isCuci = card.querySelector('.gc-name').textContent.toLowerCase().includes('cuci');
-      if (tipe === 'semua' || (tipe === 'cuci' && isCuci) || (tipe === 'pengering' && !isCuci)) {
-        card.style.display = 'flex';
+    const cards = document.querySelectorAll('.incident-card');
+    cards.forEach(c => {
+      if (type === 'semua' || c.dataset.type === type) {
+        c.style.display = 'flex';
       } else {
-        card.style.display = 'none';
+        c.style.display = 'none';
       }
     });
   }
+
+  const histSearch = document.getElementById('historySearchInput');
+  const histCat = document.getElementById('historyCategorySelect');
+  const histRows = document.querySelectorAll('#historyTableBody tr');
+
+  function applyHistoryFilter() {
+    const q = (histSearch ? histSearch.value : '').toLowerCase().trim();
+    const cat = histCat ? histCat.value : 'semua';
+    let visible = 0;
+
+    histRows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      const rowCat = row.dataset.cat;
+      const matchSearch = !q || text.includes(q);
+      const matchCat = (cat === 'semua' || rowCat === cat);
+
+      if (matchSearch && matchCat) {
+        row.style.display = '';
+        visible++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    const info = document.getElementById('historyTableCountInfo');
+    if (info) info.textContent = `Menampilkan ${visible} dari ${histRows.length} penanganan insiden hari ini`;
+  }
+
+  if (histSearch) histSearch.addEventListener('input', applyHistoryFilter);
+  if (histCat) histCat.addEventListener('change', applyHistoryFilter);
+
+  function exportAuditLog() {
+    showToast('Mengunduh berkas log audit insiden hari ini (.CSV)...', 'download');
+  }
 </script>
+
 </body>
 </html>

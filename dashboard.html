@@ -1,536 +1,1347 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menwash Admin — Dashboard</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23D25353'/%3E%3Ccircle cx='12' cy='13.3' r='6' fill='none' stroke='%23FFEAD3' stroke-width='1.8'/%3E%3Cpath d='M9.1 13.3c0-1.6 1.3-2.9 2.9-2.9s2.9 1.3 2.9 2.9-1.3 2.9-2.9 2.9' fill='none' stroke='%23FFEAD3' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M8.3 4.6h1M11.5 4.6h1M14.7 4.6h1' stroke='%23FFEAD3' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/admin.css">
-</head>
-<body>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="web_dashboard" name="shell-type">
+  <title>Menwash Admin — Dashboard</title>
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23153A66'/%3E%3Ccircle cx='12' cy='13.3' r='6' fill='none' stroke='%23FFFFFF' stroke-width='1.8'/%3E%3Cpath d='M9.1 13.3c0-1.6 1.3-2.9 2.9-2.9s2.9 1.3 2.9 2.9-1.3 2.9-2.9 2.9' fill='none' stroke='%23FFFFFF' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M8.3 4.6h1M11.5 4.6h1M14.7 4.6h1' stroke='%23FFFFFF' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 
-<div class="app">
-
-  <!-- ===== SIDEBAR (dirender oleh assets/layout.js) ===== -->
-  <aside class="sidebar" id="layoutSidebar"></aside>
-
-  <!-- ===== MAIN ===== -->
-  <main class="main">
-
-    <div class="topbar" id="layoutTopbar"></div>
-
-    <div class="content">
-
-      <!-- KPI -->
-      <div class="stat-grid">
-        <div class="stat-card">
-          <div class="s-top"> 
-            <span class="s-label">Mesin sedang aktif</span>
-            <span class="s-icon" data-icon="machine" data-size="20"></span>
-          </div>
-          <div class="s-val">7 <small>/ 12 mesin</small></div>
-          <div class="s-delta up">5 tersedia</div>
-          <div class="s-bar"><i style="width:58.3%; background:var(--busy);"></i></div>
-        </div>
-
-        <div class="stat-card">
-          <div class="s-top">
-            <span class="s-label">Transaksi hari ini</span>
-            <span class="s-icon" data-icon="invoice" data-size="20"></span>
-          </div>
-          <div class="s-val">48</div>
-          <div class="s-delta up">+12 dari kemarin</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="s-top">
-            <span class="s-label">Est. pendapatan hari ini</span>
-            <span class="s-icon" data-icon="money" data-size="20"></span>
-          </div>
-          <div class="s-val">Rp 612rb</div>
-          <div class="s-delta">QRIS 34 · Tunai 14</div>
-          <div class="s-bar" role="img" aria-label="QRIS 71 persen, Tunai 29 persen"><i style="width:70.8%; background:var(--busy);"></i><i style="width:29.2%; background:var(--amber);"></i></div>
-        </div>
-
-        <div class="stat-card is-err">
-          <div class="s-top">
-            <span class="s-label">Gangguan aktif</span>
-            <span class="s-icon" data-icon="alert" data-size="20" style="background:var(--err-bg); color:var(--err-ink);"></span>
-          </div>
-          <div class="s-val">1</div>
-          <div class="s-delta warn">Perlu tindakan</div>
-        </div>
-      </div>
-
-      <!-- Notifikasi Gangguan Singkat -->
-      <div class="alert-strip">
-        <div class="as-icon" data-icon="alert" data-size="18"></div>
-        <div class="as-body">
-          <div class="as-line"><b>Mesin Cuci #04 terhenti (menit 18)</b> · Transaksi <span class="tx-id">MW-284688</span> · Menunggu kompensasi</div>
-        </div>
-        <div class="as-actions">
-          <a href="dummy-restart.html" class="btn btn-primary" style="padding:6px 14px; font-size:13px;">Restart Dummy</a>
-        </div>
-      </div>
-
-      <!-- Siklus berjalan -->
-      <div class="section-head">
-        <div>
-          <h3>Siklus Sedang Berjalan</h3>
-          <p>Cuplikan siklus aktif saat ini</p>
-        </div>
-        <a href="progress.html" class="link-more">Lihat semua siklus <span data-icon="arrowRight" data-size="16"></span></a>
-      </div>
-      <div class="run-grid">
-        <div class="run-card">
-          <div class="rc-top">
-            <span class="rc-name">Cuci #03</span>
-            <span class="badge amber">⇄ Kombo</span>
-          </div>
-          <div class="rc-main">
-            <div class="rc-icon" data-icon="wash" data-size="24"></div>
-            <div><div class="rc-k">Sisa waktu siklus</div><div class="rc-v">9<small> menit</small></div></div>
-          </div>
-          <div>
-            <div class="rc-bar-h"><span>Cuci + Kering</span><span class="mono">78%</span></div>
-            <div class="rc-bar"><i style="width:78%"></i></div>
-          </div>
-          <div class="rc-foot">MW-284719 · QRIS</div>
-        </div>
-
-        <div class="run-card">
-          <div class="rc-top">
-            <span class="rc-name">Pengering #04</span>
-            <span class="badge busy">Berjalan</span>
-          </div>
-          <div class="rc-main">
-            <div class="rc-icon dry" data-icon="dry" data-size="24"></div>
-            <div><div class="rc-k">Sisa waktu siklus</div><div class="rc-v">12<small> menit</small></div></div>
-          </div>
-          <div>
-            <div class="rc-bar-h"><span>Kering saja</span><span class="mono">66%</span></div>
-            <div class="rc-bar dry"><i style="width:66%"></i></div>
-          </div>
-          <div class="rc-foot">MW-284710 · QRIS</div>
-        </div>
-
-        <div class="run-card">
-          <div class="rc-top">
-            <span class="rc-name">Cuci #02</span>
-            <span class="badge busy">Berjalan</span>
-          </div>
-          <div class="rc-main">
-            <div class="rc-icon" data-icon="wash" data-size="24"></div>
-            <div><div class="rc-k">Sisa waktu siklus</div><div class="rc-v">22<small> menit</small></div></div>
-          </div>
-          <div>
-            <div class="rc-bar-h"><span>Cuci saja</span><span class="mono">45%</span></div>
-            <div class="rc-bar"><i style="width:45%"></i></div>
-          </div>
-          <div class="rc-foot">MW-284702 · QRIS</div>
-        </div>
-
-        <div class="run-card">
-          <div class="rc-top">
-            <span class="rc-name">Cuci #07</span>
-            <span class="badge busy">Berjalan</span>
-          </div>
-          <div class="rc-main">
-            <div class="rc-icon" data-icon="wash" data-size="24"></div>
-            <div><div class="rc-k">Sisa waktu siklus</div><div class="rc-v">31<small> menit</small></div></div>
-          </div>
-          <div>
-            <div class="rc-bar-h"><span>Cuci saja</span><span class="mono">22%</span></div>
-            <div class="rc-bar"><i style="width:22%"></i></div>
-          </div>
-          <div class="rc-foot">MW-TX-9925 · Tunai</div>
-        </div>
-      </div>
-
-      <!-- Tren + utilisasi -->
-      <div class="dash-grid">
-
-        <div class="card col-8" id="trendChartCard">
-          <div class="card-head">
-            <div>
-              <h3>Tren Pemakaian Mesin</h3>
-              <p>Perbandingan penggunaan Mesin Cuci &amp; Pengering</p>
-            </div>
-            <div class="field" style="margin-bottom:0; min-width:140px;">
-              <select id="chartFilter" onchange="setChartPeriod(this.value, this)">
-                <option value="hari">Hari ini</option>
-                <option value="minggu">Minggu ini</option>
-                <option value="bulan">Bulan ini</option>
-              </select>
-            </div>
-          </div>
-          <div class="card-body chart-body">
-            <div class="chart-legend">
-              <div class="lg-item lg-item-cuci"><span class="lg-dot" style="background:var(--chart-1);"></span>Mesin Cuci · <b>34</b></div>
-              <div class="lg-item lg-item-kering"><span class="lg-dot" style="background:var(--chart-2);"></span>Mesin Pengering · <b>14</b></div>
-            </div>
-
-            <svg class="line-chart" viewBox="0 0 640 200" role="img" aria-label="Grafik tren pemakaian mesin">
-              <line class="grid-line" x1="40" y1="20" x2="620" y2="20"/>
-              <line class="grid-line" x1="40" y1="95" x2="620" y2="95"/>
-              <line class="axis-line" x1="40" y1="170" x2="620" y2="170"/>
-              <text class="axis-label" x="32" y="24" text-anchor="end">4</text>
-              <text class="axis-label" x="32" y="99" text-anchor="end">2</text>
-              <text class="axis-label" x="32" y="174" text-anchor="end">0</text>
-
-              <path d="M40,170 L40,132.5 81.4,95 122.9,57.5 164.3,20 205.7,57.5 247.1,95 288.6,57.5 330,20 371.4,57.5 412.9,95 454.3,57.5 495.7,95 537.1,132.5 578.6,132.5 620,170 Z" fill="var(--chart-1)" opacity="0.08"/>
-              <polyline class="polyline-cuci" points="40,132.5 81.4,95 122.9,57.5 164.3,20 205.7,57.5 247.1,95 288.6,57.5 330,20 371.4,57.5 412.9,95 454.3,57.5 495.7,95 537.1,132.5 578.6,132.5 620,170" fill="none" stroke="var(--chart-1)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-              <polyline class="polyline-kering" points="40,170 81.4,132.5 122.9,132.5 164.3,95 205.7,132.5 247.1,132.5 288.6,132.5 330,95 371.4,132.5 412.9,132.5 454.3,132.5 495.7,132.5 537.1,170 578.6,132.5 620,170" fill="none" stroke="var(--chart-2)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-
-              <g fill="var(--chart-1)">
-                <circle class="pt" cx="40" cy="132.5" r="3"><title>07:00 · Cuci · 1 kali</title></circle>
-                <circle class="pt" cx="81.4" cy="95" r="3"><title>08:00 · Cuci · 2 kali</title></circle>
-                <circle class="pt" cx="122.9" cy="57.5" r="3"><title>09:00 · Cuci · 3 kali</title></circle>
-                <circle class="pt" cx="164.3" cy="20" r="4"><title>10:00 · Cuci · 4 kali</title></circle>
-                <circle class="pt" cx="205.7" cy="57.5" r="3"><title>11:00 · Cuci · 3 kali</title></circle>
-                <circle class="pt" cx="247.1" cy="95" r="3"><title>12:00 · Cuci · 2 kali</title></circle>
-                <circle class="pt" cx="288.6" cy="57.5" r="3"><title>13:00 · Cuci · 3 kali</title></circle>
-                <circle class="pt" cx="330" cy="20" r="4"><title>14:00 · Cuci · 4 kali</title></circle>
-                <circle class="pt" cx="371.4" cy="57.5" r="3"><title>15:00 · Cuci · 3 kali</title></circle>
-                <circle class="pt" cx="412.9" cy="95" r="3"><title>16:00 · Cuci · 2 kali</title></circle>
-                <circle class="pt" cx="454.3" cy="57.5" r="3"><title>17:00 · Cuci · 3 kali</title></circle>
-                <circle class="pt" cx="495.7" cy="95" r="3"><title>18:00 · Cuci · 2 kali</title></circle>
-                <circle class="pt" cx="537.1" cy="132.5" r="3"><title>19:00 · Cuci · 1 kali</title></circle>
-                <circle class="pt" cx="578.6" cy="132.5" r="3"><title>20:00 · Cuci · 1 kali</title></circle>
-                <circle class="pt" cx="620" cy="170" r="3"><title>21:00 · Cuci · 0 kali</title></circle>
-              </g>
-              <g fill="var(--chart-2)">
-                <circle class="pt" cx="40" cy="170" r="3"><title>07:00 · Kering · 0 kali</title></circle>
-                <circle class="pt" cx="81.4" cy="132.5" r="3"><title>08:00 · Kering · 1 kali</title></circle>
-                <circle class="pt" cx="122.9" cy="132.5" r="3"><title>09:00 · Kering · 1 kali</title></circle>
-                <circle class="pt" cx="164.3" cy="95" r="4"><title>10:00 · Kering · 2 kali</title></circle>
-                <circle class="pt" cx="205.7" cy="132.5" r="3"><title>11:00 · Kering · 1 kali</title></circle>
-                <circle class="pt" cx="247.1" cy="132.5" r="3"><title>12:00 · Kering · 1 kali</title></circle>
-                <circle class="pt" cx="288.6" cy="132.5" r="3"><title>13:00 · Kering · 1 kali</title></circle>
-                <circle class="pt" cx="330" cy="95" r="4"><title>14:00 · Kering · 2 kali</title></circle>
-                <circle class="pt" cx="371.4" cy="132.5" r="3"><title>15:00 · Kering · 1 kali</title></circle>
-                <circle class="pt" cx="412.9" cy="132.5" r="3"><title>16:00 · Kering · 1 kali</title></circle>
-                <circle class="pt" cx="454.3" cy="132.5" r="3"><title>17:00 · Kering · 1 kali</title></circle>
-                <circle class="pt" cx="495.7" cy="132.5" r="3"><title>18:00 · Kering · 1 kali</title></circle>
-                <circle class="pt" cx="537.1" cy="170" r="3"><title>19:00 · Kering · 0 kali</title></circle>
-                <circle class="pt" cx="578.6" cy="132.5" r="3"><title>20:00 · Kering · 1 kali</title></circle>
-                <circle class="pt" cx="620" cy="170" r="3"><title>21:00 · Kering · 0 kali</title></circle>
-              </g>
-
-              <text class="val-label" x="164.3" y="13" text-anchor="middle" fill="var(--chart-1)">4</text>
-              <text class="val-label" x="330" y="13" text-anchor="middle" fill="var(--chart-1)">4</text>
-              <text class="val-label" x="164.3" y="88" text-anchor="middle" fill="var(--text-faint)">2</text>
-
-              <text class="axis-label" x="40" y="188" text-anchor="middle">07</text>
-              <text class="axis-label" x="122.9" y="188" text-anchor="middle">09</text>
-              <text class="axis-label" x="205.7" y="188" text-anchor="middle">11</text>
-              <text class="axis-label" x="288.6" y="188" text-anchor="middle">13</text>
-              <text class="axis-label" x="371.4" y="188" text-anchor="middle">15</text>
-              <text class="axis-label" x="454.3" y="188" text-anchor="middle">17</text>
-              <text class="axis-label" x="537.1" y="188" text-anchor="middle">19</text>
-              <text class="axis-label" x="620" y="188" text-anchor="middle">21</text>
-            </svg>
-          </div>
-        </div>
-
-        <div class="card col-4">
-          <div class="card-head">
-            <div>
-              <h3>Utilisasi Mesin</h3>
-              <p>Komposisi status 13 unit mesin outlet</p>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="donut-wrap">
-              <div class="donut">
-                <svg viewBox="0 0 120 120" role="img" aria-label="Donut utilisasi mesin: Tersedia 38%, Aktif 38%, Gangguan 15%, Offline 8%">
-                  <g transform="rotate(-90 60 60)" fill="none" stroke-width="14">
-                    <circle cx="60" cy="60" r="48" stroke="var(--surface-low)"/>
-                    <circle cx="60" cy="60" r="48" stroke="var(--ok)" stroke-dasharray="116 301.6" stroke-dashoffset="0"><title>Tersedia · 5 unit (38%)</title></circle>
-                    <circle cx="60" cy="60" r="48" stroke="var(--busy)" stroke-dasharray="116 301.6" stroke-dashoffset="-116"><title>Aktif · 5 unit (38%)</title></circle>
-                    <circle cx="60" cy="60" r="48" stroke="var(--err)" stroke-dasharray="46.4 301.6" stroke-dashoffset="-232"><title>Gangguan · 2 unit (15%)</title></circle>
-                    <circle cx="60" cy="60" r="48" stroke="var(--off)" stroke-dasharray="23.2 301.6" stroke-dashoffset="-278.4"><title>Offline · 1 unit (8%)</title></circle>
-                  </g>
-                </svg>
-                <div class="donut-center"><b>13</b><span>Total mesin</span></div>
-              </div>
-              <div class="legend-list">
-                <div class="legend-row"><span class="lg-l"><i style="background:var(--ok)"></i>Tersedia</span><span class="lg-r"><b>5</b><span>38%</span></span></div>
-                <div class="legend-row"><span class="lg-l"><i style="background:var(--busy)"></i>Aktif</span><span class="lg-r"><b>5</b><span>38%</span></span></div>
-                <div class="legend-row is-err"><span class="lg-l"><i style="background:var(--err)"></i>Gangguan</span><span class="lg-r"><b>2</b><span>15%</span></span></div>
-                <div class="legend-row"><span class="lg-l"><i style="background:var(--off)"></i>Offline</span><span class="lg-r"><b>1</b><span>8%</span></span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Komposisi metode + uang dummy -->
-        <div class="card col-4">
-          <div class="card-head">
-            <div>
-              <h3>Komposisi Metode</h3>
-              <p>Distribusi transaksi &amp; restart dummy hari ini</p>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="donut-wrap">
-              <div class="donut">
-                <svg viewBox="0 0 120 120" role="img" aria-label="Donut komposisi metode pembayaran: QRIS 71%, Tunai 29%">
-                  <g transform="rotate(-90 60 60)" fill="none" stroke-width="14">
-                    <circle cx="60" cy="60" r="48" stroke="var(--surface-low)"/>
-                    <circle cx="60" cy="60" r="48" stroke="var(--busy)" stroke-dasharray="213.6 301.6" stroke-dashoffset="0"><title>QRIS · 34 transaksi (71%)</title></circle>
-                    <circle cx="60" cy="60" r="48" stroke="var(--amber)" stroke-dasharray="88 301.6" stroke-dashoffset="-213.6"><title>Tunai · 14 transaksi (29%)</title></circle>
-                  </g>
-                </svg>
-                <div class="donut-center"><b>48</b><span>Transaksi</span></div>
-              </div>
-              <div class="legend-list">
-                <div class="legend-row"><span class="lg-l"><i style="background:var(--busy)"></i>QRIS</span><span class="lg-r"><b>34</b><span>71%</span></span></div>
-                <div class="legend-row"><span class="lg-l"><i style="background:var(--amber)"></i>Tunai</span><span class="lg-r"><b>14</b><span>29%</span></span></div>
-              </div>
-              <div class="muted" style="text-align:center;">+ 1 restart uang dummy hari ini (non-revenue, Rp 0) — <a href="transaksi.html?filter=dummy" style="font-weight:600; text-decoration:underline;">lihat</a></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card col-8">
-          <div class="card-head">
-            <div>
-              <h3>Pemantauan Uang Dummy</h3>
-              <p>Restart mesin tanpa pembayaran ulang akibat gangguan/kegagalan siklus</p>
-            </div>
-            <a href="transaksi.html?filter=dummy" class="link-more">Lihat semua <span data-icon="arrowRight" data-size="16"></span></a>
-          </div>
-          <div class="card-body">
-
-            <div class="mini-stat-row">
-              <div class="mini-stat">
-                <div class="ms-val">1</div>
-                <div class="ms-label">Restart uang dummy hari ini</div>
-              </div>
-              <div class="mini-stat">
-                <div class="ms-val">15 menit</div>
-                <div class="ms-label">Total durasi dikompensasi</div>
-              </div>
-              <div class="mini-stat">
-                <div class="ms-val">Rp 12.000</div>
-                <div class="ms-label">Nominal transaksi asli yang di-refund</div>
-              </div>
-            </div>
-
-            <div class="alert info mt-14">
-              <span data-icon="info" data-size="18"></span>
-              <span>Uang dummy dipakai admin untuk melanjutkan siklus pelanggan yang gagal/terganggu tanpa membayar ulang. Setiap kali dipakai, transaksi asli otomatis ditandai refund.</span>
-            </div>
-
-            <div class="tl mt-20">
-              <div class="tl-item">
-                <div class="tl-title">MW-DM-0042 — Cuci #04 (restart)</div>
-                <div class="tl-meta">09:34 · sisa 15 menit · terhubung ke transaksi asli MW-284688</div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Aktivitas terbaru -->
-      <div class="card" style="margin-top:16px;">
-        <div class="card-head" style="padding-bottom:16px;">
-          <div>
-            <h3>Aktivitas terbaru</h3>
-            <p>Kejadian terakhir di seluruh mesin</p>
-          </div>
-          <a href="progress.html" class="link-more">Lihat semua <span data-icon="arrowRight" data-size="16"></span></a>
-        </div>
-        <div style="overflow-x:auto;">
-          <table>
-            <thead>
-              <tr><th>Waktu</th><th>Mesin</th><th>Aktivitas</th><th>Keterangan</th><th>Status</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="mono">09:32</td>
-                <td><b>Mesin Cuci #07</b></td>
-                <td>Gangguan terdeteksi</td>
-                <td>Menunggu tindakan admin</td>
-                <td><span class="badge err"><span class="dot"></span>Gangguan</span></td>
-              </tr>
-              <tr>
-                <td class="mono">09:18</td>
-                <td><b>Mesin Pengering #03</b></td>
-                <td>Transaksi tunai</td>
-                <td>Diaktifkan oleh Rani Admin</td>
-                <td><span class="badge amber"><span class="dot"></span>Tunai</span></td>
-              </tr>
-              <tr>
-                <td class="mono">09:05</td>
-                <td><b>Mesin Cuci #02</b></td>
-                <td>Siklus selesai</td>
-                <td>QRIS mandiri, Rp 12.000</td>
-                <td><span class="badge ok"><span class="dot"></span>Selesai</span></td>
-              </tr>
-              <tr>
-                <td class="mono">08:47</td>
-                <td><b>Mesin Pengering #06</b></td>
-                <td>Dimatikan manual</td>
-                <td>Alasan: perawatan filter</td>
-                <td><span class="badge off"><span class="dot"></span>Manual</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
-  </main>
-</div>
-
-<!-- ===== MODAL: AKTIFKAN MESIN TUNAI (QB1-QB3) ===== -->
-<div class="modal-overlay" id="qaModal">
-  <div class="modal">
-    <div class="modal-head">
-      <div>
-        <h3>Aktifkan mesin untuk pelanggan tunai</h3>
-        <p>Untuk transaksi yang dibayar langsung di outlet</p>
-      </div>
-      <button class="modal-close" onclick="closeEl('qaModal')">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
-    </div>
-
-    <div class="modal-body">
-
-      <!-- STEP 1: pilih mesin, layanan, durasi -->
-      <div id="qa-step1">
-        <div class="field required">
-          <label>Pilih mesin</label>
-          <select id="qaMesin">
-            <option>Mesin Cuci #09 — Tersedia</option>
-            <option>Mesin Cuci #11 — Tersedia</option>
-            <option>Mesin Pengering #04 — Tersedia</option>
-            <option>Mesin Pengering #06 — Tersedia</option>
-          </select>
-        </div>
-        <div class="field required">
-          <label>Layanan</label>
-          <div class="seg-row">
-            <div class="seg active" data-group="layanan" data-value="Cuci saja">Cuci saja</div>
-            <div class="seg" data-group="layanan" data-value="Kering saja">Kering saja</div>
-            <div class="seg" data-group="layanan" data-value="Cuci + Kering">Cuci + Kering</div>
-          </div>
-        </div>
-        <div class="field required">
-          <label>Durasi</label>
-          <div class="seg-row">
-            <div class="seg" data-group="durasi" data-value="30 menit">30 menit</div>
-            <div class="seg active" data-group="durasi" data-value="40 menit">40 menit</div>
-            <div class="seg" data-group="durasi" data-value="60 menit">60 menit</div>
-          </div>
-        </div>
-        <div class="alert info">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 4.9V17L12 22l-9-4.9V6.9z"/><path d="M12 8v5M12 16h.01"/></svg>
-          <span>Mesin akan menyala langsung tanpa menunggu pembayaran QRIS. Pastikan uang tunai sudah diterima.</span>
-        </div>
-      </div>
-
-      <!-- STEP 2: konfirmasi -->
-      <div id="qa-step2" style="display:none;">
-        <div class="summary-box">
-          <div class="summary-row"><span class="k">Mesin</span><span class="v" id="cfMesin">Mesin Cuci #09</span></div>
-          <div class="summary-row"><span class="k">Layanan</span><span class="v" id="cfLayanan">Cuci saja</span></div>
-          <div class="summary-row"><span class="k">Durasi</span><span class="v" id="cfDurasi">40 menit</span></div>
-          <div class="summary-row"><span class="k">Metode</span><span class="v">Tunai — dicatat manual</span></div>
-          <div class="summary-row"><span class="k">Total</span><span class="v" style="color:var(--maroon); font-size:15px;">Rp 12.000</span></div>
-        </div>
-        <div class="alert danger mt-14" id="qaWarnBox">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-          <span>Mesin akan langsung menyala setelah kamu menekan tombol di bawah. Aksi ini tidak bisa dibatalkan.</span>
-        </div>
-        <div class="processing-box mt-14" id="qaProcessingBox" style="display:none;">
-          <div class="p-spin"></div>
-          <div class="p-text"><b>Memproses…</b><span>Perintah diterima sistem (202 Accepted) — menunggu mesin ACK melalui MQTT.</span></div>
-        </div>
-      </div>
-
-      <!-- STEP 3: sukses -->
-      <div id="qa-step3" style="display:none;">
-        <div style="text-align:center; padding:6px 0 4px;">
-          <div style="width:56px;height:56px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>
-          </div>
-          <div style="font-weight:600; font-size:15.5px;">Mesin berhasil dinyalakan</div>
-          <div class="muted mt-4">Transaksi tunai sudah tercatat di sistem.</div>
-        </div>
-        <div class="summary-box mt-14">
-          <div class="summary-row"><span class="k">ID Transaksi</span><span class="v">MW-TX-9931</span></div>
-          <div class="summary-row"><span class="k">Mesin</span><span class="v" id="cfMesin2">Mesin Cuci #09</span></div>
-          <div class="summary-row"><span class="k">Dicatat oleh</span><span class="v">Rani Admin</span></div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="modal-foot" id="qaFoot1">
-      <button class="btn btn-ghost" onclick="closeEl('qaModal')">Batal</button>
-      <button class="btn btn-primary btn-block" onclick="showStep('qa',2)">Lanjutkan</button>
-    </div>
-    <div class="modal-foot" id="qaFoot2" style="display:none;">
-      <button class="btn btn-ghost" onclick="showStep('qa',1)">Kembali</button>
-      <button class="btn btn-primary btn-block" id="qaActivateBtn" onclick="qaActivate()">Nyalakan Mesin Sekarang</button>
-    </div>
-    <div class="modal-foot" id="qaFoot3" style="display:none;">
-      <button class="btn btn-primary btn-block" onclick="closeEl('qaModal'); showStep('qa',1)">Selesai</button>
-    </div>
-
-  </div>
-</div>
-
-<div class="toast" id="toast">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
-  <span>Berhasil</span>
-</div>
-
-<script src="assets/icons.js"></script>
-<script src="assets/layout.js"></script>
-<script>
-  Layout.mount({ active:'dashboard', title:'Dashboard', subtitle:'Ringkasan operasional hari ini', badgeGangguan:'1' });
-</script>
-<script src="assets/admin.js"></script>
-<script>
-  function qaActivate(){
-    document.getElementById('qaWarnBox').style.display = 'none';
-    document.getElementById('qaProcessingBox').style.display = 'flex';
-    document.getElementById('qaActivateBtn').disabled = true;
-    document.querySelector('#qaFoot2 .btn-ghost').disabled = true;
-    simulateAsyncCommand(()=>{
-      showStep('qa',3);
-      showToast('Mesin dinyalakan & transaksi tunai tercatat');
-      document.getElementById('qaWarnBox').style.display = 'flex';
-      document.getElementById('qaProcessingBox').style.display = 'none';
-      document.getElementById('qaActivateBtn').disabled = false;
-      document.querySelector('#qaFoot2 .btn-ghost').disabled = false;
-    });
-  }
-
-  // sinkronkan tombol footer dengan step yang tampil
-  const qaObserver = new MutationObserver(()=>{
-    const s2 = document.getElementById('qa-step2').style.display !== 'none';
-    const s3 = document.getElementById('qa-step3').style.display !== 'none';
-    document.getElementById('qaFoot1').style.display = (!s2 && !s3) ? 'flex' : 'none';
-    document.getElementById('qaFoot2').style.display = (s2 && !s3) ? 'flex' : 'none';
-    document.getElementById('qaFoot3').style.display = s3 ? 'flex' : 'none';
-    if(s2 || s3){
-      document.getElementById('cfMesin').textContent = document.getElementById('qaMesin').value.split(' —')[0];
-      document.getElementById('cfMesin2').textContent = document.getElementById('qaMesin').value.split(' —')[0];
-      document.getElementById('cfLayanan').textContent = document.querySelector('.seg[data-group="layanan"].active').dataset.value;
-      document.getElementById('cfDurasi').textContent = document.querySelector('.seg[data-group="durasi"].active').dataset.value;
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
     }
-  });
-  ['qa-step1','qa-step2','qa-step3'].forEach(id=>{
-    qaObserver.observe(document.getElementById(id), { attributes:true, attributeFilter:['style'] });
-  });
-</script>
+    ::-webkit-scrollbar { display: none; }
+  </style>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-primary-container": "#85a5d7",
+            "primary-fixed-dim": "#a8c8fc",
+            "tertiary": "#001f5d",
+            "inverse-on-surface": "#eef0ff",
+            "surface-dim": "#d4d9f0",
+            "on-background": "#161b2b",
+            "on-secondary": "#ffffff",
+            "secondary-fixed": "#d8e2ff",
+            "secondary-fixed-dim": "#b5c6ef",
+            "on-surface-variant": "#43474f",
+            "surface-variant": "#dde2f8",
+            "on-tertiary-container": "#7f9fff",
+            "on-primary-fixed-variant": "#254874",
+            "inverse-surface": "#2a3041",
+            "primary-fixed": "#d5e3ff",
+            "surface-bright": "#faf8ff",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-secondary-container": "#4b5b7f",
+            "surface-container-lowest": "#ffffff",
+            "secondary-container": "#c3d4fe",
+            "error-container": "#ffdad6",
+            "inverse-primary": "#a8c8fc",
+            "surface-container-highest": "#dde2f8",
+            "tertiary-fixed-dim": "#b4c5ff",
+            "surface-container-high": "#e3e7fe",
+            "background": "#faf8ff",
+            "surface-container": "#eaedff",
+            "on-primary-fixed": "#001c3b",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed": "#071b3b",
+            "outline-variant": "#c3c6d0",
+            "on-surface": "#161b2b",
+            "on-tertiary-fixed": "#00174b",
+            "outline": "#737780",
+            "primary-container": "#153a66",
+            "surface": "#faf8ff",
+            "tertiary-container": "#00328b",
+            "on-secondary-fixed-variant": "#364769",
+            "on-tertiary": "#ffffff",
+            "error": "#ba1a1a",
+            "secondary": "#4d5e82",
+            "surface-container-low": "#f2f3ff",
+            "on-tertiary-fixed-variant": "#003ea8",
+            "surface-tint": "#3f5f8e",
+            "tertiary-fixed": "#dbe1ff",
+            "primary": "#002449"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "space-sm": "0.5rem",
+            "gutter-lg": "1.5rem",
+            "space-lg": "1.5rem",
+            "margin-lg": "2rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "margin": "1.5rem",
+            "space-md": "1rem",
+            "margin-sm": "1rem",
+            "gutter-sm": "0.75rem",
+            "gutter": "1.25rem"
+          },
+          fontFamily: {
+            "body-lg": ["DM Sans"],
+            "body-sm": ["DM Sans"],
+            "body-md": ["DM Sans"],
+            "headline-lg": ["DM Sans"],
+            "headline-xl": ["DM Sans"],
+            "metric-display": ["DM Sans"],
+            "label-sm": ["DM Sans"],
+            "label-lg": ["DM Sans"],
+            "label-md": ["DM Sans"],
+            "headline-xl-mobile": ["DM Sans"],
+            "headline-lg-mobile": ["DM Sans"],
+            "title-sm": ["DM Sans"],
+            "headline-md": ["DM Sans"]
+          },
+          fontSize: {
+            "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.015em", fontWeight: "700" }],
+            "headline-xl": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "metric-display": ["32px", { lineHeight: "38px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "700" }],
+            "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }],
+            "headline-xl-mobile": ["28px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "700" }],
+            "headline-lg-mobile": ["22px", { lineHeight: "30px", letterSpacing: "-0.01em", fontWeight: "700" }],
+            "title-sm": ["16px", { lineHeight: "24px", fontWeight: "600" }],
+            "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-body-md text-body-md text-on-surface antialiased">
+
+  <!-- ================= ASIDE SIDEBAR ================= -->
+  <aside class="fixed left-0 top-0 h-full w-64 bg-primary text-on-primary z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <div class="flex flex-col">
+      <!-- Sidebar Brand Header -->
+      <a href="dashboard.html" class="h-16 px-space-md flex items-center gap-space-sm bg-primary border-b border-on-primary/10 transition hover:bg-primary-container/30">
+        <img alt="Menwash Brand Logo" class="h-8 w-auto object-contain" src="logomenwash.svg">
+        <div class="flex flex-col min-w-0">
+          <span class="font-label-lg text-label-lg text-on-primary truncate font-bold">Menwash Admin</span>
+          <span class="font-label-sm text-label-sm text-on-primary-container truncate">Outlet Cendrawasih</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="flex flex-col gap-space-xs px-space-sm py-space-md overflow-y-auto" data-active-classes="bg-primary-container text-on-primary font-bold">
+        <div class="px-space-sm pt-space-xs pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">
+          Utama
+        </div>
+        <a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary font-bold shadow-sm" data-path="dashboard" href="dashboard.html">
+          <span class="material-symbols-outlined text-lg">dashboard</span>
+          <span class="font-body-md text-body-md">Dashboard</span>
+        </a>
+
+        <div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">
+          Mesin
+        </div>
+        <a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-primary/80 hover:bg-primary-container hover:text-on-primary transition-colors" data-path="semua-mesin" href="mesin.html">
+          <span class="material-symbols-outlined text-lg">local_laundry_service</span>
+          <span class="font-body-md text-body-md">Semua Mesin</span>
+        </a>
+        <a class="flex items-center justify-between px-space-sm py-space-sm rounded-lg text-on-primary/80 hover:bg-primary-container hover:text-on-primary transition-colors" data-path="mesin-gangguan" href="gangguan.html">
+          <div class="flex items-center gap-space-sm">
+            <span class="material-symbols-outlined text-lg text-red-400">error</span>
+            <span class="font-body-md text-body-md">Mesin Gangguan</span>
+          </div>
+          <span class="px-space-xs py-0.5 rounded-full bg-error text-on-error font-label-sm text-label-sm font-bold">2</span>
+        </a>
+
+        <div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">
+          Aktivitas &amp; Transaksi
+        </div>
+        <a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-primary/80 hover:bg-primary-container hover:text-on-primary transition-colors" data-path="transaksi" href="transaksi.html">
+          <span class="material-symbols-outlined text-lg">receipt_long</span>
+          <span class="font-body-md text-body-md">Transaksi</span>
+        </a>
+        <a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-primary/80 hover:bg-primary-container hover:text-on-primary transition-colors" data-path="progress" href="progress.html">
+          <span class="material-symbols-outlined text-lg">sync</span>
+          <span class="font-body-md text-body-md">Progress</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="p-space-md border-t border-on-primary/10 flex flex-col gap-space-sm bg-primary">
+      <div class="flex items-center justify-between text-on-primary/70">
+        <span class="font-label-sm text-label-sm flex items-center gap-space-xs">
+          IoT Server Online <span class="text-xs text-green-400">●</span>
+        </span>
+      </div>
+      <div class="flex items-center justify-between pt-1">
+        <button type="button" onclick="showSupportModal()" class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-primary-container hover:text-on-primary transition-colors">
+          <span class="material-symbols-outlined text-base">help_outline</span>
+          <span>Bantuan</span>
+        </button>
+        <a href="login.html" class="flex items-center gap-1 text-xs text-red-300 hover:text-red-100 transition-colors font-semibold" title="Keluar dari Panel">
+          <span class="material-symbols-outlined text-base">logout</span>
+          <span>Keluar</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN WRAPPER (PL-64) ================= -->
+  <div class="pl-64">
+    
+    <!-- TOPBAR HEADER -->
+    <header class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg">
+      <div class="flex items-center gap-space-sm text-on-surface-variant">
+        <a href="dashboard.html" class="font-body-sm text-body-sm hover:text-primary transition">Menwash Admin</a>
+        <span class="text-xs text-outline">/</span>
+        <span class="font-body-sm text-body-sm">Utama</span>
+        <span class="text-xs text-outline">/</span>
+        <span class="font-label-md text-label-md text-on-surface font-semibold">Dashboard</span>
+      </div>
+
+      <div class="flex items-center gap-space-lg">
+        <!-- Live Clock -->
+        <div class="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-container font-label-md text-label-md text-on-surface">
+          <span class="material-symbols-outlined text-sm text-on-surface-variant">schedule</span>
+          <span id="liveClockDisplay">09:41:22 WIB</span>
+        </div>
+
+        <!-- Notification Bell with Dropdown -->
+        <div class="relative">
+          <button id="btnNotif" type="button" onclick="toggleNotifDropdown()" class="relative p-space-xs rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
+          </button>
+          
+          <div id="notifDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-slate-100 p-3 z-50">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+              <span class="text-xs font-bold text-slate-800">Notifikasi Outlet</span>
+              <span class="text-[10px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded font-semibold">2 Baru</span>
+            </div>
+            <div class="divide-y divide-slate-100 max-h-64 overflow-y-auto">
+              <a href="gangguan.html" class="flex gap-2.5 py-2.5 hover:bg-slate-50 rounded-lg px-1.5 transition">
+                <span class="material-symbols-outlined text-red-500 text-lg">warning</span>
+                <div>
+                  <div class="text-xs font-semibold text-slate-800">Mesin Cuci #04 Terhenti</div>
+                  <div class="text-[11px] text-slate-500">Macet pada menit 18. Perlu kompensasi dummy.</div>
+                </div>
+              </a>
+              <a href="gangguan.html" class="flex gap-2.5 py-2.5 hover:bg-slate-50 rounded-lg px-1.5 transition">
+                <span class="material-symbols-outlined text-amber-500 text-lg">thermostat</span>
+                <div>
+                  <div class="text-xs font-semibold text-slate-800">Pengering #05 Pemanas Redup</div>
+                  <div class="text-[11px] text-slate-500">Sensor suhu gas mendeteksi fluktuasi api.</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Profile Dropdown -->
+        <div class="relative">
+          <button type="button" onclick="toggleUserDropdown()" class="flex items-center gap-space-sm pl-space-sm border-l border-outline-variant hover:opacity-90 transition">
+            <div class="text-right">
+              <div class="font-label-lg text-label-lg text-on-surface leading-tight font-bold">Ratna Sari</div>
+              <div class="font-body-sm text-body-sm text-on-surface-variant leading-tight">Supervisor Outlet</div>
+            </div>
+            <img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-primary/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZJ16dkyeRzgcZ67eDwE1S5CjswcsUra3kCohCeILjozB-FUkrAljT-EzKKxlfFDfZhSqWQ9nl6Jai2K9N3kqu7Llm2g_rkPf6oQBwndW1GNWWJCY29ncxS_RmvBgw7calcvFgRK4E0fKNHtCp5o1RSQ8NUAhf6kqL5KS9GdJJJnLWbzBtqGlQeOmWAgc4LpO0A7bMB2IMt_Xr0VVfWzKfKxJW9v8CtFip2BWgaZ6Z7B6Gp7Ci7jQElA">
+          </button>
+
+          <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-slate-100 py-1.5 z-50">
+            <div class="px-3 py-2 border-b border-slate-100">
+              <div class="text-xs font-bold text-slate-800">Ratna Sari</div>
+              <div class="text-[11px] text-slate-500">Supervisor Cendrawasih</div>
+            </div>
+            <a href="mesin.html" class="flex items-center gap-2 px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 transition">
+              <span class="material-symbols-outlined text-base">manage_accounts</span>
+              <span>Kelola Mesin</span>
+            </a>
+            <button type="button" onclick="showSupportModal()" class="w-full text-left flex items-center gap-2 px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 transition">
+              <span class="material-symbols-outlined text-base">help</span>
+              <span>Bantuan Teknis</span>
+            </button>
+            <div class="border-t border-slate-100 my-1"></div>
+            <a href="login.html" class="flex items-center gap-2 px-3 py-2 text-xs text-red-600 hover:bg-red-50 transition">
+              <span class="material-symbols-outlined text-base">logout</span>
+              <span>Keluar Sesi</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN PAGE CONTENT -->
+    <main class="relative w-full pt-16 px-space-lg pb-space-xl bg-surface min-h-screen">
+      <div class="flex flex-col w-full">
+        
+        <!-- Dashboard Heading & Sync Button -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg pt-4">
+          <div>
+            <div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm uppercase tracking-wider mb-1">
+              <span>Outlet Cendrawasih</span>
+            </div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Dashboard</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant">Ringkasan operasional hari ini &amp; status telemetri mesin real-time</p>
+          </div>
+          <div class="flex items-center gap-space-sm self-start md:self-auto">
+            <button id="btnSync" onclick="triggerSync()" class="flex items-center gap-space-xs px-space-md py-space-xs rounded-lg bg-surface-container-lowest text-primary-container shadow-sm hover:bg-surface-container transition-all border border-slate-200" type="button">
+              <span id="syncIcon" class="material-symbols-outlined text-sm">refresh</span>
+              <span class="font-label-md text-label-md">Sinkronisasi</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================= 1. KPI STAT CARDS ================= -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md mb-space-lg">
+          <!-- Card 1: Mesin Sedang Aktif -->
+          <a href="mesin.html" class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow group">
+            <div class="flex items-center justify-between mb-space-sm">
+              <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Mesin Sedang Aktif</span>
+              <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-xl">local_laundry_service</span>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-baseline gap-space-xs">
+                <span class="font-metric-display text-metric-display text-on-surface">5</span>
+                <span class="font-title-sm text-title-sm text-on-surface-variant">/ 13 Unit</span>
+              </div>
+              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">3 Cuci, 2 Kering beroperasi</p>
+            </div>
+            <div class="mt-space-sm pt-space-xs flex items-center gap-1.5 text-emerald-600 font-label-md text-label-md">
+              <span class="material-symbols-outlined text-base">trending_up</span>
+              <span>+2 dari jam lalu</span>
+            </div>
+          </a>
+
+          <!-- Card 2: Transaksi Hari Ini -->
+          <a href="transaksi.html" class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow group">
+            <div class="flex items-center justify-between mb-space-sm">
+              <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Transaksi Hari Ini</span>
+              <div class="w-10 h-10 rounded-lg bg-tertiary-container/10 text-tertiary-container flex items-center justify-center group-hover:bg-tertiary-container group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-xl">receipt_long</span>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-baseline gap-space-xs">
+                <span class="font-metric-display text-metric-display text-on-surface">42</span>
+                <span class="font-title-sm text-title-sm text-on-surface-variant">Siklus</span>
+              </div>
+              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Total omset: Rp 840.000</p>
+            </div>
+            <div class="mt-space-sm pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary-container"></span> 78% QRIS</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span> 22% Tunai</span>
+            </div>
+          </a>
+
+          <!-- Card 3: Est. Pendapatan Hari Ini -->
+          <a href="transaksi.html" class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow group">
+            <div class="flex items-center justify-between mb-space-sm">
+              <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Est. Pendapatan Hari Ini</span>
+              <div class="w-10 h-10 rounded-lg bg-primary-fixed/30 text-on-primary-fixed-variant flex items-center justify-center group-hover:bg-primary-container group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-xl">payments</span>
+              </div>
+            </div>
+            <div>
+              <div class="font-metric-display text-metric-display text-on-surface">Rp 1.150.000</div>
+              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Target Harian: Rp 1.000.000</p>
+            </div>
+            <div class="mt-space-sm pt-space-xs flex items-center gap-1.5 text-emerald-600 font-label-md text-label-md">
+              <span class="material-symbols-outlined text-base">arrow_upward</span>
+              <span>+14.2% vs kemarin</span>
+            </div>
+          </a>
+
+          <!-- Card 4: Gangguan Aktif -->
+          <a href="gangguan.html" class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow group border border-transparent hover:border-red-200">
+            <div class="flex items-center justify-between mb-space-sm">
+              <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold text-red-600">Gangguan Aktif</span>
+              <div class="w-10 h-10 rounded-lg bg-error-container text-error flex items-center justify-center group-hover:bg-error group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-xl">warning</span>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-baseline gap-space-xs">
+                <span class="font-metric-display text-metric-display text-error">2</span>
+                <span class="font-title-sm text-title-sm text-error">Mesin Kritis</span>
+              </div>
+              <p class="font-body-sm text-body-sm text-error/80 mt-1 line-clamp-1">Cuci #04 &amp; Pengering #05</p>
+            </div>
+            <div class="mt-space-sm pt-space-xs flex items-center gap-1.5 text-error font-label-md text-label-md">
+              <span class="material-symbols-outlined text-base">emergency_home</span>
+              <span>Butuh tindakan segera</span>
+            </div>
+          </a>
+        </section>
+
+        <!-- ================= 2. TREN PEMAKAIAN & UTILISASI MESIN ================= -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-space-md mb-space-lg">
+          <!-- Tren Pemakaian Mesin -->
+          <div class="lg:col-span-7 xl:col-span-8 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+              <div>
+                <div class="flex items-center gap-space-sm">
+                  <h2 class="font-headline-md text-headline-md text-on-surface">Tren Pemakaian Mesin</h2>
+                  <span class="px-space-xs py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">Peak: 14:00 - 17:00</span>
+                </div>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Volumetrik siklus beroperasi berdasarkan sensor daya &amp; relay</p>
+              </div>
+              <div class="flex items-center bg-surface-container rounded-lg p-0.5 self-start">
+                <button id="btnPeriodHari" onclick="switchPeriod('hari')" class="px-space-sm py-1 rounded-md bg-surface-container-lowest text-primary font-label-sm text-label-sm shadow-sm font-semibold transition" type="button">Hari ini</button>
+                <button id="btnPeriodMinggu" onclick="switchPeriod('minggu')" class="px-space-sm py-1 rounded-md text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface transition" type="button">Minggu ini</button>
+                <button id="btnPeriodBulan" onclick="switchPeriod('bulan')" class="px-space-sm py-1 rounded-md text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface transition" type="button">Bulan ini</button>
+              </div>
+            </div>
+            
+            <div class="relative w-full h-64 mt-2">
+              <svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 650 220">
+                <defs>
+                  <linearGradient id="washGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+                    <stop offset="0%" stop-color="#153A66" stop-opacity="0.25"></stop>
+                    <stop offset="100%" stop-color="#153A66" stop-opacity="0.0"></stop>
+                  </linearGradient>
+                  <linearGradient id="dryGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+                    <stop offset="0%" stop-color="#2563EB" stop-opacity="0.25"></stop>
+                    <stop offset="100%" stop-color="#2563EB" stop-opacity="0.0"></stop>
+                  </linearGradient>
+                </defs>
+                <line stroke="#eaedff" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="650" y1="40" y2="40"></line>
+                <line stroke="#eaedff" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="650" y1="90" y2="90"></line>
+                <line stroke="#eaedff" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="650" y1="140" y2="140"></line>
+                <line stroke="#dde2f8" stroke-width="1.5" x1="0" x2="650" y1="190" y2="190"></line>
+                <path id="svgWashArea" d="M 0 170 Q 70 160 130 140 T 260 95 T 390 60 T 520 80 T 650 45 L 650 190 L 0 190 Z" fill="url(#washGradient)"></path>
+                <path id="svgWashLine" d="M 0 170 Q 70 160 130 140 T 260 95 T 390 60 T 520 80 T 650 45" fill="none" stroke="#153A66" stroke-linecap="round" stroke-width="3"></path>
+                <path id="svgDryArea" d="M 0 185 Q 70 175 130 165 T 260 130 T 390 90 T 520 110 T 650 85 L 650 190 L 0 190 Z" fill="url(#dryGradient)"></path>
+                <path id="svgDryLine" d="M 0 185 Q 70 175 130 165 T 260 130 T 390 90 T 520 110 T 650 85" fill="none" stroke="#2563EB" stroke-dasharray="5 3" stroke-linecap="round" stroke-width="2.5"></path>
+                <circle cx="390" cy="60" fill="#153A66" r="5"></circle>
+                <circle cx="390" cy="90" fill="#2563EB" r="5"></circle>
+              </svg>
+              <div id="chartLabelsRow" class="flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm mt-2 px-1">
+                <span>07:00</span>
+                <span>09:00</span>
+                <span>11:00</span>
+                <span>13:00</span>
+                <span class="text-primary font-bold">15:00</span>
+                <span>17:00</span>
+                <span>19:00</span>
+                <span>21:00</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-space-lg pt-space-sm mt-space-sm">
+              <div class="flex items-center gap-space-xs">
+                <span class="w-3.5 h-1.5 rounded-full bg-[#153A66]"></span>
+                <span class="font-body-sm text-body-sm text-on-surface">Mesin Cuci (Washer)</span>
+              </div>
+              <div class="flex items-center gap-space-xs">
+                <span class="w-3.5 h-1.5 rounded-full bg-[#2563EB]"></span>
+                <span class="font-body-sm text-body-sm text-on-surface">Mesin Pengering (Dryer)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Utilisasi Mesin (Donut Chart) -->
+          <div class="lg:col-span-5 xl:col-span-4 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+            <div>
+              <h2 class="font-headline-md text-headline-md text-on-surface">Utilisasi Mesin</h2>
+              <p class="font-body-sm text-body-sm text-on-surface-variant">Kondisi operasional dari total 13 inventaris outlet</p>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center my-space-sm relative">
+              <div class="w-44 h-44 relative flex items-center justify-center">
+                <svg class="w-full h-full -rotate-90 transform" viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" fill="transparent" r="48" stroke="#eaedff" stroke-width="12"></circle>
+                  <!-- Hijau: Tersedia 38.5% (approx 116 stroke) -->
+                  <circle cx="60" cy="60" fill="transparent" r="48" stroke="#16A34A" stroke-dasharray="116 301.6" stroke-dashoffset="0" stroke-width="12"></circle>
+                  <!-- Biru: Aktif 38.5% -->
+                  <circle cx="60" cy="60" fill="transparent" r="48" stroke="#153A66" stroke-dasharray="116 301.6" stroke-dashoffset="-116" stroke-width="12"></circle>
+                  <!-- Merah: Gangguan 15.4% (approx 46 stroke) -->
+                  <circle cx="60" cy="60" fill="transparent" r="48" stroke="#EF4444" stroke-dasharray="46 301.6" stroke-dashoffset="-232" stroke-width="12"></circle>
+                  <!-- Abu-abu: Offline 7.7% (approx 23 stroke) -->
+                  <circle cx="60" cy="60" fill="transparent" r="48" stroke="#9DA2B7" stroke-dasharray="23 301.6" stroke-dashoffset="-278" stroke-width="12"></circle>
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                  <span class="font-metric-display text-2xl font-bold text-on-surface">76.9%</span>
+                  <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Utilisasi</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-space-sm pt-space-xs">
+              <a href="mesin.html" class="flex items-center gap-2 p-space-xs bg-surface-container-low rounded-lg hover:bg-slate-100 transition">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#16A34A]"></span>
+                <div class="min-w-0">
+                  <div class="font-label-md text-label-md text-on-surface truncate">Tersedia</div>
+                  <div class="font-body-sm text-body-sm text-on-surface-variant">5 Unit (38.5%)</div>
+                </div>
+              </a>
+              <a href="mesin.html" class="flex items-center gap-2 p-space-xs bg-surface-container-low rounded-lg hover:bg-slate-100 transition">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#153A66]"></span>
+                <div class="min-w-0">
+                  <div class="font-label-md text-label-md text-on-surface truncate">Aktif</div>
+                  <div class="font-body-sm text-body-sm text-on-surface-variant">5 Unit (38.5%)</div>
+                </div>
+              </a>
+              <a href="gangguan.html" class="flex items-center gap-2 p-space-xs bg-surface-container-low rounded-lg hover:bg-red-50 transition">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#EF4444]"></span>
+                <div class="min-w-0">
+                  <div class="font-label-md text-label-md text-error truncate">Gangguan</div>
+                  <div class="font-body-sm text-body-sm text-on-surface-variant">2 Unit (15.4%)</div>
+                </div>
+              </a>
+              <a href="mesin.html" class="flex items-center gap-2 p-space-xs bg-surface-container-low rounded-lg hover:bg-slate-100 transition">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#9DA2B7]"></span>
+                <div class="min-w-0">
+                  <div class="font-label-md text-label-md text-on-surface truncate">Offline</div>
+                  <div class="font-body-sm text-body-sm text-on-surface-variant">1 Unit (7.7%)</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= 3. PEMANTAUAN UANG DUMMY & METODE PEMBAYARAN ================= -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-space-md mb-space-lg">
+          <!-- Pemantauan Uang Dummy -->
+          <div class="lg:col-span-7 xl:col-span-8 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-space-md">
+                <div class="flex items-center gap-space-sm">
+                  <div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-xl">token</span>
+                  </div>
+                  <div>
+                    <h2 class="font-headline-md text-headline-md text-on-surface">Pemantauan Uang Dummy</h2>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">Audit aktivasi siklus darurat &amp; recovery kendala operasional</p>
+                  </div>
+                </div>
+                <span class="px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Outlet Cendrawasih</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md mb-space-md">
+                <div class="p-space-md rounded-xl bg-surface-container-low flex flex-col justify-between">
+                  <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Saldo Dummy Outlet</span>
+                  <div class="font-metric-display text-metric-display text-primary mt-1 font-bold">Rp 250.000</div>
+                  <span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Batas plafon bulanan: Rp 1.000.000</span>
+                </div>
+                <div class="p-space-md rounded-xl bg-surface-container-low flex flex-col justify-between">
+                  <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Siklus Kompensasi Aktif</span>
+                  <div class="flex items-baseline gap-space-xs mt-1">
+                    <span class="font-metric-display text-metric-display text-on-surface font-bold">3</span>
+                    <span class="font-title-sm text-title-sm text-on-surface-variant">Siklus terpakai hari ini</span>
+                  </div>
+                  <span class="font-body-sm text-body-sm text-emerald-600 mt-1 font-medium">Tercatat sah dalam log server</span>
+                </div>
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                  <thead>
+                    <tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+                      <th class="py-space-xs px-space-sm rounded-l-lg">ID Transaksi</th>
+                      <th class="py-space-xs px-space-sm">Kode Mesin</th>
+                      <th class="py-space-xs px-space-sm">Waktu</th>
+                      <th class="py-space-xs px-space-sm rounded-r-lg">Alasan Penggunaan</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-surface-container font-body-sm text-body-sm text-on-surface">
+                    <tr class="hover:bg-surface-container-low transition-colors">
+                      <td class="py-space-sm px-space-sm font-label-md text-label-md text-primary font-bold">TRX-DMY-9081</td>
+                      <td class="py-space-sm px-space-sm">
+                        <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm font-bold">MC-02</span>
+                      </td>
+                      <td class="py-space-sm px-space-sm text-on-surface-variant">08:14 WIB</td>
+                      <td class="py-space-sm px-space-sm">Kompensasi drum macet order #9823</td>
+                    </tr>
+                    <tr class="hover:bg-surface-container-low transition-colors">
+                      <td class="py-space-sm px-space-sm font-label-md text-label-md text-primary font-bold">TRX-DMY-9077</td>
+                      <td class="py-space-sm px-space-sm">
+                        <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm font-bold">MP-01</span>
+                      </td>
+                      <td class="py-space-sm px-space-sm text-on-surface-variant">09:30 WIB</td>
+                      <td class="py-space-sm px-space-sm">QC pemanas suhu pasca maintenance</td>
+                    </tr>
+                    <tr class="hover:bg-surface-container-low transition-colors">
+                      <td class="py-space-sm px-space-sm font-label-md text-label-md text-primary font-bold">TRX-DMY-9064</td>
+                      <td class="py-space-sm px-space-sm">
+                        <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm font-bold">MC-05</span>
+                      </td>
+                      <td class="py-space-sm px-space-sm text-on-surface-variant">11:05 WIB</td>
+                      <td class="py-space-sm px-space-sm">Testing modul board IoT relay switch</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Komposisi Metode Pembayaran -->
+          <div class="lg:col-span-5 xl:col-span-4 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+            <div>
+              <h2 class="font-headline-md text-headline-md text-on-surface">Komposisi Metode Pembayaran</h2>
+              <p class="font-body-sm text-body-sm text-on-surface-variant">Distribusi kanal penerimaan kas hari ini</p>
+            </div>
+            
+            <div class="flex items-center justify-center my-space-md relative">
+              <div class="w-40 h-40 relative flex items-center justify-center">
+                <svg class="w-full h-full -rotate-90 transform" viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" fill="transparent" r="48" stroke="#eaedff" stroke-width="14"></circle>
+                  <!-- QRIS Web Pribadi 58% (175 stroke) -->
+                  <circle cx="60" cy="60" fill="transparent" r="48" stroke="#153A66" stroke-dasharray="175 301.6" stroke-dashoffset="0" stroke-width="14"></circle>
+                  <!-- Kasir QRIS 28% (84.4 stroke) -->
+                  <circle cx="60" cy="60" fill="transparent" r="48" stroke="#4B5B7F" stroke-dasharray="84.4 301.6" stroke-dashoffset="-175" stroke-width="14"></circle>
+                  <!-- Cash Tunai 14% (42.2 stroke) -->
+                  <circle cx="60" cy="60" fill="transparent" r="48" stroke="#A8C8FC" stroke-dasharray="42.2 301.6" stroke-dashoffset="-259.4" stroke-width="14"></circle>
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                  <span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
+                  <span class="font-label-sm text-label-sm text-on-surface-variant font-bold">42 Transaksi</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-space-xs">
+              <div class="flex items-center justify-between p-space-xs rounded-lg bg-surface-container-low">
+                <div class="flex items-center gap-space-xs">
+                  <span class="w-3 h-3 rounded-full bg-[#153A66]"></span>
+                  <span class="font-label-md text-label-md text-on-surface font-semibold">QRIS Web Pribadi</span>
+                </div>
+                <div class="text-right">
+                  <div class="font-label-md text-label-md text-on-surface font-bold">58%</div>
+                  <div class="font-body-sm text-body-sm text-on-surface-variant">Rp 487.200</div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-space-xs rounded-lg bg-surface-container-low">
+                <div class="flex items-center gap-space-xs">
+                  <span class="w-3 h-3 rounded-full bg-[#4B5B7F]"></span>
+                  <span class="font-label-md text-label-md text-on-surface font-semibold">Kasir QRIS</span>
+                </div>
+                <div class="text-right">
+                  <div class="font-label-md text-label-md text-on-surface font-bold">28%</div>
+                  <div class="font-body-sm text-body-sm text-on-surface-variant">Rp 235.200</div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-space-xs rounded-lg bg-surface-container-low">
+                <div class="flex items-center gap-space-xs">
+                  <span class="w-3 h-3 rounded-full bg-[#A8C8FC]"></span>
+                  <span class="font-label-md text-label-md text-on-surface font-semibold">Cash Tunai ke Admin</span>
+                </div>
+                <div class="text-right">
+                  <div class="font-label-md text-label-md text-on-surface font-bold">14%</div>
+                  <div class="font-body-sm text-body-sm text-on-surface-variant">Rp 117.600</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= 4. SIKLUS SEDANG BERJALAN ================= -->
+        <section class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm mb-space-xl">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+            <div>
+              <h2 class="font-headline-md text-headline-md text-on-surface">Siklus Sedang Berjalan</h2>
+              <p class="font-body-sm text-body-sm text-on-surface-variant">Monitoring realtime status siklus putaran washer dan dryer di lantai cuci</p>
+            </div>
+            <div class="flex items-center gap-space-xs">
+              <span class="px-space-sm py-1 rounded-full bg-emerald-100 text-emerald-800 font-label-sm text-label-sm flex items-center gap-1 font-semibold">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                4 Siklus Aktif
+              </span>
+              <a href="progress.html" class="text-xs text-primary font-bold hover:underline ml-2">Lihat Semua &rarr;</a>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto -mx-space-lg px-space-lg">
+            <table class="w-full text-left min-w-[760px]">
+              <thead>
+                <tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+                  <th class="py-space-sm px-space-md rounded-l-lg">Unit Mesin</th>
+                  <th class="py-space-sm px-space-md">Tipe</th>
+                  <th class="py-space-sm px-space-md">Status Siklus</th>
+                  <th class="py-space-sm px-space-md w-1/4">Progress &amp; Sisa Waktu</th>
+                  <th class="py-space-sm px-space-md">Pelanggan / ID Transaksi</th>
+                  <th class="py-space-sm px-space-md">Mode Layanan</th>
+                  <th class="py-space-sm px-space-md rounded-r-lg text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-surface-container font-body-md text-body-md text-on-surface">
+                
+                <!-- Cuci #02 -->
+                <tr class="hover:bg-surface-container-low/60 transition-colors">
+                  <td class="py-space-md px-space-md font-label-lg text-label-lg font-bold">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+                      <span>Cuci #02</span>
+                    </div>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <span class="px-space-xs py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">Washer 8kg</span>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <span class="px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Membilas (Rinse)</span>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <div class="flex flex-col gap-1">
+                      <div class="flex justify-between items-center font-label-sm text-label-sm">
+                        <span class="text-primary font-bold">68%</span>
+                        <span class="text-on-surface-variant">Sisa 12 Menit</span>
+                      </div>
+                      <div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+                        <div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 68%"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <div class="font-label-md text-label-md text-on-surface font-semibold">Dimas Pratama</div>
+                    <div class="font-body-sm text-body-sm text-on-surface-variant">TRX-2405-091</div>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">Self Service QRIS</span>
+                  </td>
+                  <td class="py-space-md px-space-md text-right">
+                    <button onclick="openMachineDetail('Cuci #02', 'Washer 8kg', 'Membilas (Rinse)', '68%', '12 Menit', 'Dimas Pratama', 'TRX-2405-091', 'Self Service QRIS')" class="p-space-xs rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" title="Detail Mesin" type="button">
+                      <span class="material-symbols-outlined text-xl">open_in_new</span>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Cuci #03 Kombo -->
+                <tr class="hover:bg-surface-container-low/60 transition-colors">
+                  <td class="py-space-md px-space-md font-label-lg text-label-lg font-bold">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                      <span>Cuci #03</span>
+                      <span class="material-symbols-outlined text-xs text-on-surface-variant">link</span>
+                      <span class="text-on-surface-variant font-label-sm text-label-sm">Pengering #01</span>
+                    </div>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <span class="px-space-xs py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">Washer + Dryer</span>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-label-sm text-label-sm font-semibold">Spin Ekstra</span>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <div class="flex flex-col gap-1">
+                      <div class="flex justify-between items-center font-label-sm text-label-sm">
+                        <span class="text-primary font-bold">85%</span>
+                        <span class="text-on-surface-variant">Sisa 04 Menit</span>
+                      </div>
+                      <div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+                        <div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 85%"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <div class="font-label-md text-label-md text-on-surface font-semibold">Laundry Kiloan Drop-off</div>
+                    <div class="font-body-sm text-body-sm text-on-surface-variant">TRX-2405-089</div>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">Full Service (Admin)</span>
+                  </td>
+                  <td class="py-space-md px-space-md text-right">
+                    <button onclick="openMachineDetail('Cuci #03 (Kombo)', 'Washer + Dryer 10kg', 'Spin Ekstra', '85%', '04 Menit', 'Laundry Kiloan Drop-off', 'TRX-2405-089', 'Full Service (Admin)')" class="p-space-xs rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" title="Detail Mesin" type="button">
+                      <span class="material-symbols-outlined text-xl">open_in_new</span>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Cuci #07 -->
+                <tr class="hover:bg-surface-container-low/60 transition-colors">
+                  <td class="py-space-md px-space-md font-label-lg text-label-lg font-bold">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+                      <span>Cuci #07</span>
+                    </div>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <span class="px-space-xs py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">Washer 12kg</span>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <span class="px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Pencucian Utama</span>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <div class="flex flex-col gap-1">
+                      <div class="flex justify-between items-center font-label-sm text-label-sm">
+                        <span class="text-primary font-bold">25%</span>
+                        <span class="text-on-surface-variant">Sisa 28 Menit</span>
+                      </div>
+                      <div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+                        <div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 25%"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <div class="font-label-md text-label-md text-on-surface font-semibold">Ahmad Faisal</div>
+                    <div class="font-body-sm text-body-sm text-on-surface-variant">TRX-2405-095</div>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">Self Service QRIS</span>
+                  </td>
+                  <td class="py-space-md px-space-md text-right">
+                    <button onclick="openMachineDetail('Cuci #07', 'Washer 12kg', 'Pencucian Utama', '25%', '28 Menit', 'Ahmad Faisal', 'TRX-2405-095', 'Self Service QRIS')" class="p-space-xs rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" title="Detail Mesin" type="button">
+                      <span class="material-symbols-outlined text-xl">open_in_new</span>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Pengering #04 -->
+                <tr class="hover:bg-surface-container-low/60 transition-colors">
+                  <td class="py-space-md px-space-md font-label-lg text-label-lg font-bold">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-[#2563EB] animate-pulse"></span>
+                      <span>Pengering #04</span>
+                    </div>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <span class="px-space-xs py-0.5 rounded bg-secondary-fixed-dim text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Dryer Gas 10kg</span>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 font-label-sm text-label-sm font-semibold">Pemanasan Tinggi (65°C)</span>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <div class="flex flex-col gap-1">
+                      <div class="flex justify-between items-center font-label-sm text-label-sm">
+                        <span class="text-[#2563EB] font-bold">50%</span>
+                        <span class="text-on-surface-variant">Sisa 18 Menit</span>
+                      </div>
+                      <div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+                        <div class="bg-[#2563EB] h-2 rounded-full transition-all duration-500" style="width: 50%"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <div class="font-label-md text-label-md text-on-surface font-semibold">Siti Nurhaliza</div>
+                    <div class="font-body-sm text-body-sm text-on-surface-variant">TRX-2405-092</div>
+                  </td>
+                  <td class="py-space-md px-space-md">
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">Kasir Tunai</span>
+                  </td>
+                  <td class="py-space-md px-space-md text-right">
+                    <button onclick="openMachineDetail('Pengering #04', 'Dryer Gas 10kg', 'Pemanasan Tinggi (65°C)', '50%', '18 Menit', 'Siti Nurhaliza', 'TRX-2405-092', 'Kasir Tunai')" class="p-space-xs rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" title="Detail Mesin" type="button">
+                      <span class="material-symbols-outlined text-xl">open_in_new</span>
+                    </button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ================= FLOATING ACTION BUTTONS ================= -->
+  <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 pointer-events-auto">
+    <!-- Mesin Bermasalah (2) -->
+    <a class="group flex items-center gap-2 p-3 bg-error text-on-error rounded-full shadow-lg hover:bg-red-700 transition-all hover:scale-105 active:scale-95" href="gangguan.html" title="Mesin Bermasalah">
+      <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 font-label-md text-label-md pl-1 font-bold">Mesin Bermasalah (2)</span>
+      <span class="material-symbols-outlined text-2xl">error</span>
+    </a>
+
+    <!-- Mengaktifkan Mesin (Buka Modal) -->
+    <button class="group flex items-center gap-2 p-3.5 bg-primary-container text-on-primary rounded-full shadow-xl hover:bg-primary transition-all hover:scale-105 active:scale-95 relative" id="btn-activate-qa" title="Aktifkan Mesin (Klik untuk buka modal)" type="button">
+      <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 font-label-md text-label-md pl-1 font-bold">Mengaktifkan Mesin</span>
+      <span class="material-symbols-outlined text-2xl">power_settings_new</span>
+      <span class="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full ring-2 ring-surface animate-pulse"></span>
+    </button>
+  </div>
+
+  <!-- ================= MODAL AKTIVASI MESIN (#qaModal) ================= -->
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300 opacity-0 pointer-events-none" id="qaModal">
+    <!-- Backdrop Gelap Semi-Transparan -->
+    <div class="absolute inset-0 bg-[#0D2040]/60 backdrop-blur-sm transition-opacity" id="modalBackdrop"></div>
+    
+    <!-- Modal Container (540px - 580px) -->
+    <div class="relative w-full max-w-[560px] bg-surface-container-lowest rounded-2xl shadow-2xl border border-outline-variant/30 flex flex-col overflow-hidden max-h-[90vh] transition-all transform scale-95" id="modalContent">
+      
+      <!-- Header Modal -->
+      <div class="px-space-lg py-4 border-b border-outline-variant/20 flex items-start justify-between bg-surface-container-low/50">
+        <div class="flex items-center gap-space-sm">
+          <div class="w-11 h-11 rounded-xl bg-primary-container/10 text-primary-container flex items-center justify-center flex-shrink-0 ring-1 ring-primary-container/20">
+            <span class="material-symbols-outlined text-2xl text-primary">power_settings_new</span>
+          </div>
+          <div>
+            <h3 class="font-headline-md text-[18px] leading-snug font-bold text-on-surface">Aktivasi Cepat Mesin (Manual / Tunai)</h3>
+            <p class="font-body-sm text-[12px] text-on-surface-variant leading-tight mt-0.5">Nyalakan unit mesin secara langsung via Kasir outlet</p>
+          </div>
+        </div>
+        <button class="text-on-surface-variant hover:text-on-surface p-1.5 rounded-lg hover:bg-surface-container transition-colors ml-2 flex-shrink-0" id="btn-close-modal" type="button">
+          <span class="material-symbols-outlined text-xl">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Form Body -->
+      <form class="p-space-lg overflow-y-auto space-y-4" id="qaActivationForm">
+        
+        <!-- 1. Pilihan Unit Mesin -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="font-label-md text-label-md text-on-surface font-semibold flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-base text-primary-container">local_laundry_service</span>
+              Pilih Unit Mesin (Tersedia)
+            </label>
+            <span class="font-label-sm text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">5 Unit Siap</span>
+          </div>
+          <div class="relative">
+            <select class="w-full h-11 pl-3 pr-9 rounded-xl bg-surface border border-outline-variant/60 font-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container focus:border-transparent cursor-pointer transition-all" id="selectUnitMesin" required="">
+              <option value="MC-01">Cuci #01 [Front Load 10kg] — Tersedia</option>
+              <option value="MC-05">Cuci #05 [Front Load 10kg] — Tersedia</option>
+              <option value="MP-02">Pengering #02 [Gas Dryer 12kg] — Tersedia</option>
+              <option value="MP-03">Pengering #03 [Gas Dryer 12kg] — Tersedia</option>
+              <option value="MP-06">Pengering #06 [Gas Dryer 12kg] — Tersedia</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-on-surface-variant">
+              <span class="material-symbols-outlined text-lg">expand_more</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Pilihan Mode / Siklus -->
+        <div>
+          <label class="block font-label-md text-label-md text-on-surface font-semibold mb-2 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-base text-primary-container">timer</span>
+            Pilihan Mode / Siklus
+          </label>
+          <div class="grid grid-cols-2 gap-2.5">
+            <label class="relative flex flex-col p-2.5 rounded-xl border border-outline-variant/50 bg-surface hover:bg-surface-container-low cursor-pointer transition-all has-[:checked]:border-primary has-[:checked]:bg-primary-container/5 has-[:checked]:ring-1 has-[:checked]:ring-primary">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-label-md text-[13px] font-bold text-on-surface">Cuci Saja</span>
+                <input checked="" class="text-primary focus:ring-primary-container" name="cycleMode" type="radio" value="Cuci Saja (Standar)">
+              </div>
+              <div class="flex items-center justify-between text-xs text-on-surface-variant">
+                <span>45 menit</span>
+                <span class="font-semibold text-primary">Rp 15.000</span>
+              </div>
+            </label>
+
+            <label class="relative flex flex-col p-2.5 rounded-xl border border-outline-variant/50 bg-surface hover:bg-surface-container-low cursor-pointer transition-all has-[:checked]:border-primary has-[:checked]:bg-primary-container/5 has-[:checked]:ring-1 has-[:checked]:ring-primary">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-label-md text-[13px] font-bold text-on-surface">Kering Saja</span>
+                <input class="text-primary focus:ring-primary-container" name="cycleMode" type="radio" value="Kering Saja (Standar)">
+              </div>
+              <div class="flex items-center justify-between text-xs text-on-surface-variant">
+                <span>30 menit</span>
+                <span class="font-semibold text-primary">Rp 12.000</span>
+              </div>
+            </label>
+
+            <label class="relative flex flex-col p-2.5 rounded-xl border border-outline-variant/50 bg-surface hover:bg-surface-container-low cursor-pointer transition-all has-[:checked]:border-primary has-[:checked]:bg-primary-container/5 has-[:checked]:ring-1 has-[:checked]:ring-primary col-span-2">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-label-md text-[13px] font-bold text-on-surface">Cuci + Kering (Combo)</span>
+                <input class="text-primary focus:ring-primary-container" name="cycleMode" type="radio" value="Cuci + Kering (Combo)">
+              </div>
+              <div class="flex items-center justify-between text-xs text-on-surface-variant">
+                <span>Cuci 45 mnt &rarr; Auto Antre Pengering 30 mnt</span>
+                <span class="font-semibold text-primary">Rp 25.000</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- 3. Metode Otorisasi / Pembayaran -->
+        <div>
+          <label class="block font-label-md text-label-md text-on-surface font-semibold mb-2 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-base text-primary-container">verified_user</span>
+            Metode Otorisasi / Pembayaran
+          </label>
+          <div class="space-y-1.5">
+            <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-outline-variant/50 bg-surface hover:bg-surface-container-low cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary-container/5">
+              <input checked="" class="text-primary focus:ring-primary-container" name="authMethod" type="radio" value="Tunai">
+              <div class="flex-1 text-xs">
+                <span class="font-semibold text-on-surface">Tunai / Kasir Manual</span>
+                <span class="text-on-surface-variant block">(dicatat ke kasir fisik harian)</span>
+              </div>
+              <span class="material-symbols-outlined text-base text-on-surface-variant">payments</span>
+            </label>
+            <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-outline-variant/50 bg-surface hover:bg-surface-container-low cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary-container/5">
+              <input class="text-primary focus:ring-primary-container" name="authMethod" type="radio" value="Kompensasi Dummy">
+              <div class="flex-1 text-xs">
+                <span class="font-semibold text-on-surface">Kompensasi / Uang Dummy</span>
+                <span class="text-on-surface-variant block">(dipotong dari saldo dummy outlet • sisa Rp 250.000)</span>
+              </div>
+              <span class="material-symbols-outlined text-base text-on-surface-variant">token</span>
+            </label>
+            <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-outline-variant/50 bg-surface hover:bg-surface-container-low cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary-container/5">
+              <input class="text-primary focus:ring-primary-container" name="authMethod" type="radio" value="QRIS Kasir">
+              <div class="flex-1 text-xs">
+                <span class="font-semibold text-on-surface">QRIS Kasir</span>
+                <span class="text-on-surface-variant block">(Pembayaran QRIS via Kasir)</span>
+              </div>
+              <span class="material-symbols-outlined text-base text-on-surface-variant">qr_code_2</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 4. Catatan / Nama Pelanggan (Opsional) -->
+        <div>
+          <label class="block font-label-md text-label-md text-on-surface font-semibold mb-1 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-base text-primary-container">badge</span>
+            Nama Pelanggan / Catatan Transaksi (Opsional)
+          </label>
+          <input id="inputCatatan" type="text" placeholder="cth. Pelanggan Walk-in / Ibu Rina (0812...)" class="w-full h-10 px-3 rounded-xl bg-surface border border-outline-variant/60 font-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container text-xs">
+        </div>
+
+        <!-- Footer Modal -->
+        <div class="pt-2 border-t border-outline-variant/20 flex items-center justify-end gap-3 mt-4">
+          <button class="px-space-md py-2.5 rounded-xl border border-outline-variant text-on-surface-variant font-label-md text-label-md hover:bg-surface-container hover:text-on-surface transition-colors" id="btn-cancel-modal" type="button">
+            Batal
+          </button>
+          <button class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#153A66] hover:bg-[#0D2040] text-on-primary font-label-lg text-label-lg shadow-md hover:shadow-lg transition-all active:scale-[0.98]" id="btn-submit-activate" type="submit">
+            <span class="material-symbols-outlined text-lg">play_arrow</span>
+            <span>Mulai</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: DETAIL MESIN ================= -->
+  <div id="detailMachineModal" class="fixed inset-0 bg-[#0D2040]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200">
+    <div id="detailMachineModalContent" class="bg-surface-container-lowest rounded-2xl max-w-sm w-full p-6 shadow-2xl relative border border-slate-100 transform scale-95 transition-transform duration-200">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-xl">local_laundry_service</span>
+          <h3 id="dmTitle" class="text-base font-bold text-slate-800">Detail Mesin</h3>
+        </div>
+        <button onclick="closeMachineDetail()" type="button" class="p-1 rounded-lg text-slate-400 hover:text-slate-700">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-2.5 text-xs text-slate-600">
+        <div class="flex justify-between py-1 border-b border-slate-50">
+          <span class="text-slate-400">Tipe Perangkat</span>
+          <span id="dmType" class="font-semibold text-slate-800">-</span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-slate-50">
+          <span class="text-slate-400">Fase Berjalan</span>
+          <span id="dmPhase" class="font-semibold text-primary">-</span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-slate-50">
+          <span class="text-slate-400">Progress Siklus</span>
+          <span id="dmProgress" class="font-bold text-slate-800">-</span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-slate-50">
+          <span class="text-slate-400">Estimasi Sisa</span>
+          <span id="dmTime" class="font-semibold text-slate-800">-</span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-slate-50">
+          <span class="text-slate-400">Pelanggan</span>
+          <span id="dmCustomer" class="font-semibold text-slate-800">-</span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-slate-50">
+          <span class="text-slate-400">No. Transaksi</span>
+          <span id="dmTrx" class="font-mono font-semibold text-slate-800">-</span>
+        </div>
+        <div class="flex justify-between py-1">
+          <span class="text-slate-400">Metode Akses</span>
+          <span id="dmMode" class="font-semibold text-slate-800">-</span>
+        </div>
+      </div>
+
+      <div class="mt-5 flex gap-2">
+        <a href="progress.html" class="w-full py-2 bg-primary-container hover:bg-primary text-white text-xs font-semibold rounded-lg text-center transition">
+          Buka di Tab Progress
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: BANTUAN & SUPPORT ================= -->
+  <div id="supportModal" class="fixed inset-0 bg-[#0D2040]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200">
+    <div id="supportModalContent" class="bg-surface-container-lowest rounded-2xl max-w-sm w-full p-6 shadow-2xl relative border border-slate-100 transform scale-95 transition-transform duration-200">
+      <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center mb-3">
+        <span class="material-symbols-outlined text-2xl">headset_mic</span>
+      </div>
+      <h3 class="text-base font-bold text-slate-800">Bantuan &amp; Dukungan Teknis</h3>
+      <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+        Pusat kendali operasional Menwash IoT. Hubungi tim teknis kami jika terjadi kendala modul relay, offline gateway, atau perselisihan transaksi.
+      </p>
+      <div class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1.5">
+        <div class="flex items-center gap-2 text-slate-700">
+          <span class="material-symbols-outlined text-primary text-base">call</span>
+          <span>(021) 8892-0199 (Siaga 24 Jam)</span>
+        </div>
+        <div class="flex items-center gap-2 text-slate-700">
+          <span class="material-symbols-outlined text-primary text-base">mail</span>
+          <span>support@menwash.id</span>
+        </div>
+      </div>
+      <div class="mt-5">
+        <button onclick="hideSupportModal()" type="button" class="w-full py-2 bg-primary-container text-white text-xs font-semibold rounded-lg hover:bg-primary transition">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TOAST NOTIFICATION FEEDBACK ================= -->
+  <div class="fixed bottom-24 right-6 z-50 bg-[#0D2040] text-white px-5 py-3.5 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-10 opacity-0 pointer-events-none transition-all duration-300 border border-white/10" id="activationToast">
+    <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
+      <span class="material-symbols-outlined text-xl">check_circle</span>
+    </div>
+    <div>
+      <div class="font-label-md text-sm font-bold text-white">Sinyal IoT Terkirim!</div>
+      <div class="text-xs text-slate-300" id="toastMessage">Mesin berhasil diaktifkan dengan sukses.</div>
+    </div>
+  </div>
+
+  <!-- ================= INTERACTIVE JAVASCRIPT ================= -->
+  <script>
+    // Live WIB Clock
+    function updateClock() {
+      const el = document.getElementById('liveClockDisplay');
+      if (!el) return;
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      el.textContent = `${h}:${m}:${s} WIB`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Dropdown Toggles
+    function toggleNotifDropdown() {
+      const drop = document.getElementById('notifDropdown');
+      const userDrop = document.getElementById('userDropdown');
+      if (userDrop) userDrop.classList.add('hidden');
+      if (drop) drop.classList.toggle('hidden');
+    }
+
+    function toggleUserDropdown() {
+      const drop = document.getElementById('userDropdown');
+      const notifDrop = document.getElementById('notifDropdown');
+      if (notifDrop) notifDrop.classList.add('hidden');
+      if (drop) drop.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#btnNotif') && !e.target.closest('#notifDropdown')) {
+        document.getElementById('notifDropdown')?.classList.add('hidden');
+      }
+      if (!e.target.closest('header button[onclick="toggleUserDropdown()"]') && !e.target.closest('#userDropdown')) {
+        document.getElementById('userDropdown')?.classList.add('hidden');
+      }
+    });
+
+    // Toast Notification
+    const toast = document.getElementById('activationToast');
+    const toastMessage = document.getElementById('toastMessage');
+
+    function showToast(msg) {
+      if (!toast) return;
+      if (toastMessage && msg) toastMessage.textContent = msg;
+      toast.classList.remove('translate-y-10', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.add('translate-y-10', 'opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 4000);
+    }
+
+    // Sinkronisasi Button
+    function triggerSync() {
+      const icon = document.getElementById('syncIcon');
+      const btn = document.getElementById('btnSync');
+      if (icon) icon.classList.add('animate-spin');
+      if (btn) btn.disabled = true;
+
+      setTimeout(() => {
+        if (icon) icon.classList.remove('animate-spin');
+        if (btn) btn.disabled = false;
+        showToast('Data telemetri IoT 13 mesin berhasil disinkronkan.');
+      }, 700);
+    }
+
+    // Modal Aktivasi Cepat Mesin (#qaModal)
+    const btnActivate = document.getElementById('btn-activate-qa');
+    const modal = document.getElementById('qaModal');
+    const modalContent = document.getElementById('modalContent');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const btnClose = document.getElementById('btn-close-modal');
+    const btnCancel = document.getElementById('btn-cancel-modal');
+    const form = document.getElementById('qaActivationForm');
+
+    function openModal() {
+      if (!modal) return;
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100', 'pointer-events-auto');
+      if (modalContent) {
+        modalContent.classList.remove('scale-95');
+        modalContent.classList.add('scale-100');
+      }
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modal.classList.remove('opacity-100', 'pointer-events-auto');
+      if (modalContent) {
+        modalContent.classList.add('scale-95');
+        modalContent.classList.remove('scale-100');
+      }
+    }
+
+    if (btnActivate) {
+      btnActivate.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+      });
+    }
+
+    if (btnClose) btnClose.addEventListener('click', closeModal);
+    if (btnCancel) btnCancel.addEventListener('click', closeModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (modal && !modal.classList.contains('pointer-events-none')) closeModal();
+        closeMachineDetail();
+        hideSupportModal();
+      }
+    });
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const selectEl = document.getElementById('selectUnitMesin');
+        const selectedMachineText = selectEl ? selectEl.options[selectEl.selectedIndex].text.split('—')[0].trim() : 'Unit Mesin';
+        const selectedCycle = form.querySelector('input[name="cycleMode"]:checked')?.value || 'Siklus';
+        const selectedAuth = form.querySelector('input[name="authMethod"]:checked')?.value || 'Tunai';
+
+        const submitBtn = document.getElementById('btn-submit-activate');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<span class="material-symbols-outlined text-lg animate-spin">refresh</span><span>Mengaktifkan...</span>`;
+        }
+
+        setTimeout(() => {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<span class="material-symbols-outlined text-lg">play_arrow</span><span>Mulai</span>`;
+          }
+          closeModal();
+          showToast(`${selectedMachineText} berhasil diaktifkan (${selectedCycle} • Metode: ${selectedAuth}). Controller IoT merespons.`);
+        }, 600);
+      });
+    }
+
+    // Detail Mesin Modal Logic
+    function openMachineDetail(name, type, phase, prog, time, cust, trx, mode) {
+      document.getElementById('dmTitle').textContent = `Detail ${name}`;
+      document.getElementById('dmType').textContent = type;
+      document.getElementById('dmPhase').textContent = phase;
+      document.getElementById('dmProgress').textContent = prog;
+      document.getElementById('dmTime').textContent = time;
+      document.getElementById('dmCustomer').textContent = cust;
+      document.getElementById('dmTrx').textContent = trx;
+      document.getElementById('dmMode').textContent = mode;
+
+      const m = document.getElementById('detailMachineModal');
+      const c = document.getElementById('detailMachineModalContent');
+      m.classList.remove('hidden');
+      setTimeout(() => {
+        m.classList.remove('opacity-0');
+        c.classList.remove('scale-95');
+      }, 10);
+    }
+
+    function closeMachineDetail() {
+      const m = document.getElementById('detailMachineModal');
+      const c = document.getElementById('detailMachineModalContent');
+      m.classList.add('opacity-0');
+      c.classList.add('scale-95');
+      setTimeout(() => {
+        m.classList.add('hidden');
+      }, 200);
+    }
+
+    // Support Modal
+    function showSupportModal() {
+      const m = document.getElementById('supportModal');
+      const c = document.getElementById('supportModalContent');
+      m.classList.remove('hidden');
+      setTimeout(() => {
+        m.classList.remove('opacity-0');
+        c.classList.remove('scale-95');
+      }, 10);
+    }
+
+    function hideSupportModal() {
+      const m = document.getElementById('supportModal');
+      const c = document.getElementById('supportModalContent');
+      m.classList.add('opacity-0');
+      c.classList.add('scale-95');
+      setTimeout(() => {
+        m.classList.add('hidden');
+      }, 200);
+    }
+
+    // Period Switcher Tren Mesin
+    function switchPeriod(p) {
+      const bHari = document.getElementById('btnPeriodHari');
+      const bMinggu = document.getElementById('btnPeriodMinggu');
+      const bBulan = document.getElementById('btnPeriodBulan');
+      const lbls = document.getElementById('chartLabelsRow');
+      const wLine = document.getElementById('svgWashLine');
+      const wArea = document.getElementById('svgWashArea');
+      const dLine = document.getElementById('svgDryLine');
+      const dArea = document.getElementById('svgDryArea');
+
+      [bHari, bMinggu, bBulan].forEach(b => {
+        b.className = 'px-space-sm py-1 rounded-md text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface transition';
+      });
+
+      if (p === 'hari') {
+        bHari.className = 'px-space-sm py-1 rounded-md bg-surface-container-lowest text-primary font-label-sm text-label-sm shadow-sm font-semibold transition';
+        lbls.innerHTML = `<span>07:00</span><span>09:00</span><span>11:00</span><span>13:00</span><span class="text-primary font-bold">15:00</span><span>17:00</span><span>19:00</span><span>21:00</span>`;
+        wLine.setAttribute('d', 'M 0 170 Q 70 160 130 140 T 260 95 T 390 60 T 520 80 T 650 45');
+        wArea.setAttribute('d', 'M 0 170 Q 70 160 130 140 T 260 95 T 390 60 T 520 80 T 650 45 L 650 190 L 0 190 Z');
+        dLine.setAttribute('d', 'M 0 185 Q 70 175 130 165 T 260 130 T 390 90 T 520 110 T 650 85');
+        dArea.setAttribute('d', 'M 0 185 Q 70 175 130 165 T 260 130 T 390 90 T 520 110 T 650 85 L 650 190 L 0 190 Z');
+      } else if (p === 'minggu') {
+        bMinggu.className = 'px-space-sm py-1 rounded-md bg-surface-container-lowest text-primary font-label-sm text-label-sm shadow-sm font-semibold transition';
+        lbls.innerHTML = `<span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span class="text-primary font-bold">Jum</span><span>Sab</span><span>Min</span>`;
+        wLine.setAttribute('d', 'M 0 150 Q 80 120 160 130 T 320 80 T 480 50 T 650 35');
+        wArea.setAttribute('d', 'M 0 150 Q 80 120 160 130 T 320 80 T 480 50 T 650 35 L 650 190 L 0 190 Z');
+        dLine.setAttribute('d', 'M 0 165 Q 80 140 160 145 T 320 100 T 480 75 T 650 60');
+        dArea.setAttribute('d', 'M 0 165 Q 80 140 160 145 T 320 100 T 480 75 T 650 60 L 650 190 L 0 190 Z');
+      } else {
+        bBulan.className = 'px-space-sm py-1 rounded-md bg-surface-container-lowest text-primary font-label-sm text-label-sm shadow-sm font-semibold transition';
+        lbls.innerHTML = `<span>W1</span><span>W2</span><span class="text-primary font-bold">W3</span><span>W4</span>`;
+        wLine.setAttribute('d', 'M 0 130 Q 150 90 300 110 T 650 40');
+        wArea.setAttribute('d', 'M 0 130 Q 150 90 300 110 T 650 40 L 650 190 L 0 190 Z');
+        dLine.setAttribute('d', 'M 0 150 Q 150 120 300 130 T 650 70');
+        dArea.setAttribute('d', 'M 0 150 Q 150 120 300 130 T 650 70 L 650 190 L 0 190 Z');
+      }
+    }
+  </script>
+
 </body>
 </html>

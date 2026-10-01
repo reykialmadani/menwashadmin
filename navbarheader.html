@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menwash Admin — Sidebar & Header</title>
+<!-- Google Fonts: DM Sans & Inter -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   MENWASH ADMIN — DESIGN SYSTEM & TOKENS
+   ========================================================= */
+:root {
+  --brand-primary: #0D2040;
+  --accent-brown: #B2775F;
+  
+  /* Update ke style terang ala IOFI */
+  --sidebar-bg: #FFFFFF;
+  --sidebar-hover: rgba(13, 32, 64, 0.05); /* Soft highlight untuk hover */
+  --sidebar-text: #242220;
+  --sidebar-text-dim: rgba(0, 0, 0, 0.56);
+  --sidebar-active-bg: #0D2040;
+  --sidebar-active-text: #FFFFFF;
+  
+  --page-bg: #F8F9FA;
+  --card-bg: #FFFFFF;
+  --border: rgba(36, 34, 32, 0.15);
+  --border-soft: rgba(36, 34, 32, 0.10);
+  --text: #242220;
+  --text-soft: rgba(36, 34, 32, 0.60);
+  --ok: #16A34A;
+  --ok-bg: #F0FDF4;
+  --ok-ink: #166534;
+  --err: #B91C1C;
+  --err-bg: #FEF2F2;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --font-display: 'DM Sans', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-nav: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  background: var(--page-bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+
+/* LAYOUT SHELL */
+.app { display: flex; min-height: 100vh; }
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+/* =========================================================
+   1. SIDEBAR
+   ========================================================= */
+.sidebar {
+  width: 256px;
+  flex-shrink: 0;
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  border-right: 1px solid var(--border-soft); /* Pembatas kanan sidebar */
+}
+.sidebar::-webkit-scrollbar { display: none; }
+
+.brand {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px;
+}
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-lg);
+  background: var(--brand-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: .02em;
+  color: var(--sidebar-text);
+  text-transform: uppercase;
+}
+.brand-sub {
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 500;
+  color: var(--text-soft);
+  margin-top: 4px;
+}
+
+/* Garis pemisah gaya iofi */
+.sidebar-divider {
+  margin: 0 16px;
+  height: 1px;
+  background: radial-gradient(ellipse at center, rgba(36, 34, 32, 0.2) 0%, transparent 100%);
+}
+
+.nav {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.nav-label {
+  padding: 8px 12px 6px;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-soft);
+}
+.nav-label:first-child { padding-top: 0; }
+.nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  color: var(--sidebar-text-dim);
+  border-radius: var(--radius-xl);
+  font-family: var(--font-nav);
+  font-weight: 500;
+  font-size: 14px;
+  transition: background .15s ease, color .15s ease;
+}
+.nav a svg { flex-shrink: 0; }
+.nav a .lbl { flex: 1; min-width: 0; }
+.nav a:hover {
+  background: var(--sidebar-hover);
+  color: var(--sidebar-text);
+}
+/* Style Menu Aktif ala iofi */
+.nav a.active {
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+  font-weight: 500;
+}
+.nav a.nav-danger svg { color: var(--err); }
+.nav a .badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--err);
+  color: #fff;
+}
+
+.sb-bottom {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sidebar-outlet {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: var(--page-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-xl);
+}
+.sidebar-outlet .o-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+  flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
+}
+.sidebar-outlet .o-name {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--sidebar-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidebar-outlet .o-addr {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-soft);
+  margin-top: 2px;
+}
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-xl);
+  font-family: var(--font-nav);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--err);
+  transition: background .15s ease, color .15s ease;
+}
+.logout-btn:hover {
+  background: var(--err-bg);
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+
+/* =========================================================
+   2. HEADER / TOPBAR
+   ========================================================= */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  min-height: 72px; /* Lebih proporsional (mengimbangi padding) */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border-soft);
+}
+/* Menyesuaikan text-size judul halaman agar mirip iofi */
+.topbar-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--text);
+}
+.topbar-sub {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--text-soft);
+  margin-top: 2px;
+}
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Jam Live Pill */
+.clock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--page-bg);
+  color: var(--text);
+  border: 1px solid var(--border-soft);
+  white-space: nowrap;
+}
+.clock::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  flex-shrink: 0;
+}
+.clock b {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}
+.clock span {
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 500;
+  color: var(--text-soft);
+}
+
+/* Tombol Aksi */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--brand-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-xl);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.btn-primary:hover {
+  background: rgba(13, 32, 64, 0.88);
+}
+
+/* Bell Notifikasi */
+.icon-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  color: var(--text-soft);
+  transition: background .15s ease, color .15s ease;
+}
+.icon-btn:hover {
+  background: var(--sidebar-hover);
+  color: var(--text);
+}
+.icon-btn .ping {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--err);
+  border: 2px solid #fff;
+}
+
+/* User Profil */
+.user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px;
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.user:hover {
+  background: var(--sidebar-hover);
+}
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.user-meta b {
+  display: block;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  color: var(--text);
+}
+.user-meta span {
+  display: block;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  color: var(--text-soft);
+}
+
+/* Demo Content Placeholder */
+.content { padding: 32px 24px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside class="sidebar">
+    <div>
+      <!-- Brand Logo & Title -->
+      <div class="brand">
+        <div class="brand-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">Menwash</div>
+          <div class="brand-sub">Admin Panel</div>
+        </div>
+      </div>
+
+      <!-- Pembatas Radial Gradient Ala Iofi -->
+      <div class="sidebar-divider"></div>
+
+      <!-- Navigation -->
+      <nav class="nav">
+        <!-- Grup Utama -->
+        <div class="nav-label">Utama</div>
+        <a href="dashboard.html" class="active" title="Dashboard">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+          <span class="lbl">Dashboard</span>
+        </a>
+
+        <!-- Grup Mesin -->
+        <div class="nav-label">Mesin</div>
+        <a href="mesin.html" title="Semua Mesin">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="20" x="3" y="2" rx="3"/><circle cx="12" cy="13" r="5"/><circle cx="12" cy="13" r="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="10" x2="10.01" y1="6" y2="6"/></svg>
+          <span class="lbl">Semua Mesin</span>
+        </a>
+        <a href="gangguan.html" class="nav-danger" title="Mesin Gangguan">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+          <span class="lbl">Mesin Gangguan</span>
+          <span class="badge">1</span>
+        </a>
+
+        <!-- Grup Aktivitas & Transaksi -->
+        <div class="nav-label">Aktivitas &amp; Transaksi</div>
+        <a href="transaksi.html" title="Transaksi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+          <span class="lbl">Transaksi</span>
+        </a>
+        <a href="progress.html" title="Progress Siklus">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="lbl">Progress</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Sidebar Bottom (Outlet status + logout) -->
+    <div class="sb-bottom">
+      <div class="sidebar-outlet">
+        <span class="o-dot"></span>
+        <div>
+          <div class="o-name">Outlet Laundry Cendrawasih</div>
+          <div class="o-addr">12/13 mesin online</div>
+        </div>
+      </div>
+      <a href="login.html" class="logout-btn" title="Keluar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+        <span class="lbl">Keluar</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN SECTION ==================== -->
+  <main class="main">
+
+    <!-- ==================== HEADER / TOPBAR ==================== -->
+    <header class="topbar">
+      <!-- Title & Subtitle -->
+      <div>
+        <div class="topbar-title">Dashboard</div>
+        <div class="topbar-sub">Ringkasan operasional hari ini</div>
+      </div>
+
+      <!-- Right Action Items -->
+      <div class="topbar-right">
+        <!-- Live Clock Pill -->
+        <div class="clock" id="liveClock">
+          <b>09:41:07</b>
+          <span>Kamis, hari ini</span>
+        </div>
+
+        <!-- Action CTA Button -->
+        <button type="button" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Aktifkan Mesin Tunai</span>
+        </button>
+
+        <!-- Notification Bell -->
+        <button type="button" class="icon-btn" aria-label="Notifikasi">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="ping"></span>
+        </button>
+
+        <!-- Admin User Avatar & Meta -->
+        <div class="user">
+          <div class="avatar">RA</div>
+          <div class="user-meta">
+            <b>Rani Admin</b>
+            <span>Admin Outlet</span>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-soft); margin-left: 4px;"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- Konten Halaman (Placeholder) -->
+    <div class="content">
+      <!-- Isi konten halaman diletakkan di sini -->
+    </div>
+
+  </main>
+</div>
+
+<!-- Script Live Clock (Opsional) -->
+<script>
+  function tickClock(){
+    const el = document.getElementById('liveClock');
+    if(!el) return;
+    const d = new Date();
+    const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+    const hh = String(d.getHours()).padStart(2,'0');
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    const ss = String(d.getSeconds()).padStart(2,'0');
+    el.querySelector('b').textContent = `${hh}:${mm}:${ss}`;
+    el.querySelector('span').textContent = days[d.getDay()] + ', hari ini';
+  }
+  setInterval(tickClock, 1000);
+  tickClock();
+</script>
+
+</body>
+</html>

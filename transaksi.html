@@ -1,163 +1,725 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="web_dashboard" name="shell-type">
 <title>Menwash Admin — Transaksi</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23D25353'/%3E%3Ccircle cx='12' cy='13.3' r='6' fill='none' stroke='%23FFEAD3' stroke-width='1.8'/%3E%3Cpath d='M9.1 13.3c0-1.6 1.3-2.9 2.9-2.9s2.9 1.3 2.9 2.9-1.3 2.9-2.9 2.9' fill='none' stroke='%23FFEAD3' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M8.3 4.6h1M11.5 4.6h1M14.7 4.6h1' stroke='%23FFEAD3' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/admin.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23002449'/%3E%3Ccircle cx='12' cy='13.3' r='6' fill='none' stroke='%23D5E3FF' stroke-width='1.8'/%3E%3Cpath d='M9.1 13.3c0-1.6 1.3-2.9 2.9-2.9s2.9 1.3 2.9 2.9-1.3 2.9-2.9 2.9' fill='none' stroke='%23D5E3FF' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M8.3 4.6h1M11.5 4.6h1M14.7 4.6h1' stroke='%23D5E3FF' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+<style>
+@layer base {
+  html, body { margin: 0; padding: 0; }
+  body { overscroll-behavior: none; }
+  main > :first-child { margin-top: 0 !important; }
+  main > :last-child { margin-bottom: 0 !important; }
+}
+::-webkit-scrollbar { display: none; }
+.modal-enter { animation: fadeIn 0.18s ease-out forwards; }
+.modal-content-enter { animation: scaleUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleUp { from { opacity: 0; transform: scale(0.96) translateY(6px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+</style>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "on-primary-container": "#85a5d7",
+        "primary-fixed-dim": "#a8c8fc",
+        "tertiary": "#001f5d",
+        "inverse-on-surface": "#eef0ff",
+        "surface-dim": "#d4d9f0",
+        "on-background": "#161b2b",
+        "on-secondary": "#ffffff",
+        "secondary-fixed": "#d8e2ff",
+        "secondary-fixed-dim": "#b5c6ef",
+        "on-surface-variant": "#43474f",
+        "surface-variant": "#dde2f8",
+        "on-tertiary-container": "#7f9fff",
+        "on-primary-fixed-variant": "#254874",
+        "inverse-surface": "#2a3041",
+        "primary-fixed": "#d5e3ff",
+        "surface-bright": "#faf8ff",
+        "on-error": "#ffffff",
+        "on-error-container": "#93000a",
+        "on-secondary-container": "#4b5b7f",
+        "surface-container-lowest": "#ffffff",
+        "secondary-container": "#c3d4fe",
+        "error-container": "#ffdad6",
+        "inverse-primary": "#a8c8fc",
+        "surface-container-highest": "#dde2f8",
+        "tertiary-fixed-dim": "#b4c5ff",
+        "surface-container-high": "#e3e7fe",
+        "background": "#faf8ff",
+        "surface-container": "#eaedff",
+        "on-primary-fixed": "#001c3b",
+        "on-primary": "#ffffff",
+        "on-secondary-fixed": "#071b3b",
+        "outline-variant": "#c3c6d0",
+        "on-surface": "#161b2b",
+        "on-tertiary-fixed": "#00174b",
+        "outline": "#737780",
+        "primary-container": "#153a66",
+        "surface": "#faf8ff",
+        "tertiary-container": "#00328b",
+        "on-secondary-fixed-variant": "#364769",
+        "on-tertiary": "#ffffff",
+        "error": "#ba1a1a",
+        "secondary": "#4d5e82",
+        "surface-container-low": "#f2f3ff",
+        "on-tertiary-fixed-variant": "#003ea8",
+        "surface-tint": "#3f5f8e",
+        "tertiary-fixed": "#dbe1ff",
+        "primary": "#002449"
+      },
+      borderRadius: {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "2xl": "1rem",
+        "full": "9999px"
+      },
+      spacing: {
+        "space-sm": "0.5rem",
+        "gutter-lg": "1.5rem",
+        "space-lg": "1.5rem",
+        "margin-lg": "2rem",
+        "space-xs": "0.25rem",
+        "space-xl": "2rem",
+        "margin": "1.5rem",
+        "space-md": "1rem",
+        "margin-sm": "1rem",
+        "gutter-sm": "0.75rem",
+        "gutter": "1.25rem"
+      },
+      fontFamily: {
+        "body-lg": ["DM Sans"],
+        "body-sm": ["DM Sans"],
+        "body-md": ["DM Sans"],
+        "headline-lg": ["DM Sans"],
+        "headline-xl": ["DM Sans"],
+        "metric-display": ["DM Sans"],
+        "label-sm": ["DM Sans"],
+        "label-lg": ["DM Sans"],
+        "label-md": ["DM Sans"],
+        "headline-xl-mobile": ["DM Sans"],
+        "headline-lg-mobile": ["DM Sans"],
+        "title-sm": ["DM Sans"],
+        "headline-md": ["DM Sans"]
+      },
+      fontSize: {
+        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+        "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+        "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.015em", fontWeight: "700" }],
+        "headline-xl": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "metric-display": ["32px", { lineHeight: "38px", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "700" }],
+        "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }],
+        "headline-xl-mobile": ["28px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "700" }],
+        "headline-lg-mobile": ["22px", { lineHeight: "30px", letterSpacing: "-0.01em", fontWeight: "700" }],
+        "title-sm": ["16px", { lineHeight: "24px", fontWeight: "600" }],
+        "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }]
+      }
+    }
+  }
+};
+</script>
 </head>
-<body>
+<body class="bg-surface font-body-md text-body-md text-on-surface">
 
-<div class="app">
+<!-- ===== SIDEBAR (Fixed Left w-64) ===== -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-primary text-on-primary z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+  <div class="flex flex-col">
+    <!-- Brand / Header Sidebar -->
+    <div class="h-16 px-space-md flex items-center gap-space-sm bg-primary border-b border-on-primary/10">
+      <img src="logomenwash.svg" alt="Menwash Logo" style="width: 32px; height: 32px; object-fit: contain; border-radius: 6px; background: rgb(255, 255, 255); padding: 2px;">
+      <div class="flex flex-col min-w-0">
+        <span class="font-label-lg text-label-lg text-on-primary truncate">Menwash Admin</span>
+        <span class="font-label-sm text-label-sm text-on-primary-container truncate">Outlet Cendrawasih</span>
+      </div>
+    </div>
 
-  <!-- ===== SIDEBAR (dirender oleh assets/layout.js) ===== -->
-  <aside class="sidebar" id="layoutSidebar"></aside>
+    <!-- Navigasi -->
+    <nav class="flex flex-col gap-space-xs px-space-sm py-space-md overflow-y-auto">
+      <div class="px-space-sm pt-space-xs pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Utama</div>
+      <a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-primary/80 hover:bg-primary-container hover:text-on-primary transition-colors" data-path="dashboard" href="dashboard.html">
+        <span class="material-symbols-outlined text-lg">dashboard</span>
+        <span class="font-body-md text-body-md">Dashboard</span>
+      </a>
 
-  <!-- ===== MAIN ===== -->
-  <main class="main">
-
-    <div class="topbar" id="layoutTopbar"></div>
-
-    <div class="content">
-
-      <!-- Ringkasan -->
-      <div class="stat-grid cols-3">
-        <div class="stat-card">
-          <div class="s-top">
-            <span class="s-label">Total transaksi hari ini</span>
-            <span class="s-icon" data-icon="invoice" data-size="20"></span>
-          </div>
-          <div class="s-row">
-            <div class="s-val">48 <small>Tx</small></div>
-            <span class="badge ok">+12 dari kemarin</span>
-          </div>
+      <div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Mesin</div>
+      <a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-primary/80 hover:bg-primary-container hover:text-on-primary transition-colors" data-path="semua-mesin" href="mesin.html">
+        <span class="material-symbols-outlined text-lg">local_laundry_service</span>
+        <span class="font-body-md text-body-md">Semua Mesin</span>
+      </a>
+      <a class="flex items-center justify-between px-space-sm py-space-sm rounded-lg text-on-primary/80 hover:bg-primary-container hover:text-on-primary transition-colors" data-path="mesin-gangguan" href="gangguan.html">
+        <div class="flex items-center gap-space-sm">
+          <span class="material-symbols-outlined text-lg">error</span>
+          <span class="font-body-md text-body-md">Mesin Gangguan</span>
         </div>
+        <span class="px-space-xs py-0.5 rounded-full bg-error text-on-error font-label-sm text-label-sm font-bold">1</span>
+      </a>
 
-        <div class="stat-card">
-          <div class="s-top">
-            <span class="s-label">Estimasi pendapatan hari ini</span>
-            <span class="s-icon" data-icon="money" data-size="20" style="background:var(--ok-bg); color:var(--ok-ink);"></span>
-          </div>
-          <div class="s-row">
-            <div class="s-val">Rp 612rb</div>
-          </div>
+      <div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Aktivitas &amp; Transaksi</div>
+      <a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary font-bold shadow-sm" data-path="transaksi" href="transaksi.html">
+        <span class="material-symbols-outlined text-lg">receipt_long</span>
+        <span class="font-body-md text-body-md">Transaksi</span>
+      </a>
+      <a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-primary/80 hover:bg-primary-container hover:text-on-primary transition-colors" data-path="progress" href="progress.html">
+        <span class="material-symbols-outlined text-lg">sync</span>
+        <span class="font-body-md text-body-md">Progress</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Footer Sidebar -->
+  <div class="p-space-md border-t border-on-primary/10 flex flex-col gap-space-sm bg-primary">
+    <div class="flex items-center justify-between text-on-primary/70">
+      <span class="font-label-sm text-label-sm flex items-center gap-space-xs">
+        IoT Server Online <span class="text-xs text-green-400">●</span>
+      </span>
+      <span class="font-label-sm text-[11px] text-on-primary-container">v2.4.1</span>
+    </div>
+    <div class="flex items-center justify-between pt-1">
+      <a class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-primary-container hover:text-on-primary transition-colors" href="javascript:void(0)" onclick="showToast('Pusat Bantuan IoT Menwash: Hubungi teknisi di ext. 102')">
+        <span class="material-symbols-outlined text-base">help_outline</span>
+        <span>Bantuan &amp; Dukungan</span>
+      </a>
+      <a class="flex items-center gap-1 font-body-sm text-body-sm text-on-primary/60 hover:text-error transition-colors" href="login.html" title="Keluar dari sistem">
+        <span class="material-symbols-outlined text-base">logout</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<!-- ===== MAIN CONTENT WRAPPER ===== -->
+<div class="pl-64">
+  <!-- Topbar Header (Fixed) -->
+  <header class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg border-b border-outline-variant/30">
+    <div class="flex items-center gap-space-sm text-on-surface-variant">
+      <span class="font-body-sm text-body-sm">Menwash Admin</span>
+      <span class="text-xs text-outline">/</span>
+      <span class="font-body-sm text-body-sm">Aktivitas &amp; Transaksi</span>
+      <span class="text-xs text-outline">/</span>
+      <span class="font-label-md text-label-md text-on-surface font-semibold">Transaksi</span>
+    </div>
+
+    <div class="flex items-center gap-space-md">
+      <!-- Tombol Cepat: Aktifkan Mesin Tunai (Flow Menwash Admin) -->
+      <button onclick="openQaModal()" class="px-space-md py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md flex items-center gap-1.5 hover:bg-primary transition-colors shadow-sm cursor-pointer">
+        <span class="material-symbols-outlined text-sm">payments</span>
+        <span>Aktifkan Mesin Tunai</span>
+      </button>
+
+      <!-- Live Clock Display -->
+      <div class="flex items-center gap-space-xs px-space-sm py-space-xs rounded bg-surface-container font-label-md text-label-md text-on-surface border border-outline-variant/40">
+        <span class="material-symbols-outlined text-sm text-on-surface-variant">schedule</span>
+        <span id="liveClockDisplay">09:41:22 WIB</span>
+      </div>
+
+      <!-- Notifikasi -->
+      <button class="relative p-space-xs rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors cursor-pointer" type="button" title="Notifikasi" onclick="showToast('Semua pembayaran jurnal kasir tersinkronisasi')">
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
+      </button>
+
+      <!-- User Profile -->
+      <div class="flex items-center gap-space-sm pl-space-sm border-l border-outline-variant">
+        <div class="text-right">
+          <div class="font-label-lg text-label-lg text-on-surface leading-tight font-semibold">Ratna Sari</div>
+          <div class="font-body-sm text-body-sm text-on-surface-variant leading-tight">Supervisor Outlet</div>
         </div>
+        <img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZJ16dkyeRzgcZ67eDwE1S5CjswcsUra3kCohCeILjozB-FUkrAljT-EzKKxlfFDfZhSqWQ9nl6Jai2K9N3kqu7Llm2g_rkPf6oQBwndW1GNWWJCY29ncxS_RmvBgw7calcvFgRK4E0fKNHtCp5o1RSQ8NUAhf6kqL5KS9GdJJJnLWbzBtqGlQeOmWAgc4LpO0A7bMB2IMt_Xr0VVfWzKfKxJW9v8CtFip2BWgaZ6Z7B6Gp7Ci7jQElA">
+      </div>
+    </div>
+  </header>
 
-        <div class="stat-card">
-          <div class="s-top">
-            <span class="s-label">Rasio pembayaran</span>
-            <span class="s-icon" data-icon="progress" data-size="20" style="background:var(--busy-bg); color:var(--busy-ink);"></span>
-          </div>
-          <div class="s-row">
-            <div class="ratio">
-              <b style="color:var(--busy-ink);">71%</b><span>QRIS</span><em>/</em><b style="color:var(--amber-ink);">29%</b><span>Tunai</span>
-            </div>
-            <span class="mono">34 · 14 Tx</span>
-          </div>
-          <div class="s-bar" role="img" aria-label="QRIS 71 persen, Tunai 29 persen"><i style="width:70.8%; background:var(--busy);"></i><i style="width:29.2%; background:var(--amber);"></i></div>
+  <!-- Page Body -->
+  <main class="relative w-full pt-20 px-space-lg pb-space-xl bg-surface min-h-screen">
+    <div class="flex flex-col w-full gap-space-lg max-w-7xl mx-auto">
+
+      <!-- Top Meta Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-sm">
+        <div class="flex flex-col">
+          <h1 class="font-headline-lg text-headline-lg text-primary tracking-tight font-bold">Transaksi</h1>
+          <p class="font-body-md text-body-md text-on-surface-variant">Riwayat pembayaran &amp; laporan arus kas shift kasir hari ini (Hari H)</p>
+        </div>
+        <div class="flex items-center gap-space-xs text-on-surface-variant font-label-md text-label-md bg-surface-container-lowest px-space-md py-space-xs rounded-lg shadow-sm border border-outline-variant/30">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-on-surface font-semibold">Sinkronisasi Real-Time</span>
+          <span class="text-outline">·</span>
+          <span class="text-on-surface-variant" id="topCountLabel">48 Transaksi Hari Ini</span>
         </div>
       </div>
 
-      <div class="card" style="margin-top:16px;">
-        <div class="card-head">
-          <div><h3>Daftar transaksi outlet</h3><p id="txCountLabel">48 transaksi hari ini</p></div>
-          <div class="card-actions">
-            <button type="button" class="btn btn-secondary" id="txExport"><span data-icon="download" data-size="18"></span>Ekspor CSV</button>
+      <!-- Banner Kebijakan Shift Kasir: Hari H Saja (Auto-Reset 00:00 WIB) -->
+      <div class="p-space-md rounded-xl bg-primary/5 border border-primary/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm text-body-sm shadow-xs">
+        <div class="flex items-start sm:items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-0 shadow-sm">
+            <span class="material-symbols-outlined text-xl">today</span>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="font-label-md text-label-md text-primary font-bold">Mode Pembukuan Shift Kasir: Hari H Saja (<span id="bannerCurrentDate">Kamis, 01 Okt 2026</span>)</span>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">● Sesi Harian Aktif</span>
+            </div>
+            <p class="text-on-surface-variant text-xs mt-0.5 max-w-3xl">
+              Hak akses Admin Outlet dibatasi hanya untuk pemantauan arus kas pada <strong>1 hari berjalan (Hari H)</strong>. Sistem otomatis melakukan tutup buku dan <strong>ter-reset ke hari baru pada pukul 00:00 WIB</strong> (data transaksi sebelumnya diarsipkan secara terpusat dan hanya dapat diakses oleh Super Admin / Owner).
+            </p>
           </div>
         </div>
-        <div class="table-toolbar">
-          <div class="table-search">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 17L21 21"/><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z"/></svg>
-            <input type="text" id="txSearch" placeholder="Cari ID transaksi atau mesin...">
+        <div class="flex items-center gap-2 self-end md:self-auto flex-shrink-0">
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container font-mono text-xs text-primary font-semibold border border-outline-variant/30">
+            <span class="material-symbols-outlined text-sm text-outline">timer</span>
+            <span>Reset: <strong id="resetCountdown" class="text-error font-bold">02:24:15</strong></span>
           </div>
-          <div class="chip-row">
-            <div class="fchip active" data-filter="semua">Semua</div>
-            <div class="fchip" data-filter="qris">QRIS</div>
-            <div class="fchip" data-filter="tunai">Tunai</div>
-            <div class="fchip" data-filter="dummy">Uang Dummy</div>
-            <div class="fchip" data-filter="gagal">Gagal / Refund</div>
+          <button type="button" onclick="simulateNewDayReset()" class="px-2.5 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-primary font-label-md text-xs font-semibold border border-outline-variant/40 transition-colors flex items-center gap-1 cursor-pointer shadow-xs" title="Simulasikan pergantian hari pukul 00:00 WIB">
+            <span class="material-symbols-outlined text-sm text-secondary">restart_alt</span>
+            <span>Simulasi Pergantian Hari</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Section 1: Ringkasan Finansial Hari H (3 Stat Cards) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+        <!-- Card 1: Total Order Hari H -->
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-md border border-outline-variant/30">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-space-sm">
+              <div class="w-10 h-10 rounded-lg bg-secondary-container/40 flex items-center justify-center text-primary-container">
+                <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+              </div>
+              <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-bold">Total Order Hari H</span>
+            </div>
+            <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-label-sm text-label-sm font-bold">
+              <span class="material-symbols-outlined text-sm">schedule</span>
+              Sesi Berjalan
+            </span>
+          </div>
+          <div>
+            <div class="font-metric-display text-metric-display text-primary tracking-tight font-bold" id="cardTotalOrder">48 <span class="font-title-sm text-title-sm font-normal text-on-surface-variant">Tx</span></div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-1" id="cardTotalOrderSub">34 Web Mandiri · 14 Manual Kasir (Hari Ini)</p>
+          </div>
+          <div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden flex">
+            <div class="bg-primary h-full rounded-full" style="width: 71%"></div>
+            <div class="bg-primary-container h-full rounded-full" style="width: 29%"></div>
           </div>
         </div>
-        <div class="card-body" style="padding:0;">
-          <div style="overflow-x:auto;">
-          <table style="min-width:860px;">
+
+        <!-- Card 2: Pendapatan Hari H -->
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-md border border-outline-variant/30">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-space-sm">
+              <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700">
+                <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">payments</span>
+              </div>
+              <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-bold">Pendapatan Hari H</span>
+            </div>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm font-bold">
+              Net Omset Hari Ini
+            </span>
+          </div>
+          <div>
+            <div class="font-metric-display text-metric-display text-primary tracking-tight font-bold" id="cardNetOmset">Rp 612.000</div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-1" id="cardNetOmsetSub">QRIS: Rp 444rb · Tunai: Rp 168rb (Sesi 01 Okt)</p>
+          </div>
+          <div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+            <span class="flex items-center gap-1 font-medium"><span class="w-2 h-2 rounded-full bg-primary-container"></span> QRIS Rp 444.000</span>
+            <span class="flex items-center gap-1 font-medium"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Tunai Rp 168.000</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Rasio Pembayaran Hari H -->
+        <div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-space-md border border-outline-variant/30">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-space-sm">
+              <div class="w-10 h-10 rounded-lg bg-secondary-container/40 flex items-center justify-center text-primary-container">
+                <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">donut_large</span>
+              </div>
+              <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-bold">Rasio Pembayaran Hari H</span>
+            </div>
+            <span class="font-label-sm text-label-sm text-on-surface-variant font-bold" id="cardRatioTx">34 : 14 Tx</span>
+          </div>
+          <div>
+            <div class="font-metric-display text-metric-display text-primary tracking-tight font-bold" id="cardRatioDisplay">71% <span class="font-title-sm text-title-sm text-on-surface-variant font-normal">QRIS</span> / 29% <span class="font-title-sm text-title-sm text-on-surface-variant font-normal">Tunai</span></div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Proporsi metode bayar shift kasir hari ini</p>
+          </div>
+          <div class="flex flex-col gap-1">
+            <div class="w-full bg-surface-container h-2 rounded-full overflow-hidden flex">
+              <div class="bg-primary-container h-full rounded-l-full" style="width: 70.8%" title="QRIS 70.8%"></div>
+              <div class="bg-amber-500 h-full rounded-r-full" style="width: 29.2%" title="Tunai 29.2%"></div>
+            </div>
+            <div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant px-0.5">
+              <span>Digital (QRIS)</span>
+              <span>Cash (Kasir)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Dual-Section Control Toolbar -->
+      <div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-space-md border border-outline-variant/30">
+        <!-- Left Section: Search & Payment Filter Chips -->
+        <div class="flex flex-col lg:flex-row items-stretch lg:items-center gap-space-sm flex-1">
+          <div class="relative min-w-[260px] max-w-md flex-1">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+            <input class="w-full pl-9 pr-space-md py-2 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container transition-all border border-outline-variant/30" id="txSearchInput" placeholder="Cari ID transaksi, mesin, nominal..." type="text">
+          </div>
+          
+          <!-- Payment Method Filter Dropdown -->
+          <div class="relative min-w-[220px]">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-base pointer-events-none">payments</span>
+            <select id="paymentMethodSelect" class="w-full appearance-none bg-surface-container-low pl-9 pr-8 py-2 rounded-lg font-label-md text-label-md text-on-surface cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-container focus:bg-surface-container-lowest transition-all border border-outline-variant/30">
+              <option value="all" selected>Semua Metode Pembayaran</option>
+              <option value="qris">QRIS Mandiri / BCA</option>
+              <option value="cash">Cash / Tunai Kasir</option>
+              <option value="dummy">Uang Dummy</option>
+              <option value="failed">Gagal / Refund</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-base pointer-events-none">expand_more</span>
+          </div>
+        </div>
+
+        <!-- Right Section: Fixed Hari H Indicator & Export Dropdown -->
+        <div class="flex items-center justify-end gap-space-sm flex-wrap">
+          <!-- Fixed Hari H Status Indicator (Berkala Terkunci) -->
+          <button type="button" onclick="showPeriodicLockModal()" class="flex items-center gap-2 bg-surface-container-low hover:bg-surface-container pl-3 pr-3.5 py-2 rounded-lg font-label-md text-label-md text-on-surface border border-outline-variant/40 transition-colors cursor-pointer group" title="Klik untuk informasi pembatasan akses laporan berkala">
+            <span class="material-symbols-outlined text-base text-primary">event_available</span>
+            <span class="font-bold text-primary" id="toolbarDateLabel">Hari Ini (Hari H)</span>
+            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container text-[11px] text-outline group-hover:text-error transition-colors font-medium">
+              <span class="material-symbols-outlined text-xs">lock</span> Berkala Terkunci
+            </span>
+          </button>
+
+          <!-- Export Button with Dropdown (Rekap Harian Saja) -->
+          <div class="relative">
+            <button class="flex items-center gap-1.5 bg-primary-container hover:bg-primary text-on-primary px-3.5 py-2 rounded-lg font-label-lg text-label-lg transition-colors shadow-sm cursor-pointer" id="exportDropdownBtn" type="button">
+              <span class="material-symbols-outlined text-lg">download</span>
+              <span>Unduh Rekap Kasir</span>
+              <span class="material-symbols-outlined text-base">expand_more</span>
+            </button>
+            <!-- Dropdown Menu -->
+            <div class="hidden absolute right-0 mt-2 w-64 bg-surface-container-lowest rounded-xl shadow-xl z-30 p-1 flex flex-col border border-outline-variant/40" id="exportMenu">
+              <button class="flex items-center gap-2.5 px-3 py-2 text-left rounded-lg hover:bg-surface-container font-label-md text-label-md text-on-surface transition-colors cursor-pointer" onclick="exportReport('pdf')" type="button">
+                <span class="material-symbols-outlined text-error text-lg">picture_as_pdf</span>
+                <div class="flex flex-col">
+                  <span>Slip Tutup Kasir Hari H (.pdf)</span>
+                  <span class="font-body-sm text-body-sm text-on-surface-variant">Rekap shift harian untuk kasir</span>
+                </div>
+              </button>
+              <button class="flex items-center gap-2.5 px-3 py-2 text-left rounded-lg hover:bg-surface-container font-label-md text-label-md text-on-surface transition-colors cursor-pointer" onclick="exportReport('xlsx')" type="button">
+                <span class="material-symbols-outlined text-emerald-600 text-lg">table_view</span>
+                <div class="flex flex-col">
+                  <span>Jurnal Transaksi Hari H (.xlsx)</span>
+                  <span class="font-body-sm text-body-sm text-on-surface-variant">Lengkap dengan rincian mesin &amp; jam</span>
+                </div>
+              </button>
+              <button class="flex items-center gap-2.5 px-3 py-2 text-left rounded-lg hover:bg-surface-container font-label-md text-label-md text-on-surface transition-colors cursor-pointer" onclick="exportReport('csv')" type="button">
+                <span class="material-symbols-outlined text-primary text-lg">csv</span>
+                <div class="flex flex-col">
+                  <span>Data Tabular Hari H (.csv)</span>
+                  <span class="font-body-sm text-body-sm text-on-surface-variant">Data mentah sesi hari ini</span>
+                </div>
+              </button>
+              
+              <!-- Locked Periodic Report item -->
+              <div class="p-2.5 border-t border-surface-container bg-surface-container-low/60 rounded-b-lg flex items-center justify-between text-[11px] text-outline font-medium mt-1">
+                <span class="flex items-center gap-1.5 text-on-surface-variant font-medium">
+                  <span class="material-symbols-outlined text-xs text-error">lock</span>
+                  Laporan Mingguan / Bulanan
+                </span>
+                <span class="text-[10px] bg-outline/10 text-on-surface-variant px-1.5 py-0.5 rounded font-bold">Super Admin</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Data Table Card -->
+      <div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col border border-outline-variant/30">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
             <thead>
-              <tr>
-                <th>ID Transaksi</th><th>Waktu (WIB)</th><th>Mesin &amp; Layanan</th><th>Nominal</th><th>Metode</th><th>Status</th>
+              <tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+                <th class="py-3 px-space-md font-bold">ID Transaksi</th>
+                <th class="py-3 px-space-md font-bold">Waktu (WIB)</th>
+                <th class="py-3 px-space-md font-bold">Mesin &amp; Layanan</th>
+                <th class="py-3 px-space-md font-bold">Nominal</th>
+                <th class="py-3 px-space-md font-bold">Metode</th>
+                <th class="py-3 px-space-md font-bold">Status</th>
+                <th class="py-3 px-space-md text-right font-bold">Aksi</th>
               </tr>
             </thead>
-            <tbody id="txTableBody">
-              <tr data-filter="qris" data-amount="20000">
-                <td class="tx-id">MW-284719</td><td class="mono">09:31</td>
-                <td><b class="c-mesin">Cuci #03 → Pengering #01</b><span class="cell-sub c-layanan">Cuci + Kering</span></td>
-                <td class="nom">Rp 20.000</td>
-                <td><span class="badge busy"><span class="dot"></span>QRIS</span></td>
-                <td><span class="badge busy"><span class="dot"></span>Berjalan</span></td>
+            <tbody class="font-body-md text-body-md text-on-surface divide-y divide-surface-container" id="transactionTableBody">
+
+              <!-- Row 1: Normal QRIS Berjalan -->
+              <tr class="hover:bg-surface-container-low/60 transition-colors" data-method="qris" data-status="running">
+                <td class="py-3.5 px-space-md">
+                  <span class="font-mono font-bold text-primary">MW-284719</span>
+                </td>
+                <td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">09:31</td>
+                <td class="py-3.5 px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-label-lg text-label-lg text-on-surface flex items-center gap-1 font-bold">
+                      Cuci #03 <span class="material-symbols-outlined text-xs text-outline">arrow_forward</span> Pengering #01
+                    </span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">Cuci + Kering Complete</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="font-bold text-on-surface">Rp 20.000</span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container/50 text-primary-container font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> QRIS
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping"></span> Berjalan
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md text-right">
+                  <button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm transition-colors cursor-pointer" onclick="showTxDetail('MW-284719', 'Cuci #03 → Pengering #01', 'Rp 20.000', 'QRIS Mandiri', 'Berjalan', '09:31 WIB')" type="button">
+                    <span class="material-symbols-outlined text-sm">visibility</span> Nota
+                  </button>
+                </td>
               </tr>
-              <tr data-filter="tunai" data-amount="12000">
-                <td class="tx-id">MW-TX-9925</td><td class="mono">09:10</td>
-                <td><b class="c-mesin">Cuci #07</b><span class="cell-sub c-layanan">Cuci saja</span></td>
-                <td class="nom">Rp 12.000</td>
-                <td><span class="badge amber"><span class="dot"></span>Tunai</span></td>
-                <td><span class="badge busy"><span class="dot"></span>Berjalan</span></td>
+
+              <!-- Row 2: Tunai Selesai -->
+              <tr class="hover:bg-surface-container-low/60 transition-colors" data-method="cash" data-status="completed">
+                <td class="py-3.5 px-space-md">
+                  <span class="font-mono font-bold text-primary">MW-TX-9925</span>
+                </td>
+                <td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">09:10</td>
+                <td class="py-3.5 px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-label-lg text-label-lg text-on-surface font-bold">Cuci #07</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">Cuci saja standard (35 min)</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="font-bold text-on-surface">Rp 12.000</span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Tunai
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Selesai
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md text-right">
+                  <button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm transition-colors cursor-pointer" onclick="showTxDetail('MW-TX-9925', 'Cuci #07', 'Rp 12.000', 'Tunai Kasir', 'Selesai', '09:10 WIB')" type="button">
+                    <span class="material-symbols-outlined text-sm">visibility</span> Nota
+                  </button>
+                </td>
               </tr>
-              <tr data-filter="qris gagal" data-amount="12000">
-                <td class="tx-id">MW-284688</td><td class="mono">08:52</td>
-                <td><b class="c-mesin">Cuci #04</b><span class="cell-sub c-layanan">Cuci saja</span></td>
-                <td class="nom">Rp 12.000</td>
-                <td><span class="badge busy"><span class="dot"></span>QRIS</span></td>
-                <td><span class="badge err"><span class="dot"></span>Gagal / Gangguan</span></td>
+
+              <!-- Row 3: Mesin Gangguan / Refund -->
+              <tr class="hover:bg-surface-container-low/60 transition-colors bg-error-container/20" data-method="failed" data-status="refund">
+                <td class="py-3.5 px-space-md">
+                  <span class="font-mono font-bold text-error">MW-284688</span>
+                </td>
+                <td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">08:52</td>
+                <td class="py-3.5 px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-label-lg text-label-lg text-on-surface font-bold">Cuci #04</span>
+                    <span class="font-body-sm text-body-sm text-error flex items-center gap-1 font-semibold">
+                      <span class="material-symbols-outlined text-xs">error</span> Cuci saja (Terhenti menit 18)
+                    </span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="font-bold text-on-surface line-through text-outline">Rp 12.000</span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container/50 text-primary-container font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> QRIS
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-100 text-red-800 font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-600"></span> Gagal / Refund
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md text-right">
+                  <button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-error/10 hover:bg-error/20 text-error font-label-sm text-label-sm transition-colors cursor-pointer" onclick="showTxDetail('MW-284688', 'Cuci #04 (E-02 Motor / Tekanan Air)', 'Rp 12.000 (Refunded)', 'QRIS Mandiri', 'Refund Selesai', '08:52 WIB')" type="button">
+                    <span class="material-symbols-outlined text-sm">assignment_return</span> Log
+                  </button>
+                </td>
               </tr>
-              <tr data-filter="qris" data-amount="10000">
-                <td class="tx-id">MW-284710</td><td class="mono">08:47</td>
-                <td><b class="c-mesin">Pengering #04</b><span class="cell-sub c-layanan">Kering saja</span></td>
-                <td class="nom">Rp 10.000</td>
-                <td><span class="badge busy"><span class="dot"></span>QRIS</span></td>
-                <td><span class="badge busy"><span class="dot"></span>Berjalan</span></td>
+
+              <!-- Row 4: Uang Dummy Kompensasi -->
+              <tr class="hover:bg-surface-container-low/60 transition-colors" data-method="dummy" data-status="running">
+                <td class="py-3.5 px-space-md">
+                  <span class="font-mono font-bold text-on-surface-variant">MW-DM-0042</span>
+                </td>
+                <td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">09:34</td>
+                <td class="py-3.5 px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-label-lg text-label-lg text-on-surface font-bold">Cuci #04 (Restart)</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+                      <span class="px-1.5 py-0.2 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant font-bold">Dummy Manual</span> Kompensasi sisa 15 menit
+                    </span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="font-bold text-on-surface-variant">Rp 0</span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Uang Dummy
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Berjalan
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md text-right">
+                  <button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm transition-colors cursor-pointer" onclick="showTxDetail('MW-DM-0042', 'Cuci #04 (Restart Dummy)', 'Rp 0 (Kompensasi Toko)', 'Uang Dummy Admin', 'Berjalan', '09:34 WIB')" type="button">
+                    <span class="material-symbols-outlined text-sm">visibility</span> Detail
+                  </button>
+                </td>
               </tr>
-              <tr data-filter="qris" data-amount="12000">
-                <td class="tx-id">MW-284670</td><td class="mono">08:15</td>
-                <td><b class="c-mesin">Cuci #02</b><span class="cell-sub c-layanan">Cuci saja</span></td>
-                <td class="nom">Rp 12.000</td>
-                <td><span class="badge busy"><span class="dot"></span>QRIS</span></td>
-                <td><span class="badge ok"><span class="dot"></span>Selesai</span></td>
+
+              <!-- Row 5: Pengering QRIS Selesai -->
+              <tr class="hover:bg-surface-container-low/60 transition-colors" data-method="qris" data-status="completed">
+                <td class="py-3.5 px-space-md">
+                  <span class="font-mono font-bold text-primary">MW-284710</span>
+                </td>
+                <td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">08:47</td>
+                <td class="py-3.5 px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-label-lg text-label-lg text-on-surface font-bold">Pengering #04</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">Kering saja (45 min)</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="font-bold text-on-surface">Rp 10.000</span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container/50 text-primary-container font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> QRIS
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Selesai
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md text-right">
+                  <button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm transition-colors cursor-pointer" onclick="showTxDetail('MW-284710', 'Pengering #04', 'Rp 10.000', 'QRIS Mandiri', 'Selesai', '08:47 WIB')" type="button">
+                    <span class="material-symbols-outlined text-sm">visibility</span> Nota
+                  </button>
+                </td>
               </tr>
-              <tr data-filter="tunai" data-amount="10000">
-                <td class="tx-id">MW-284655</td><td class="mono">07:58</td>
-                <td><b class="c-mesin">Pengering #06</b><span class="cell-sub c-layanan">Kering saja</span></td>
-                <td class="nom">Rp 10.000</td>
-                <td><span class="badge amber"><span class="dot"></span>Tunai</span></td>
-                <td><span class="badge ok"><span class="dot"></span>Selesai</span></td>
+
+              <!-- Row 6: Cuci Kasir Tunai Selesai -->
+              <tr class="hover:bg-surface-container-low/60 transition-colors" data-method="cash" data-status="completed">
+                <td class="py-3.5 px-space-md">
+                  <span class="font-mono font-bold text-primary">MW-284670</span>
+                </td>
+                <td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">08:15</td>
+                <td class="py-3.5 px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-label-lg text-label-lg text-on-surface font-bold">Cuci #02</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">Cuci saja standard (35 min)</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="font-bold text-on-surface">Rp 12.000</span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Tunai
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Selesai
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md text-right">
+                  <button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm transition-colors cursor-pointer" onclick="showTxDetail('MW-284670', 'Cuci #02', 'Rp 12.000', 'Tunai Kasir', 'Selesai', '08:15 WIB')" type="button">
+                    <span class="material-symbols-outlined text-sm">visibility</span> Nota
+                  </button>
+                </td>
               </tr>
-              <tr data-filter="dummy" data-amount="0">
-                <td class="tx-id">MW-DM-0042</td><td class="mono">09:34</td>
-                <td><b class="c-mesin">Cuci #04 (restart)</b><span class="cell-sub c-layanan">Cuci saja · sisa 15 menit</span></td>
-                <td class="nom">Rp 0</td>
-                <td><span class="badge amber"><span class="dot"></span>Uang Dummy</span></td>
-                <td><span class="badge ok"><span class="dot"></span>Berjalan</span></td>
+
+              <!-- Row 7: Pengering QRIS Selesai -->
+              <tr class="hover:bg-surface-container-low/60 transition-colors" data-method="qris" data-status="completed">
+                <td class="py-3.5 px-space-md">
+                  <span class="font-mono font-bold text-primary">MW-284655</span>
+                </td>
+                <td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">07:58</td>
+                <td class="py-3.5 px-space-md">
+                  <div class="flex flex-col">
+                    <span class="font-label-lg text-label-lg text-on-surface font-bold">Pengering #06</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">Kering saja (45 min)</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="font-bold text-on-surface">Rp 10.000</span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container/50 text-primary-container font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> QRIS
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-label-sm text-label-sm font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Selesai
+                  </span>
+                </td>
+                <td class="py-3.5 px-space-md text-right">
+                  <button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm transition-colors cursor-pointer" onclick="showTxDetail('MW-284655', 'Pengering #06', 'Rp 10.000', 'QRIS BCA', 'Selesai', '07:58 WIB')" type="button">
+                    <span class="material-symbols-outlined text-sm">visibility</span> Nota
+                  </button>
+                </td>
               </tr>
-              <tr data-filter="qris gagal" data-amount="12000">
-                <td class="tx-id">MW-284688</td><td class="mono">09:34</td>
-                <td><b class="c-mesin">Cuci #04</b><span class="cell-sub c-layanan">Cuci saja</span></td>
-                <td class="nom" style="color:var(--text-soft); text-decoration:line-through;">Rp 12.000</td>
-                <td><span class="badge busy"><span class="dot"></span>QRIS</span></td>
-                <td><span class="badge err"><span class="dot"></span>Refund otomatis</span></td>
-              </tr>
+
             </tbody>
           </table>
-          </div>
-          <div id="txEmpty" class="empty-state" style="display:none;">
-            <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M17 17L21 21"/><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z"/><path d="M8 8L11 11M11 11L14 14M11 11L14 8M11 11L8 14"/></svg>
-            <div>Tidak ada transaksi untuk filter ini.</div>
-          </div>
         </div>
-        <div class="table-pagination">
-          <div class="tp-info" id="txPageInfo">Menampilkan 1–8 dari 8 data</div>
-          <div class="tp-pages">
-            <button class="tp-btn tp-text" id="txPrevBtn" disabled><span data-icon="arrowLeft" data-size="16"></span>Sebelumnya</button>
-            <div class="tp-page">1</div>
-            <button class="tp-btn tp-text" id="txNextBtn" disabled>Selanjutnya<span data-icon="arrowRight" data-size="16"></span></button>
+
+        <!-- Section 4: Table Footer & Pagination -->
+        <div class="p-space-md bg-surface-container-low/40 flex flex-col sm:flex-row items-center justify-between gap-space-sm border-t border-surface-container">
+          <span class="font-body-sm text-body-sm text-on-surface-variant" id="paginationRangeText">
+            Menampilkan <span class="font-bold text-on-surface">1 - 7</span> dari <span class="font-bold text-on-surface">48</span> transaksi
+          </span>
+          <div class="flex items-center gap-1 font-label-md text-label-md">
+            <button id="txPrevBtn" class="px-2.5 py-1.5 rounded-lg text-outline bg-surface-container-low cursor-not-allowed flex items-center gap-1 border border-outline-variant/30" disabled type="button">
+              <span class="material-symbols-outlined text-sm">chevron_left</span>
+              <span>Sebelumnya</span>
+            </button>
+            <button class="w-8 h-8 rounded-lg bg-primary text-on-primary font-bold flex items-center justify-center shadow-sm" type="button">
+              1
+            </button>
+            <button class="w-8 h-8 rounded-lg text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors cursor-pointer" onclick="showToast('Memuat halaman 2 transaksi...')" type="button">
+              2
+            </button>
+            <button class="w-8 h-8 rounded-lg text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors cursor-pointer" onclick="showToast('Memuat halaman 3 transaksi...')" type="button">
+              3
+            </button>
+            <button id="txNextBtn" class="px-2.5 py-1.5 rounded-lg text-on-surface hover:bg-surface-container flex items-center gap-1 transition-colors border border-outline-variant/30 cursor-pointer" onclick="showToast('Memuat transaksi selanjutnya...')" type="button">
+              <span>Berikutnya</span>
+              <span class="material-symbols-outlined text-sm">chevron_right</span>
+            </button>
           </div>
         </div>
       </div>
@@ -166,218 +728,649 @@
   </main>
 </div>
 
-<!-- ===== MODAL: AKTIFKAN MESIN TUNAI (sama seperti Dashboard) ===== -->
-<div class="modal-overlay" id="qaModal">
-  <div class="modal">
-    <div class="modal-head">
-      <div>
-        <h3>Aktifkan mesin untuk pelanggan tunai</h3>
-        <p>Untuk transaksi yang dibayar langsung di outlet</p>
+<!-- ========================================================================= -->
+<!-- MODAL: DETAIL NOTA TRANSAKSI (RECEIPT PREVIEW & THERMAL PRINT)           -->
+<!-- ========================================================================= -->
+<div class="hidden fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm flex items-center justify-center p-4 modal-enter" id="txModal">
+  <div class="bg-surface-container-lowest rounded-2xl shadow-2xl max-w-md w-full p-space-lg flex flex-col gap-space-md modal-content-enter border border-outline-variant/40">
+    <div class="flex items-start justify-between">
+      <div class="flex items-center gap-space-sm">
+        <div class="w-9 h-9 rounded-lg bg-primary-container text-on-primary flex items-center justify-center">
+          <span class="material-symbols-outlined text-xl">receipt</span>
+        </div>
+        <div>
+          <h3 class="font-title-sm text-title-sm text-on-surface font-bold">Detail Nota Transaksi</h3>
+          <span class="font-mono font-bold text-primary text-sm" id="modalTxId">MW-284719</span>
+        </div>
       </div>
-      <button class="modal-close" onclick="closeEl('qaModal')">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      <button class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant flex items-center justify-center cursor-pointer transition-colors" onclick="closeTxModal()" type="button">
+        <span class="material-symbols-outlined text-base">close</span>
       </button>
     </div>
 
-    <div class="modal-body">
-      <div id="qa-step1">
-        <div class="field required">
-          <label>Pilih mesin</label>
-          <select id="qaMesin">
-            <option>Mesin Cuci #01 — Tersedia</option>
-            <option>Mesin Cuci #05 — Tersedia</option>
-            <option>Mesin Pengering #02 — Tersedia</option>
-            <option>Mesin Pengering #03 — Tersedia</option>
+    <div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-xs font-body-sm text-body-sm border border-outline-variant/30">
+      <div class="flex justify-between py-1 border-b border-surface-container">
+        <span class="text-on-surface-variant">Waktu Pembayaran:</span>
+        <span class="font-semibold text-on-surface" id="modalTxTime">09:31 WIB</span>
+      </div>
+      <div class="flex justify-between py-1 border-b border-surface-container">
+        <span class="text-on-surface-variant">Unit Mesin:</span>
+        <span class="font-semibold text-on-surface font-bold text-primary" id="modalTxMachine">Cuci #03</span>
+      </div>
+      <div class="flex justify-between py-1 border-b border-surface-container">
+        <span class="text-on-surface-variant">Metode Bayar:</span>
+        <span class="font-semibold text-on-surface" id="modalTxMethod">QRIS Mandiri</span>
+      </div>
+      <div class="flex justify-between py-1 border-b border-surface-container">
+        <span class="text-on-surface-variant">Status IoT Pulse:</span>
+        <span class="font-semibold text-emerald-600" id="modalTxStatus">Selesai / Terkirim</span>
+      </div>
+      <div class="flex justify-between py-1.5 mt-1 pt-1.5 font-title-sm text-title-sm text-on-surface font-bold">
+        <span>Total Dibayar:</span>
+        <span class="font-bold text-primary text-base" id="modalTxNominal">Rp 20.000</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-space-sm justify-end">
+      <button class="px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors cursor-pointer" onclick="closeTxModal()" type="button">
+        Tutup
+      </button>
+      <button class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md transition-colors shadow-sm cursor-pointer" onclick="printThermalReceipt()" type="button">
+        <span class="material-symbols-outlined text-base">print</span>
+        <span>Cetak Thermal</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- MODAL: INFORMASI PEMBATASAN LAPORAN BERKALA (HARI H SAJA)                -->
+<!-- ========================================================================= -->
+<div id="periodicLockModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 modal-enter">
+  <div class="w-full max-w-lg bg-surface-container-lowest rounded-2xl shadow-2xl overflow-hidden border border-outline-variant/40 modal-content-enter flex flex-col">
+    <div class="px-space-lg py-space-md bg-primary text-on-primary flex items-start justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-xl bg-primary-container text-on-primary flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-2xl text-amber-300">lock_clock</span>
+        </div>
+        <div>
+          <h3 class="font-headline-md text-title-sm text-on-primary font-bold">Akses Laporan Berkala Terkunci</h3>
+          <p class="font-body-sm text-xs text-on-primary-container">Kebijakan Keamanan &amp; Integritas Kasir Outlet</p>
+        </div>
+      </div>
+      <button onclick="closePeriodicLockModal()" class="w-8 h-8 rounded-lg flex items-center justify-center text-on-primary/70 hover:text-on-primary hover:bg-primary-container transition-colors cursor-pointer" type="button">
+        <span class="material-symbols-outlined text-xl">close</span>
+      </button>
+    </div>
+
+    <div class="p-space-lg flex flex-col gap-space-md text-on-surface">
+      <div class="p-3.5 bg-amber-50/80 rounded-xl border border-amber-200/80 flex items-start gap-3">
+        <span class="material-symbols-outlined text-amber-700 text-2xl mt-0.5 flex-shrink-0">shield</span>
+        <div class="text-xs text-amber-900 leading-relaxed">
+          <strong class="font-bold block mb-1">Kenapa Riwayat Keuangan Sebelumnya Tidak Bisa Dicek?</strong>
+          Sisi akun <strong>Admin Outlet / Operator Kasir</strong> hanya memiliki izin memantau transaksi pada <strong>Hari H (1 hari berjalan)</strong> untuk kepentingan pencocokan uang tunai dan verifikasi tiket cuci pelanggan saat shift aktif.
+        </div>
+      </div>
+
+      <div class="space-y-2.5 text-xs text-on-surface">
+        <div class="flex items-start gap-2.5 p-2.5 rounded-lg bg-surface-container-low border border-surface-container">
+          <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-[11px] flex-shrink-0">1</span>
+          <div>
+            <strong class="font-semibold text-primary block">Tutup Shift &amp; Auto-Reset Harian (00:00 WIB)</strong>
+            <span>Setiap pergantian hari pukul 00:00 WIB, pembukuan kasir otomatis ditutup dan saldo hari baru dimulai dari Rp 0 secara otomatis.</span>
+          </div>
+        </div>
+        <div class="flex items-start gap-2.5 p-2.5 rounded-lg bg-surface-container-low border border-surface-container">
+          <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-[11px] flex-shrink-0">2</span>
+          <div>
+            <strong class="font-semibold text-primary block">Arsip Terpusat ke Super Admin</strong>
+            <span>Data keuangan hari-hari sebelumnya langsung diarsipkan ke cloud server terpusat. Admin outlet tidak memiliki hak akses membuka kembali pembukuan lampau.</span>
+          </div>
+        </div>
+        <div class="flex items-start gap-2.5 p-2.5 rounded-lg bg-surface-container-low border border-surface-container">
+          <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-[11px] flex-shrink-0">3</span>
+          <div>
+            <strong class="font-semibold text-primary block">Laporan Mingguan, Bulanan &amp; Tahunan</strong>
+            <span>Laporan berkala dan analisa laba-rugi multi-periode dikelola eksklusif oleh Pemilik Outlet / Manajemen Super Admin.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-space-md bg-surface-container-low border-t border-surface-container flex items-center justify-between">
+      <span class="text-xs text-secondary flex items-center gap-1">
+        <span class="material-symbols-outlined text-xs text-emerald-600">verified_user</span> Otorisasi: Supervisor Outlet
+      </span>
+      <button onclick="closePeriodicLockModal()" class="px-4 py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-xs font-semibold transition-colors cursor-pointer">
+        Saya Mengerti
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- MODAL: AKTIFKAN MESIN TUNAI (WIZARD FLOW MENWASH ADMIN)                   -->
+<!-- ========================================================================= -->
+<div id="qaModalOverlay" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 modal-enter">
+  <div class="w-full max-w-lg bg-surface-container-lowest rounded-2xl shadow-2xl overflow-hidden border border-outline-variant/40 modal-content-enter">
+    
+    <!-- Modal Head -->
+    <div class="px-space-lg py-space-md border-b border-surface-container flex items-center justify-between bg-surface-container-lowest">
+      <div>
+        <h3 class="font-headline-md text-headline-md text-primary font-bold">Aktifkan Mesin Tunai</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Untuk transaksi yang dibayar langsung di outlet kasir</p>
+      </div>
+      <button onclick="closeQaModal()" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container transition-colors cursor-pointer">
+        <span class="material-symbols-outlined text-xl">close</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-space-lg flex flex-col gap-space-md">
+      
+      <!-- Step 1: Form Input -->
+      <div id="qa-step1" class="flex flex-col gap-space-md">
+        <div class="flex flex-col gap-1.5">
+          <label class="font-label-md text-label-md text-primary font-bold">Pilih Unit Mesin <span class="text-error">*</span></label>
+          <select id="qaMesinSelect" class="w-full h-11 px-3 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container">
+            <option value="Mesin Cuci #01">Mesin Cuci #01 — Front Load (Tersedia)</option>
+            <option value="Mesin Cuci #05">Mesin Cuci #05 — Front Load (Tersedia)</option>
+            <option value="Mesin Pengering #02">Mesin Pengering #02 — Gas Dryer (Tersedia)</option>
+            <option value="Mesin Pengering #03">Mesin Pengering #03 — Gas Dryer (Tersedia)</option>
+            <option value="Mesin Pengering #06">Mesin Pengering #06 — Gas Dryer (Tersedia)</option>
           </select>
         </div>
-        <div class="field required">
-          <label>Layanan</label>
-          <div class="seg-row">
-            <div class="seg active" data-group="layanan" data-value="Cuci saja">Cuci saja</div>
-            <div class="seg" data-group="layanan" data-value="Kering saja">Kering saja</div>
-            <div class="seg" data-group="layanan" data-value="Cuci + Kering">Cuci + Kering</div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="font-label-md text-label-md text-primary font-bold">Jenis Layanan <span class="text-error">*</span></label>
+          <div class="grid grid-cols-3 gap-2" id="qaLayananGroup">
+            <button type="button" class="qa-layanan-btn active py-2 px-3 rounded-lg border-2 border-primary-container bg-primary-container text-on-primary font-label-md text-label-md text-center transition-all cursor-pointer" data-val="Cuci saja" data-price="12000">Cuci Saja</button>
+            <button type="button" class="qa-layanan-btn py-2 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface font-label-md text-label-md text-center transition-all cursor-pointer hover:bg-surface-container" data-val="Kering saja" data-price="12000">Kering Saja</button>
+            <button type="button" class="qa-layanan-btn py-2 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface font-label-md text-label-md text-center transition-all cursor-pointer hover:bg-surface-container" data-val="Cuci + Kering" data-price="22000">Cuci + Kering</button>
           </div>
         </div>
-        <div class="field required">
-          <label>Durasi</label>
-          <div class="seg-row">
-            <div class="seg" data-group="durasi" data-value="30 menit">30 menit</div>
-            <div class="seg active" data-group="durasi" data-value="40 menit">40 menit</div>
-            <div class="seg" data-group="durasi" data-value="60 menit">60 menit</div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="font-label-md text-label-md text-primary font-bold">Durasi Siklus <span class="text-error">*</span></label>
+          <div class="grid grid-cols-3 gap-2" id="qaDurasiGroup">
+            <button type="button" class="qa-durasi-btn py-2 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface font-label-md text-label-md text-center transition-all cursor-pointer hover:bg-surface-container" data-val="30 menit">30 Menit</button>
+            <button type="button" class="qa-durasi-btn active py-2 px-3 rounded-lg border-2 border-primary-container bg-primary-container text-on-primary font-label-md text-label-md text-center transition-all cursor-pointer" data-val="40 menit">40 Menit</button>
+            <button type="button" class="qa-durasi-btn py-2 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface font-label-md text-label-md text-center transition-all cursor-pointer hover:bg-surface-container" data-val="60 menit">60 Menit</button>
           </div>
         </div>
-        <div class="alert info">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l9 4.9V17L12 22l-9-4.9V6.9z"/><path d="M12 8v5M12 16h.01"/></svg>
-          <span>Mesin akan menyala langsung tanpa menunggu pembayaran QRIS. Pastikan uang tunai sudah diterima.</span>
+
+        <div class="p-space-sm bg-surface-container-low rounded-xl border border-primary-container/20 flex items-start gap-2.5 text-on-surface-variant font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-primary-container text-lg mt-0.5">info</span>
+          <span>Mesin akan menyala seketika via sinyal relay IoT setelah konfirmasi. Pastikan uang tunai dari pelanggan sudah diterima kasir.</span>
         </div>
       </div>
 
-      <div id="qa-step2" style="display:none;">
-        <div class="summary-box">
-          <div class="summary-row"><span class="k">Mesin</span><span class="v" id="cfMesin">Mesin Cuci #01</span></div>
-          <div class="summary-row"><span class="k">Layanan</span><span class="v" id="cfLayanan">Cuci saja</span></div>
-          <div class="summary-row"><span class="k">Durasi</span><span class="v" id="cfDurasi">40 menit</span></div>
-          <div class="summary-row"><span class="k">Metode</span><span class="v">Tunai — dicatat manual</span></div>
-          <div class="summary-row"><span class="k">Total</span><span class="v" style="color:var(--maroon); font-size:15px;">Rp 12.000</span></div>
-        </div>
-        <div class="alert danger mt-14" id="qaWarnBox">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-          <span>Mesin akan langsung menyala setelah kamu menekan tombol di bawah. Aksi ini tidak bisa dibatalkan.</span>
-        </div>
-        <div class="processing-box mt-14" id="qaProcessingBox" style="display:none;">
-          <div class="p-spin"></div>
-          <div class="p-text"><b>Memproses…</b><span>Perintah diterima sistem (202 Accepted) — menunggu mesin ACK melalui MQTT.</span></div>
-        </div>
-      </div>
-
-      <div id="qa-step3" style="display:none;">
-        <div style="text-align:center; padding:6px 0 4px;">
-          <div style="width:56px;height:56px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>
+      <!-- Step 2: Confirmation & Processing -->
+      <div id="qa-step2" class="hidden flex flex-col gap-space-md">
+        <div class="p-space-md rounded-xl bg-surface-container-low border border-outline-variant/40 flex flex-col gap-2 font-body-sm text-body-sm">
+          <div class="flex justify-between items-center py-1 border-b border-surface-container">
+            <span class="text-on-surface-variant">Unit Mesin</span>
+            <span class="font-bold text-primary" id="qaConfMesin">Mesin Cuci #01</span>
           </div>
-          <div style="font-weight:600; font-size:15.5px;">Mesin berhasil dinyalakan</div>
-          <div class="muted mt-4">Transaksi tunai sudah tercatat di sistem.</div>
+          <div class="flex justify-between items-center py-1 border-b border-surface-container">
+            <span class="text-on-surface-variant">Layanan</span>
+            <span class="font-semibold text-on-surface" id="qaConfLayanan">Cuci Saja</span>
+          </div>
+          <div class="flex justify-between items-center py-1 border-b border-surface-container">
+            <span class="text-on-surface-variant">Durasi Siklus</span>
+            <span class="font-semibold text-on-surface" id="qaConfDurasi">40 Menit</span>
+          </div>
+          <div class="flex justify-between items-center py-1 border-b border-surface-container">
+            <span class="text-on-surface-variant">Metode Pembayaran</span>
+            <span class="font-semibold text-[#16A34A] flex items-center gap-1"><span class="material-symbols-outlined text-sm">payments</span> Tunai (Dicatat Kasir)</span>
+          </div>
+          <div class="flex justify-between items-center pt-1.5">
+            <span class="font-bold text-primary">Total Tagihan Tunai</span>
+            <span class="font-headline-md text-headline-md text-primary font-bold" id="qaConfTotal">Rp 12.000</span>
+          </div>
         </div>
-        <div class="summary-box mt-14">
-          <div class="summary-row"><span class="k">ID Transaksi</span><span class="v">MW-TX-9932</span></div>
-          <div class="summary-row"><span class="k">Mesin</span><span class="v" id="cfMesin2">Mesin Cuci #01</span></div>
-          <div class="summary-row"><span class="k">Dicatat oleh</span><span class="v">Rani Admin</span></div>
+
+        <div id="qaWarnBox" class="p-space-sm bg-error-container/30 border border-error/20 rounded-xl flex items-start gap-2.5 text-error font-body-sm text-body-sm">
+          <span class="material-symbols-outlined text-error text-lg mt-0.5">warning</span>
+          <span>Perintah daya akan langsung dialirkan ke smart breaker mesin. Aksi ini tidak dapat dibatalkan.</span>
+        </div>
+
+        <!-- Processing State -->
+        <div id="qaProcessingBox" class="hidden p-space-md bg-surface-container rounded-xl flex items-center gap-3">
+          <span class="material-symbols-outlined text-2xl text-primary animate-spin">progress_activity</span>
+          <div class="flex flex-col">
+            <span class="font-label-md text-label-md text-primary font-bold">Memproses Perintah (202 Accepted)…</span>
+            <span class="font-body-sm text-body-sm text-on-surface-variant">Mengirim paket MQTT relay ke board breaker mesin.</span>
+          </div>
         </div>
       </div>
+
+      <!-- Step 3: Success Result -->
+      <div id="qa-step3" class="hidden flex flex-col items-center text-center gap-space-md py-4">
+        <div class="w-14 h-14 rounded-full bg-[#DCFCE7] text-[#16A34A] flex items-center justify-center shadow-inner">
+          <span class="material-symbols-outlined text-3xl">check_circle</span>
+        </div>
+        <div class="flex flex-col">
+          <h4 class="font-headline-md text-headline-md text-primary font-bold">Mesin Berhasil Dinyalakan!</h4>
+          <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Transaksi tunai telah sukses dicatat di sistem jurnal kasir.</p>
+        </div>
+        <div class="w-full p-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 flex flex-col gap-2 text-left font-body-sm text-body-sm">
+          <div class="flex justify-between items-center py-1 border-b border-surface-container">
+            <span class="text-on-surface-variant">ID Transaksi Baru</span>
+            <span class="font-mono font-bold text-primary" id="qaResTx">MW-TX-9940</span>
+          </div>
+          <div class="flex justify-between items-center py-1 border-b border-surface-container">
+            <span class="text-on-surface-variant">Mesin Aktif</span>
+            <span class="font-semibold text-on-surface" id="qaResMesin">Mesin Cuci #01</span>
+          </div>
+          <div class="flex justify-between items-center py-1">
+            <span class="text-on-surface-variant">Dicatat Oleh</span>
+            <span class="font-semibold text-on-surface">Ratna Sari (Supervisor Outlet)</span>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="modal-foot" id="qaFoot1">
-      <button class="btn btn-ghost" onclick="closeEl('qaModal')">Batal</button>
-      <button class="btn btn-primary btn-block" onclick="showStep('qa',2)">Lanjutkan</button>
-    </div>
-    <div class="modal-foot" id="qaFoot2" style="display:none;">
-      <button class="btn btn-ghost" onclick="showStep('qa',1)">Kembali</button>
-      <button class="btn btn-primary btn-block" id="qaActivateBtn" onclick="qaActivate()">Nyalakan Mesin Sekarang</button>
-    </div>
-    <div class="modal-foot" id="qaFoot3" style="display:none;">
-      <button class="btn btn-primary btn-block" onclick="closeEl('qaModal'); showStep('qa',1)">Selesai</button>
+    <!-- Modal Footer Controls -->
+    <div class="px-space-lg py-space-md bg-surface-container-low/60 border-t border-surface-container flex items-center justify-end gap-2.5">
+      <div id="qaFootStep1" class="flex items-center gap-2.5 w-full justify-end">
+        <button onclick="closeQaModal()" class="px-space-md py-2 rounded-lg text-secondary font-label-md text-label-md hover:bg-surface-container transition-colors cursor-pointer" type="button">Batal</button>
+        <button onclick="goQaStep2()" class="px-space-lg py-2 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:bg-primary transition-colors shadow-sm cursor-pointer" type="button">Lanjutkan</button>
+      </div>
+      <div id="qaFootStep2" class="hidden flex items-center gap-2.5 w-full justify-between">
+        <button onclick="goQaStep1()" class="px-space-md py-2 rounded-lg text-secondary font-label-md text-label-md hover:bg-surface-container transition-colors cursor-pointer" id="qaBackBtn" type="button">Kembali</button>
+        <button onclick="executeQaActivate()" class="px-space-lg py-2 rounded-lg bg-[#16A34A] text-on-primary font-label-md text-label-md hover:bg-green-700 transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer" id="qaSubmitBtn" type="button">
+          <span class="material-symbols-outlined text-sm">power_settings_new</span> Nyalakan Mesin Sekarang
+        </button>
+      </div>
+      <div id="qaFootStep3" class="hidden w-full">
+        <button onclick="closeQaModal()" class="w-full py-2.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:bg-primary transition-colors shadow-sm cursor-pointer" type="button">Selesai &amp; Kembali</button>
+      </div>
     </div>
 
   </div>
 </div>
 
-<div class="toast" id="toast">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
-  <span>Berhasil</span>
+<!-- TOAST FLOATING NOTIFICATION -->
+<div id="toastNotification" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 px-space-md py-2.5 rounded-xl bg-primary text-on-primary shadow-2xl flex items-center gap-2.5 font-label-md text-label-md transition-all duration-300 opacity-0 pointer-events-none translate-y-4 border border-primary-fixed/20">
+  <span class="material-symbols-outlined text-green-400 text-lg" id="toastIcon">check_circle</span>
+  <span id="toastMessage">Aksi berhasil dilakukan</span>
 </div>
 
-<script src="assets/icons.js"></script>
-<script src="assets/layout.js"></script>
+<!-- ========================================================================= -->
+<!-- JAVASCRIPT LOGIC & MENWASH FLOWS                                          -->
+<!-- ========================================================================= -->
 <script>
-  Layout.mount({ active:'transaksi', title:'Transaksi', subtitle:'Riwayat transaksi lengkap outlet', badgeGangguan:'1' });
-</script>
-<script src="assets/admin.js"></script>
-<script>
-  function qaActivate(){
-    document.getElementById('qaWarnBox').style.display = 'none';
-    document.getElementById('qaProcessingBox').style.display = 'flex';
-    document.getElementById('qaActivateBtn').disabled = true;
-    document.querySelector('#qaFoot2 .btn-ghost').disabled = true;
-    simulateAsyncCommand(()=>{
-      showStep('qa',3);
-      showToast('Mesin dinyalakan & transaksi tunai tercatat');
-      document.getElementById('qaWarnBox').style.display = 'flex';
-      document.getElementById('qaProcessingBox').style.display = 'none';
-      document.getElementById('qaActivateBtn').disabled = false;
-      document.querySelector('#qaFoot2 .btn-ghost').disabled = false;
+  /* Toast Notification */
+  function showToast(msg, icon = 'check_circle', isErr = false) {
+    const toast = document.getElementById('toastNotification');
+    const toastMsg = document.getElementById('toastMessage');
+    const toastIcon = document.getElementById('toastIcon');
+    if (!toast) return;
+
+    toastMsg.textContent = msg;
+    toastIcon.textContent = isErr ? 'error' : icon;
+    toastIcon.className = isErr ? 'material-symbols-outlined text-red-400 text-lg' : 'material-symbols-outlined text-green-400 text-lg';
+
+    toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+    toast.classList.add('opacity-100', 'translate-y-0');
+
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(() => {
+      toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+      toast.classList.remove('opacity-100', 'translate-y-0');
+    }, 3200);
+  }
+
+  /* Live Clock */
+  function updateLiveClock() {
+    const clockEl = document.getElementById('liveClockDisplay');
+    if (!clockEl) return;
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const ss = String(now.getSeconds()).padStart(2, '0');
+    clockEl.textContent = `${hh}:${mm}:${ss} WIB`;
+  }
+  setInterval(updateLiveClock, 1000);
+  updateLiveClock();
+
+  /* Export Dropdown Toggle */
+  const exportBtn = document.getElementById('exportDropdownBtn');
+  const exportMenu = document.getElementById('exportMenu');
+
+  if (exportBtn && exportMenu) {
+    exportBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      exportMenu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!exportMenu.contains(e.target) && !exportBtn.contains(e.target)) {
+        exportMenu.classList.add('hidden');
+      }
     });
   }
 
-  /* ===== Filter transaksi (chip: Semua/QRIS/Tunai/Uang Dummy/Gagal-Refund) ===== */
-  const txRows = document.querySelectorAll('#txTableBody tr');
-
-  function formatRupiah(n){
-    return 'Rp ' + n.toLocaleString('id-ID');
-  }
-
-  /* Catatan: tabel ini hanya memuat 8 baris contoh (bukan 48 transaksi penuh hari ini),
-     jadi label "Semua" tetap memakai angka ringkasan resmi. Total nominal dinamis hanya
-     ditampilkan saat sebuah filter aktif, dihitung dari baris contoh yang sedang tampil. */
-  let txActiveFilter = 'semua';
-
-  function applyTxFilter(filter){
-    txActiveFilter = filter;
-    const query = (document.getElementById('txSearch').value || '').trim().toLowerCase();
-    let visible = 0;
-    let sum = 0;
-    txRows.forEach(row=>{
-      const matchFilter = filter === 'semua' || row.dataset.filter.split(' ').includes(filter);
-      const matchSearch = !query || row.textContent.toLowerCase().includes(query);
-      const match = matchFilter && matchSearch;
-      row.style.display = match ? '' : 'none';
-      if(match){ visible++; sum += Number(row.dataset.amount || 0); }
-    });
-    document.getElementById('txEmpty').style.display = visible === 0 ? 'block' : 'none';
-    document.getElementById('txCountLabel').textContent = (filter === 'semua' && !query)
-      ? '48 transaksi hari ini'
-      : `${visible} transaksi ditampilkan · ${formatRupiah(sum)}`;
-    document.getElementById('txPageInfo').innerHTML = visible === 0
-      ? 'Tidak ada data'
-      : `Menampilkan <strong>1–${visible}</strong> dari <strong>${visible}</strong> data`;
-  }
-
-  document.querySelectorAll('.fchip').forEach(c=>{
-    c.addEventListener('click', ()=>{
-      document.querySelectorAll('.fchip').forEach(x=>x.classList.remove('active'));
-      c.classList.add('active');
-      applyTxFilter(c.dataset.filter);
-    });
-  });
-
-  document.getElementById('txSearch').addEventListener('input', ()=> applyTxFilter(txActiveFilter));
-
-  /* Deep-link dari kartu lain, mis. dashboard.html?filter=dummy — jika tidak ada, tampilkan total "Semua" */
-  (function initTxFilter(){
-    const requested = new URLSearchParams(window.location.search).get('filter');
-    const chip = requested && document.querySelector(`.fchip[data-filter="${requested}"]`);
-    if(chip){
-      document.querySelectorAll('.fchip').forEach(x=>x.classList.remove('active'));
-      chip.classList.add('active');
-      applyTxFilter(requested);
+  function exportReport(format) {
+    if (exportMenu) exportMenu.classList.add('hidden');
+    if (format === 'xlsx') {
+      showToast('Mengunduh Jurnal Transaksi Hari H (.xlsx)...', 'table_view');
+    } else if (format === 'pdf') {
+      showToast('Mencetak Slip Tutup Kasir Hari H (.pdf)...', 'picture_as_pdf');
     } else {
-      applyTxFilter('semua');
+      showToast('Mengekspor Data Tabular Hari H (.csv)...', 'download');
     }
-  })();
+  }
 
-  /* Ekspor CSV: baris yang sedang tampil (mengikuti filter & pencarian) */
-  document.getElementById('txExport').addEventListener('click', ()=>{
-    const q = v => '"' + String(v).replace(/"/g, '""') + '"';
-    const lines = [['ID Transaksi','Waktu','Mesin','Layanan','Nominal','Metode','Status'].map(q).join(',')];
-    txRows.forEach(row=>{
-      if(row.style.display === 'none') return;
-      const c = row.children;
-      lines.push([c[0].textContent, c[1].textContent, row.querySelector('.c-mesin').textContent, row.querySelector('.c-layanan').textContent,
-        row.dataset.amount, c[4].textContent.trim(), c[5].textContent.trim()].map(q).join(','));
+  /* Periodic Lock Modal Handlers */
+  function showPeriodicLockModal() {
+    const modal = document.getElementById('periodicLockModal');
+    if (modal) modal.classList.remove('hidden');
+  }
+
+  function closePeriodicLockModal() {
+    const modal = document.getElementById('periodicLockModal');
+    if (modal) modal.classList.add('hidden');
+  }
+
+  /* Auto-Reset Countdown to 00:00:00 WIB */
+  function updateResetCountdown() {
+    const now = new Date();
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+    const diff = tomorrow - now;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+    const el = document.getElementById('resetCountdown');
+    if (el) {
+      el.textContent = `${String(hours).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+    }
+  }
+  setInterval(updateResetCountdown, 1000);
+  updateResetCountdown();
+
+  /* Simulasi Pergantian Hari (00:00 WIB Auto-Reset Flow) */
+  let isSimulatedNewDay = false;
+  let originalTbodyHtml = null;
+
+  function simulateNewDayReset() {
+    const tbody = document.getElementById('transactionTableBody');
+    if (!tbody) return;
+
+    if (!isSimulatedNewDay) {
+      const confirmReset = confirm(
+        "SIMULASI PERGANTIAN HARI (00:00:00 WIB)\n\n" +
+        "Apakah Anda ingin mensimulasikan pergantian hari?\n" +
+        "1. Transaksi Hari Ini (01 Okt 2026) akan ditutup & diarsipkan secara terpusat.\n" +
+        "2. Angka kasir ter-reset menjadi Rp 0 dan 0 Transaksi.\n" +
+        "3. Sesi hari baru dimulai dengan tabel kosong.\n" +
+        "4. Admin outlet tidak dapat mengakses lagi data keuangan hari kemarin.\n\n" +
+        "Lanjutkan simulasi reset?"
+      );
+      if (!confirmReset) return;
+
+      isSimulatedNewDay = true;
+      originalTbodyHtml = tbody.innerHTML;
+
+      // Update counters to 0
+      document.getElementById('cardTotalOrder').innerHTML = '0 <span class="font-title-sm text-title-sm font-normal text-on-surface-variant">Tx</span>';
+      document.getElementById('cardTotalOrderSub').textContent = '0 Web Mandiri · 0 Manual Kasir (Hari Ini)';
+      document.getElementById('cardNetOmset').textContent = 'Rp 0';
+      document.getElementById('cardNetOmsetSub').textContent = 'QRIS: Rp 0 · Tunai: Rp 0 (Sesi Baru)';
+      document.getElementById('cardRatioTx').textContent = '0 : 0 Tx';
+      document.getElementById('cardRatioDisplay').innerHTML = '0% <span class="font-title-sm text-title-sm text-on-surface-variant font-normal">QRIS</span> / 0% <span class="font-title-sm text-title-sm text-on-surface-variant font-normal">Tunai</span>';
+      document.getElementById('topCountLabel').textContent = '0 Transaksi Hari Ini';
+      document.getElementById('bannerCurrentDate').textContent = 'Jumat, 02 Okt 2026 (Hari Baru)';
+      document.getElementById('toolbarDateLabel').textContent = 'Hari Ini (02 Okt 2026)';
+
+      tbody.innerHTML = `
+        <tr id="emptyNewDayRow">
+          <td colspan="7" class="py-14 px-space-md text-center bg-surface-container-low/30">
+            <div class="flex flex-col items-center justify-center gap-3">
+              <div class="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined text-3xl">hourglass_empty</span>
+              </div>
+              <div class="max-w-md">
+                <h4 class="font-headline-md text-base text-primary font-bold">Sesi Hari Baru Telah Dimulai (Hari H)</h4>
+                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Sistem telah di-reset otomatis pada pukul 00:00 WIB. Belum ada transaksi kasir pada hari baru ini. Transaksi hari sebelumnya telah diarsipkan secara aman ke portal Super Admin.
+                </p>
+              </div>
+              <button onclick="restoreDemoTransactions()" class="mt-2 px-3.5 py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm">
+                <span class="material-symbols-outlined text-sm">history</span>
+                <span>Muat Ulang Sesi Demo Sebelumnya</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+
+      const paginationRange = document.getElementById('paginationRangeText');
+      if (paginationRange) {
+        paginationRange.innerHTML = `Menampilkan <span class="font-bold text-on-surface">0</span> transaksi`;
+      }
+
+      showToast("Pergantian hari pukul 00:00 WIB disimulasikan: Arus kas telah ter-reset menjadi Hari H baru.", "Hari Baru (00:00 WIB)", "success");
+    } else {
+      restoreDemoTransactions();
+    }
+  }
+
+  function restoreDemoTransactions() {
+    const tbody = document.getElementById('transactionTableBody');
+    if (tbody && originalTbodyHtml) {
+      tbody.innerHTML = originalTbodyHtml;
+      isSimulatedNewDay = false;
+      document.getElementById('cardTotalOrder').innerHTML = '48 <span class="font-title-sm text-title-sm font-normal text-on-surface-variant">Tx</span>';
+      document.getElementById('cardTotalOrderSub').textContent = '34 Web Mandiri · 14 Manual Kasir (Hari Ini)';
+      document.getElementById('cardNetOmset').textContent = 'Rp 612.000';
+      document.getElementById('cardNetOmsetSub').textContent = 'QRIS: Rp 444rb · Tunai: Rp 168rb (Sesi 01 Okt)';
+      document.getElementById('cardRatioTx').textContent = '34 : 14 Tx';
+      document.getElementById('cardRatioDisplay').innerHTML = '71% <span class="font-title-sm text-title-sm text-on-surface-variant font-normal">QRIS</span> / 29% <span class="font-title-sm text-title-sm text-on-surface-variant font-normal">Tunai</span>';
+      document.getElementById('topCountLabel').textContent = '48 Transaksi Hari Ini';
+      document.getElementById('bannerCurrentDate').textContent = 'Kamis, 01 Okt 2026';
+      document.getElementById('toolbarDateLabel').textContent = 'Hari Ini (Hari H)';
+      applyFilters();
+      showToast("Sesi demo transaksi Hari H telah dimuat ulang.", "Data Dimuat");
+    }
+  }
+
+  /* Search & Filter Logic */
+  const searchInput = document.getElementById('txSearchInput');
+  const paymentSelect = document.getElementById('paymentMethodSelect');
+  const paginationRange = document.getElementById('paginationRangeText');
+
+  function applyFilters() {
+    const tableRows = document.querySelectorAll('#transactionTableBody tr:not(#emptyNewDayRow)');
+    const term = (searchInput ? searchInput.value : '').toLowerCase().trim();
+    const method = paymentSelect ? paymentSelect.value : 'all';
+    let visible = 0;
+
+    tableRows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      const rowMethod = row.getAttribute('data-method');
+      const matchSearch = !term || text.includes(term);
+      const matchMethod = (method === 'all' || rowMethod === method);
+
+      if (matchSearch && matchMethod) {
+        row.style.display = '';
+        visible++;
+      } else {
+        row.style.display = 'none';
+      }
     });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([String.fromCharCode(0xFEFF) + lines.join(String.fromCharCode(13, 10))], { type:'text/csv;charset=utf-8' }));
-    a.download = 'transaksi-menwash.csv';
-    a.click();
-    URL.revokeObjectURL(a.href);
-    showToast('Ekspor CSV berhasil');
+
+    if (paginationRange) {
+      paginationRange.innerHTML = `Menampilkan <span class="font-bold text-on-surface">1 - ${visible}</span> dari <span class="font-bold text-on-surface">${tableRows.length}</span> transaksi`;
+    }
+  }
+
+  if (searchInput) searchInput.addEventListener('input', applyFilters);
+  if (paymentSelect) paymentSelect.addEventListener('change', applyFilters);
+
+  /* Modal Detail Nota Transaksi */
+  function showTxDetail(id, machine, nominal, method, status, time) {
+    document.getElementById('modalTxId').textContent = id;
+    document.getElementById('modalTxMachine').textContent = machine;
+    document.getElementById('modalTxNominal').textContent = nominal;
+    document.getElementById('modalTxMethod').textContent = method;
+    document.getElementById('modalTxStatus').textContent = status;
+    document.getElementById('modalTxTime').textContent = time;
+    document.getElementById('txModal').classList.remove('hidden');
+  }
+
+  function closeTxModal() {
+    document.getElementById('txModal').classList.add('hidden');
+  }
+
+  function printThermalReceipt() {
+    const txId = document.getElementById('modalTxId').textContent;
+    closeTxModal();
+    showToast(`Mencetak struk thermal kasir untuk ${txId}...`, 'print');
+  }
+
+  /* ---------------------------------------------------- */
+  /* QUICK ACTIVATE CASH TRANSACTION MODAL (qaModal)      */
+  /* ---------------------------------------------------- */
+  let qaSelectedPrice = 12000;
+  let qaSelectedLayanan = 'Cuci saja';
+  let qaSelectedDurasi = '40 menit';
+
+  function openQaModal() {
+    goQaStep1();
+    document.getElementById('qaModalOverlay').classList.remove('hidden');
+  }
+
+  function closeQaModal() {
+    document.getElementById('qaModalOverlay').classList.add('hidden');
+  }
+
+  function goQaStep1() {
+    document.getElementById('qa-step1').classList.remove('hidden');
+    document.getElementById('qa-step2').classList.add('hidden');
+    document.getElementById('qa-step3').classList.add('hidden');
+    document.getElementById('qaFootStep1').classList.remove('hidden');
+    document.getElementById('qaFootStep2').classList.add('hidden');
+    document.getElementById('qaFootStep3').classList.add('hidden');
+  }
+
+  function goQaStep2() {
+    const machine = document.getElementById('qaMesinSelect').value;
+    document.getElementById('qaConfMesin').textContent = machine;
+    document.getElementById('qaConfLayanan').textContent = qaSelectedLayanan;
+    document.getElementById('qaConfDurasi').textContent = qaSelectedDurasi;
+    document.getElementById('qaConfTotal').textContent = 'Rp ' + Number(qaSelectedPrice).toLocaleString('id-ID');
+
+    document.getElementById('qa-step1').classList.add('hidden');
+    document.getElementById('qa-step2').classList.remove('hidden');
+    document.getElementById('qa-step3').classList.add('hidden');
+    document.getElementById('qaFootStep1').classList.add('hidden');
+    document.getElementById('qaFootStep2').classList.remove('hidden');
+    document.getElementById('qaFootStep3').classList.add('hidden');
+    document.getElementById('qaWarnBox').classList.remove('hidden');
+    document.getElementById('qaProcessingBox').classList.add('hidden');
+    document.getElementById('qaSubmitBtn').disabled = false;
+    document.getElementById('qaBackBtn').disabled = false;
+  }
+
+  function executeQaActivate() {
+    document.getElementById('qaWarnBox').classList.add('hidden');
+    document.getElementById('qaProcessingBox').classList.remove('hidden');
+    document.getElementById('qaSubmitBtn').disabled = true;
+    document.getElementById('qaBackBtn').disabled = true;
+
+    // Simulate async MQTT command
+    setTimeout(() => {
+      const machineName = document.getElementById('qaMesinSelect').value;
+      const newTxId = 'MW-TX-' + Math.floor(1000 + Math.random() * 9000);
+
+      document.getElementById('qaResTx').textContent = newTxId;
+      document.getElementById('qaResMesin').textContent = machineName;
+
+      document.getElementById('qa-step2').classList.add('hidden');
+      document.getElementById('qa-step3').classList.remove('hidden');
+      document.getElementById('qaFootStep2').classList.add('hidden');
+      document.getElementById('qaFootStep3').classList.remove('hidden');
+
+      // Dynamically prepend new row to transaction table
+      const tbody = document.getElementById('transactionTableBody');
+      if (tbody) {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-surface-container-low/60 transition-colors bg-green-50/30';
+        tr.dataset.method = 'cash';
+        tr.dataset.status = 'running';
+        const now = new Date();
+        const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+        tr.innerHTML = `
+          <td class="py-3.5 px-space-md">
+            <span class="font-mono font-bold text-primary">${newTxId}</span>
+          </td>
+          <td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">${timeStr}</td>
+          <td class="py-3.5 px-space-md">
+            <div class="flex flex-col">
+              <span class="font-label-lg text-label-lg text-on-surface font-bold">${machineName}</span>
+              <span class="font-body-sm text-body-sm text-on-surface-variant">${qaSelectedLayanan} (${qaSelectedDurasi})</span>
+            </div>
+          </td>
+          <td class="py-3.5 px-space-md">
+            <span class="font-bold text-on-surface">Rp ${Number(qaSelectedPrice).toLocaleString('id-ID')}</span>
+          </td>
+          <td class="py-3.5 px-space-md">
+            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-label-sm text-label-sm font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Tunai
+            </span>
+          </td>
+          <td class="py-3.5 px-space-md">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 font-label-sm text-label-sm font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping"></span> Berjalan
+            </span>
+          </td>
+          <td class="py-3.5 px-space-md text-right">
+            <button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm transition-colors cursor-pointer" onclick="showTxDetail('${newTxId}', '${machineName}', 'Rp ${Number(qaSelectedPrice).toLocaleString('id-ID')}', 'Tunai Kasir', 'Berjalan', '${timeStr} WIB')" type="button">
+              <span class="material-symbols-outlined text-sm">visibility</span> Nota
+            </button>
+          </td>
+        `;
+        tbody.insertBefore(tr, tbody.firstChild);
+      }
+
+      // Update counters
+      const topCount = document.getElementById('topCountLabel');
+      const cardTotal = document.getElementById('cardTotalOrder');
+      const cardOmset = document.getElementById('cardNetOmset');
+      if (topCount) topCount.textContent = '49 Transaksi Tercatat';
+      if (cardTotal) cardTotal.innerHTML = `49 <span class="font-title-sm text-title-sm font-normal text-on-surface-variant">Tx</span>`;
+      if (cardOmset) cardOmset.textContent = 'Rp ' + (612000 + qaSelectedPrice).toLocaleString('id-ID');
+
+      showToast(`Transaksi tunai ${newTxId} berhasil dibuat & mesin ${machineName} dinyalakan.`);
+    }, 1200);
+  }
+
+  // Layanan selector in QA Modal
+  document.querySelectorAll('.qa-layanan-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.qa-layanan-btn').forEach(b => {
+        b.className = 'qa-layanan-btn py-2 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface font-label-md text-label-md text-center transition-all cursor-pointer hover:bg-surface-container';
+      });
+      btn.className = 'qa-layanan-btn active py-2 px-3 rounded-lg border-2 border-primary-container bg-primary-container text-on-primary font-label-md text-label-md text-center transition-all cursor-pointer';
+      qaSelectedLayanan = btn.dataset.val;
+      qaSelectedPrice = Number(btn.dataset.price) || 12000;
+    });
   });
 
-  const qaObserver = new MutationObserver(()=>{
-    const s2 = document.getElementById('qa-step2').style.display !== 'none';
-    const s3 = document.getElementById('qa-step3').style.display !== 'none';
-    document.getElementById('qaFoot1').style.display = (!s2 && !s3) ? 'flex' : 'none';
-    document.getElementById('qaFoot2').style.display = (s2 && !s3) ? 'flex' : 'none';
-    document.getElementById('qaFoot3').style.display = s3 ? 'flex' : 'none';
-    if(s2 || s3){
-      document.getElementById('cfMesin').textContent = document.getElementById('qaMesin').value.split(' —')[0];
-      document.getElementById('cfMesin2').textContent = document.getElementById('qaMesin').value.split(' —')[0];
-      document.getElementById('cfLayanan').textContent = document.querySelector('.seg[data-group="layanan"].active').dataset.value;
-      document.getElementById('cfDurasi').textContent = document.querySelector('.seg[data-group="durasi"].active').dataset.value;
-    }
-  });
-  ['qa-step1','qa-step2','qa-step3'].forEach(id=>{
-    qaObserver.observe(document.getElementById(id), { attributes:true, attributeFilter:['style'] });
+  // Durasi selector in QA Modal
+  document.querySelectorAll('.qa-durasi-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.qa-durasi-btn').forEach(b => {
+        b.className = 'qa-durasi-btn py-2 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface font-label-md text-label-md text-center transition-all cursor-pointer hover:bg-surface-container';
+      });
+      btn.className = 'qa-durasi-btn active py-2 px-3 rounded-lg border-2 border-primary-container bg-primary-container text-on-primary font-label-md text-label-md text-center transition-all cursor-pointer';
+      qaSelectedDurasi = btn.dataset.val;
+    });
   });
 </script>
+
 </body>
 </html>
